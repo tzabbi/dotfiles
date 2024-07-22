@@ -1,0 +1,8 @@
+[
+    {
+      "bindings": {
+        "ctrl-j": "workspace::OpenTerminal",
+        "ctrl-shift-j": "terminal_panel::ToggleFocus"
+      }
+    }
+  ]
