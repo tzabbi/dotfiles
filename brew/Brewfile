@@ -1,5 +1,6 @@
 brew 'ansible'
 brew 'ansible-lint'
+brew 'argocd'
 brew 'awscli'
 brew 'bat'
 brew 'dust'
