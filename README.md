@@ -9,9 +9,9 @@ Note that there are some initial steps you'll need to clone my entire config.
 
 ## Usage
 
-1. Clone this repo.
+1. Clone this repo in our home directory.
 1. Change dir to the root directory of this repos.
-1. Run `stow .`.
+1. Run `./setup.sh`.
 
 ## Brew
 
