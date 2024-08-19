@@ -1,0 +1,169 @@
+version = 2
+final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+[[blocks]]
+	type = 'promt'
+	alignment = 'left'
+	newline = true
+
+	[[blocks.segments]]
+		type = "session"
+		style = "diamond"
+		foreground = "#ffffff"
+		background = "#c386f1"
+		leading_diamond = ""
+		trailing_diamond = ""
+		template = "{{ if .SSHSession }} {{ end }}{{ .UserName }}"
+
+	[[blocks.segments]]
+		type = 'path'
+		style = 'powerline'
+		powerline_symbol = ""
+		background ='#fffff'
+		template = '{{ .Path }}'
+
+		[blocks.segments.properties]
+				style = 'full'
+
+	[[block.segments]]
+		type = "connection"
+		style = "powerline"
+		background = "#8822ee"
+		foreground = "#222222"
+		powerline_symbol = ""
+	
+	[[block.segments]]
+		type = "sysinfo"
+		powerline_symbol = ""
+		foreground = "#ffffff"
+		background = "#8f43f3"
+		template = "  {{ round .PhysicalPercentUsed .Precision }}% "
+		style = "powerline"
+
+		[properties]
+		precision = 2
+
+	[[block.segments]]
+		type = "git"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#193549"
+		background = "#ffeb3b"
+		background_templates = [
+			"{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
+			"{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+			"{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+			"{{ if gt .Behind 0 }}#B388FB{{ end }}"
+		]
+		template = "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
+
+		[properties]
+		fetch_status = true
+		fetch_upstream_icon = true
+		source = "cli"
+
+			[properties.untracked_modes]
+			"/Users/user/Projects/oh-my-posh/" = "no"
+
+			[properties.mapped_branches]
+			"feature/*" = "🚀 "
+			"bugfix/*" = "🐛 "
+
+	[[block.segments]]
+		type = "kubectl"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#000000"
+		background = "#ebcc34"
+		template = " ﴱ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
+
+	[[block.segments]]
+		background = "#a7cae1"
+		foreground = "#100e23"
+		powerline_symbol = ""
+		template = " Helm {{ .Version }}"
+		style = "powerline"
+		type = "helm"
+
+	[[block.segments]]
+		type = "lua"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "white"
+		background = "blue"
+		template = "  {{ .Full }} "
+
+	[[block.segments]]
+		type = "go"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#ffffff"
+		background = "#7FD5EA"
+		template = " ‭ﳑ {{ .Full }} "
+
+	[[block.segments]]
+		type = "python"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#100e23"
+		background = "#906cff"
+		template = "  {{ .Full }} "
+
+	[[block.segments]]
+		type = "rust"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#193549"
+		background = "#99908a"
+		template = "  {{ .Full }} "
+
+	[[block.segments]]
+		type = "root"
+		style = "powerline"
+		powerline_symbol = ""
+		foreground = "#111111"
+		background = "#ffff66"
+		template = ""
+
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'green'
+    background = 'transparent'
+    template = '{{ .FormattedMs }}'
+
+    [blocks.segments.properties]
+      threshold = 5000
+
+[[blocks]]
+    type = 'promt'
+    alignment = 'left'
+    newline = true
+
+    [[blocks.segments]]
+      type = 'text'
+      style = 'plain'
+      foreground_templates = [
+        "{{if gt .Code 0}}red{{end}}",
+        "{{if eq .Code 0}}green{{end}}",
+      ]
+      background = 'transparent'
+      template = '❯'
+
+[transient_promt]
+  foreground_templates = [
+    "{{if gt .Code 0}}red{{end}}",
+    "{{if eq .Code 0}}green{{end}}",
+  ]
+  background = "transparent"
+  template = '❯ '
+
+	[secondary_prompt]
+  foreground = 'magenta'
+  background = 'transparent'
+  template = '❯❯ '
