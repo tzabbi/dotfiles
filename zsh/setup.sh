@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# upstreamrepo: https://github.com/Skaronator/dotfiles/blob/main/zsh-scripts/autocomplete
+
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+if command -v brew >/dev/null 2>&1; then
+  plugins=(
+    "zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    "zsh-autosuggestions/zsh-autosuggestions.zsh"
+  )
+
+  for plugin in "${plugins[@]}"; do
+    plugin_path="$(brew --prefix)/share/$plugin"
+    # shellcheck disable=SC1090
+    [ -f "$plugin_path" ] && source "$plugin_path"
+  done
+fi
+
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh --disable-up-arrow)"
+
+command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
+command -v trivy >/dev/null 2>&1 && eval "$(trivy completion zsh)"
+command -v talosctl >/dev/null 2>&1 && eval "$(talosctl completion zsh)"
+
+command -v kubectl >/dev/null 2>&1 && eval "$(kubectl completion zsh)"
+command -v kubectl >/dev/null 2>&1 && complete -F __start_kubectl k
+
+# More advanced if for WSL2
+if docker --version >/dev/null 2>&1; then
+  eval "$(docker completion zsh)"
+  complete -F __start_docker d
+fi
