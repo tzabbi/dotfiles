@@ -1,9 +1,9 @@
-version = 2
+mand_start)version = 3
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
 [[blocks]]
-	type = 'promt'
+	type = 'prompt'
 	alignment = 'left'
 	newline = true
 
@@ -20,20 +20,20 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		type = 'path'
 		style = 'powerline'
 		powerline_symbol = ""
-		background ='#fffff'
+		background = '#ffffff'
 		template = '{{ .Path }}'
 
 		[blocks.segments.properties]
 				style = 'full'
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "connection"
 		style = "powerline"
 		background = "#8822ee"
 		foreground = "#222222"
 		powerline_symbol = ""
 	
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "sysinfo"
 		powerline_symbol = ""
 		foreground = "#ffffff"
@@ -41,10 +41,10 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		template = "  {{ round .PhysicalPercentUsed .Precision }}% "
 		style = "powerline"
 
-		[properties]
+		[blocks.segments.properties]
 		precision = 2
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "git"
 		style = "powerline"
 		powerline_symbol = ""
@@ -58,19 +58,19 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		]
 		template = "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
 
-		[properties]
+		[blocks.segments.properties]
 		fetch_status = true
 		fetch_upstream_icon = true
 		source = "cli"
 
-			[properties.untracked_modes]
+			[blocks.segments.properties.untracked_modes]
 			"/Users/user/Projects/oh-my-posh/" = "no"
 
-			[properties.mapped_branches]
+			[blocks.segments.properties.mapped_branches]
 			"feature/*" = "🚀 "
 			"bugfix/*" = "🐛 "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "kubectl"
 		style = "powerline"
 		powerline_symbol = ""
@@ -78,7 +78,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		background = "#ebcc34"
 		template = " ﴱ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		background = "#a7cae1"
 		foreground = "#100e23"
 		powerline_symbol = ""
@@ -86,7 +86,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		style = "powerline"
 		type = "helm"
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "lua"
 		style = "powerline"
 		powerline_symbol = ""
@@ -94,15 +94,15 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		background = "blue"
 		template = "  {{ .Full }} "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "go"
 		style = "powerline"
 		powerline_symbol = ""
 		foreground = "#ffffff"
 		background = "#7FD5EA"
-		template = " ‭ﳑ {{ .Full }} "
+		template = " ﳑ {{ .Full }} "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "python"
 		style = "powerline"
 		powerline_symbol = ""
@@ -110,7 +110,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		background = "#906cff"
 		template = "  {{ .Full }} "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "rust"
 		style = "powerline"
 		powerline_symbol = ""
@@ -118,7 +118,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 		background = "#99908a"
 		template = "  {{ .Full }} "
 
-	[[block.segments]]
+	[[blocks.segments]]
 		type = "root"
 		style = "powerline"
 		powerline_symbol = ""
@@ -141,7 +141,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       threshold = 5000
 
 [[blocks]]
-    type = 'promt'
+    type = 'prompt'
     alignment = 'left'
     newline = true
 
@@ -155,7 +155,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       background = 'transparent'
       template = '❯'
 
-[transient_promt]
+[transient_prompt]
   foreground_templates = [
     "{{if gt .Code 0}}red{{end}}",
     "{{if eq .Code 0}}green{{end}}",
@@ -163,7 +163,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   background = "transparent"
   template = '❯ '
 
-	[secondary_prompt]
+[secondary_prompt]
   foreground = 'magenta'
   background = 'transparent'
   template = '❯❯ '
