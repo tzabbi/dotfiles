@@ -1,4 +1,4 @@
-mand_start)version = 3
+version = 3
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
