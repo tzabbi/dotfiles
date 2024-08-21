@@ -79,7 +79,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias ls='exa'
+alias ls='eza'
 alias vim='nvim'
 alias c='clear'
 alias z='zoxide'
