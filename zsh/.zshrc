@@ -44,7 +44,6 @@ zinit snippet OMZP::command-not-found
 
 # Load completions
 autoload -Uz compinit && compinit
-
 zinit cdreplay -q
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -58,6 +57,7 @@ bindkey '^[w' kill-region
 bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -81,9 +81,11 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Aliases
 alias ls='eza'
 alias vim='nvim'
-alias c='clear'
-alias z='zoxide'
+alias cls='clear'
+alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
+alias svc-shell="ssh ssh://svcsh.internal.mms-support.de/"
+alias ks="kubecm switch"
 
 # Shell integrations
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init --cmd z zsh)"
