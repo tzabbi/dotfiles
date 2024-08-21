@@ -75,7 +75,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 powerline_symbol = ""
                 foreground = "#ffffff"
                 background = "#7FD5EA"
-                template = " ﳑ {{ .Full }} "
+                template = "  {{ .Full }} "
 
         [[blocks.segments]]
                 type = "python"
