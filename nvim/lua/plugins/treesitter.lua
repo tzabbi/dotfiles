@@ -45,7 +45,6 @@ return {
         "ruby",
         "rust",
         "sql",
-        "todo",
         "typescript",
         "vim",
         "xml",
