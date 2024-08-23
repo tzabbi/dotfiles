@@ -8,8 +8,8 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
         newline = true
 
         [[blocks.segments]]
-                background = "#24a824"
                 foreground = "#ffffff"
+                background = "#24a824"
                 style = "diamond"
                 leading_diamond = ""
                 trailing_diamond = ""
@@ -25,11 +25,19 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 template = " {{ if .SSHSession }} {{ end }}{{ .UserName }} "
 
         [[blocks.segments]]
+                type = "kubectl"
+                style = "powerline"
+                powerline_symbol = "" 
+                foreground = "#FFFFFF"
+                background = "#326CE5"
+                template = "{{ if eq .Shell \"bash\" }} ⎈ {{.Context}} {{end}}"
+
+        [[blocks.segments]]
                 type = 'path'
                 style = 'powerline'
                 powerline_symbol = ""
-                background = '#4e3b2b'
                 foreground = '#ffffff'
+                background = '#4e3b2b'
                 template = ' {{ .Path }} '
 
                 [blocks.segments.properties]
@@ -104,23 +112,23 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     trailing_diamond = "\ue0b4 "
     foreground = "#FFFFFF"
     background = "#326CE5"
-    template = " ⎈ {{.Context}} "
+    template = "{{ if eq .Shell \"zsh\" }} ⎈ {{.Context}} {{end}}"
 
   [[blocks.segments]]
     type = "time"
     style = "diamond"
     leading_diamond = "\ue0b6"
     template = " \ue641 {{ .CurrentDate | date .Format }} "
-    background = "#003543"
     foreground = "#ffffff"
+    background = "#003543"
 
   [[blocks.segments]]
     type = "executiontime"
     style = "diamond"
     trailing_diamond = "\ue0b4"
     template = " \ueba2 {{ .FormattedMs }} "
-    background = "#83769c"
     foreground = "#ffffff"
+    background = "#83769c"
 
     [blocks.segments.properties]
       always_enabled = true
