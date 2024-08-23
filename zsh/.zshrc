@@ -83,7 +83,6 @@ alias ls='eza'
 alias vim='nvim'
 alias cls='clear'
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
-alias svc-shell="ssh ssh://svcsh.internal.mms-support.de/"
 alias ks="kubecm switch"
 
 # Shell integrations
