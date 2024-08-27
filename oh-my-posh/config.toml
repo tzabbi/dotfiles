@@ -21,7 +21,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 style = "powerline"
                 powerline_symbol = ""
                 foreground = "#ffffff"
-                background = "#2ed22e"
+                background = "#326CE5"
                 template = " {{ if .SSHSession }} {{ end }}{{ .UserName }} "
 
         [[blocks.segments]]
@@ -48,7 +48,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 style = "powerline"
                 powerline_symbol = ""
                 foreground = "#193549"
-                background = "#ffeb3b"
+                background = "#fcde65"
                 background_templates = [
                         "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
                         "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
