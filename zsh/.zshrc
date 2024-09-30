@@ -25,7 +25,7 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # add Oh-my-Posh
-eval "$(oh-my-posh init zsh --config .config/ohmyposh/config.toml)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
