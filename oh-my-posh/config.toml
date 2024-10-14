@@ -21,13 +21,13 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 style = "powerline"
                 powerline_symbol = ""
                 foreground = "#ffffff"
-                background = "#326CE5"
+                background = "#9e2944"
                 template = " {{ if .SSHSession }} {{ end }}{{ .UserName }} "
 
         [[blocks.segments]]
                 type = "kubectl"
                 style = "powerline"
-                powerline_symbol = "" 
+                powerline_symbol = ""
                 foreground = "#FFFFFF"
                 background = "#326CE5"
                 template = "{{ if eq .Shell \"bash\" }} ⎈ {{.Context}} {{end}}"
