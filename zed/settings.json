@@ -29,6 +29,7 @@
     "light": "Ayu Mirage",
     "dark": "One Dark"
   },
+  "hard_tabs": false,
   "hints": {
     "assignVariableTypes": true,
     "compositeLiteralFields": true,
