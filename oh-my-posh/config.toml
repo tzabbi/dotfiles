@@ -83,6 +83,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
                 powerline_symbol = ""
                 foreground = "#ffffff"
                 background = "#7FD5EA"
+                parse_mod_file = true
                 template = "  {{ .Full }} "
 
         [[blocks.segments]]
