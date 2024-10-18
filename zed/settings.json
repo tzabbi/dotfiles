@@ -29,7 +29,6 @@
     "light": "Ayu Mirage",
     "dark": "One Dark"
   },
-  "hard_tabs": false,
   "hints": {
     "assignVariableTypes": true,
     "compositeLiteralFields": true,
@@ -38,6 +37,11 @@
     "functionTypeParameters": true,
     "parameterNames": true,
     "rangeVariableTypes": true
+  },
+  "languages": {
+    "Go": {
+      "hard_tabs": false
+    }
   },
   "lsp": {
     "gopls": {
