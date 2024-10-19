@@ -1,8 +1,7 @@
 #!/bin/sh
-dotfiles=( "bashrc" "tmux")
+scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
+cd "$scriptdirectory"
 
-for tool in "${dotfiles[@]}"; do
-    echo "Create Symlink for $tool"
-    stow $tool
+for dir in */; do
+    stow "$(basename "$dir")"
 done
-
