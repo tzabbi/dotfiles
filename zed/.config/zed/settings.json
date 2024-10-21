@@ -43,6 +43,15 @@
       "hard_tabs": false
     }
   },
+  "file_types": {
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml"
+    ]
+  },
   "lsp": {
     "gopls": {
       "initialization_options": {
