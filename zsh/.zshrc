@@ -25,7 +25,7 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # add Oh-my-Posh
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -45,9 +45,10 @@ zinit snippet OMZP::command-not-found
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
+command -v trivy >/dev/null 2>&1 && eval "$(trivy completion zsh)"
+command -v talosctl >/dev/null 2>&1 && eval "$(talosctl completion zsh)"
+command -v kubectl >/dev/null 2>&1 && complete -F __start_kubectl k
 
 # Keybindings
 bindkey -e
@@ -79,12 +80,14 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias ls='eza'
-alias vim='nvim'
-alias cls='clear'
+alias ls="eza"
+alias k="kubectl"
+alias vim="nvim"
+alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubecm switch"
+alias z="zoxide"
 
 # Shell integrations
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd z zsh)"
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd z zsh)"
