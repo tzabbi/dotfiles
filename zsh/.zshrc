@@ -4,10 +4,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [ "$TMUX" = "" ]; then tmux; fi
-
 # Edit PATH variable
-export PATH="$PATH:/home/toza/.krew/bin:/home/toza/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/toza/.local/share/JetBrains/Toolbox/scripts:/home/toza/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:$HOME/.local/share/JetBrains/Toolbox/scripts:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin"
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
