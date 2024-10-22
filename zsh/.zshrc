@@ -83,7 +83,6 @@ alias vim="nvim"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubecm switch"
-alias z="zoxide"
 
 # Shell integrations
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
