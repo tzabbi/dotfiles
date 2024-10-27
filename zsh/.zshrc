@@ -4,11 +4,6 @@
 # Edit PATH variable
 export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:$HOME/.local/share/JetBrains/Toolbox/scripts:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin"
 
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-  # If you're using macOS, you'll want this enabled
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -39,13 +34,11 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
-# Load completions
-autoload -Uz compinit && compinit
-zinit cdreplay -q
-command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
-command -v trivy >/dev/null 2>&1 && eval "$(trivy completion zsh)"
-command -v talosctl >/dev/null 2>&1 && eval "$(talosctl completion zsh)"
-command -v kubectl >/dev/null 2>&1 && complete -F __start_kubectl k
+# Update zinit
+zinit self-update >/dev/null 2>&1
+
+# Remove "zi" alias for default zoxide alias to work
+unalias zi
 
 # Keybindings
 bindkey -e
@@ -69,13 +62,6 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
 # Aliases
 alias ls="eza"
 alias k="kubectl"
@@ -84,6 +70,23 @@ alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubecm switch"
 
-# Shell integrations
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Load completions
+autoload -Uz compinit && compinit
+zinit cdreplay -q
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd z zsh)"
+command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
+command -v kubectl >/dev/null 2>&1 && complete -F __start_kubectl k
+command -v talosctl >/dev/null 2>&1 && eval "$(talosctl completion zsh)"
+command -v trivy >/dev/null 2>&1 && eval "$(trivy completion zsh)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd z)"
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
