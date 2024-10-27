@@ -19,7 +19,6 @@ eval "$(fzf --bash)"
 source <(helm completion bash)
 source <(kustomize completion bash)
 alias k=kubectl
-alias z="zoxide"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 
 # add Oh-my-Posh
