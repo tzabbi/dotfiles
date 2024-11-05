@@ -5,7 +5,8 @@
       "ctrl-shift-j": "terminal_panel::ToggleFocus",
       "alt-shift-up": "editor::DuplicateLineUp",
       "alt-shift-down": "editor::DuplicateLineDown",
-      "ctrl-d": "editor::SelectNext"
+      "ctrl-d": "editor::SelectNext",
+      "ctrl-alt-l": "projects::OpenRecent"
     }
   }
 ]
