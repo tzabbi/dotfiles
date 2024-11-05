@@ -91,6 +91,7 @@
       "LANG": "C.UTF-8",
       "LC_ALL": "C.UTF-8"
     },
+    "font_family": "JetBrainsMonoNL Nerd Font",
     "shell": {
       "program": "/home/linuxbrew/.linuxbrew/bin/zsh"
     }
@@ -98,7 +99,7 @@
   "relative_line_numbers": true,
   "autosave": "on_focus_change",
   "format_on_save": "on",
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMonoNL Nerd Font",
   "show_whitespaces": "all",
   "ensure_final_newline_on_save": true,
   "enable_language_server": true,
