@@ -24,7 +24,9 @@
     "ini": true,
     "tmux": true,
     "groovy": true,
-    "helm": true
+    "helm": true,
+    "vale": true,
+    "marksman": true
   },
   "outline_panel": {
     "dock": "right"
