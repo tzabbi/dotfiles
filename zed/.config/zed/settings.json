@@ -109,6 +109,13 @@
   "tab_size": 2,
   "current_line_highlight": "gutter",
   "git_status": true,
+  "git": {
+    "git_gutter": "tracked_files",
+    "gutter_debounce": 4,
+    "inline_blame": {
+      "show_commit_summary": false
+    }
+  },
   "collaboration_panel": {
     "button": false
   },
