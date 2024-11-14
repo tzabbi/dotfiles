@@ -25,7 +25,6 @@
     "tmux": true,
     "groovy": true,
     "helm": true,
-    "vale": true,
     "marksman": true
   },
   "outline_panel": {
@@ -129,5 +128,10 @@
     },
     "version": "2",
     "button": false
+  },
+  "active_pane_modifiers": {
+    "border_size": 2.0,
+    "magnification": 1.2,
+    "inactive_opacity": 0.45
   }
 }
