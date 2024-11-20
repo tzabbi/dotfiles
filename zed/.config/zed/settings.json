@@ -107,6 +107,7 @@
   "remove_trailing_whitespace_on_save": true,
   "tab_size": 2,
   "current_line_highlight": "gutter",
+  "soft_wrap": "editor_width",
   "git_status": true,
   "git": {
     "git_gutter": "tracked_files",
