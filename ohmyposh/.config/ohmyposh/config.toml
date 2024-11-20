@@ -3,182 +3,194 @@ version = 3
 final_space = true
 
 [secondary_prompt]
-  template = '❯❯ '
-  foreground = 'magenta'
-  background = 'transparent'
+template = '❯❯ '
+foreground = 'magenta'
+background = 'transparent'
 
 [transient_prompt]
-  template = '❯ '
-  background = 'transparent'
-  foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}green{{end}}']
+template = '❯ '
+background = 'transparent'
+foreground_templates = [
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}green{{end}}',
+]
 
 [[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
+type = 'prompt'
+alignment = 'left'
+newline = true
 
-  [[blocks.segments]]
-    leading_diamond = ''
-    trailing_diamond = ''
-    template = '{{ if .WSL }}WSL at {{ end }}{{.Icon}} '
-    foreground = '#ffffff'
-    background = '#24a824'
-    type = 'os'
-    style = 'diamond'
+[[blocks.segments]]
+leading_diamond = ''
+trailing_diamond = ''
+template = '{{ if .WSL }}WSL at {{ end }}{{.Icon}} '
+foreground = '#ffffff'
+background = '#24a824'
+type = 'os'
+style = 'diamond'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = ' {{ if .SSHSession }} {{ end }}{{ .UserName }} '
-    foreground = '#ffffff'
-    powerline_symbol = ''
-    background = '#9e2944'
-    type = 'session'
-    style = 'powerline'
+[[blocks.segments]]
+template = ' {{ if .SSHSession }} {{ end }}{{ .UserName }} '
+foreground = '#ffffff'
+powerline_symbol = ''
+background = '#9e2944'
+type = 'session'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = '{{ if eq .Shell "bash" }} ⎈ {{.Context}} {{end}}'
-    foreground = '#FFFFFF'
-    powerline_symbol = ''
-    background = '#326CE5'
-    type = 'kubectl'
-    style = 'powerline'
+[[blocks.segments]]
+template = '{{ if eq .Shell "bash" }} ⎈ {{.Context}} {{end}}'
+foreground = '#FFFFFF'
+powerline_symbol = ''
+background = '#326CE5'
+type = 'kubectl'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = ' {{ .Path }} '
-    foreground = '#ffffff'
-    powerline_symbol = ''
-    background = '#4e3b2b'
-    type = 'path'
-    style = 'powerline'
+[[blocks.segments]]
+template = ' {{ .Path }} '
+foreground = '#ffffff'
+powerline_symbol = ''
+background = '#4e3b2b'
+type = 'path'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
-      style = 'full'
+[blocks.segments.properties]
+cache_duration = 'none'
+style = 'full'
 
-  [[blocks.segments]]
-    template = '{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
-    foreground = '#193549'
-    powerline_symbol = ''
-    background = '#fcde65'
-    type = 'git'
-    style = 'powerline'
-    background_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}', '{{ if gt .Ahead 0 }}#B388FF{{ end }}', '{{ if gt .Behind 0 }}#B388FB{{ end }}']
+[[blocks.segments]]
+template = '{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
+foreground = '#193549'
+powerline_symbol = ''
+background = '#fcde65'
+type = 'git'
+style = 'powerline'
+background_templates = [
+  '{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}',
+  '{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}',
+  '{{ if gt .Ahead 0 }}#B388FF{{ end }}',
+  '{{ if gt .Behind 0 }}#B388FB{{ end }}',
+]
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
-      fetch_status = true
-      fetch_upstream_icon = true
-      source = 'cli'
+[blocks.segments.properties]
+cache_duration = 'none'
+fetch_status = true
+fetch_upstream_icon = true
+source = 'cli'
 
-      [blocks.segments.properties.mapped_branches]
-        'bugfix/*' = '🐛 '
-        'feature/*' = '🚀 '
+[blocks.segments.properties.mapped_branches]
+'bugfix/*' = '🐛 '
+'feature/*' = '🚀 '
 
-      [blocks.segments.properties.untracked_modes]
-        '/Users/user/Projects/oh-my-posh/' = 'no'
+[blocks.segments.properties.untracked_modes]
+'/Users/user/Projects/oh-my-posh/' = 'no'
 
-  [[blocks.segments]]
-    template = '  {{ .Full }} '
-    foreground = 'white'
-    powerline_symbol = ''
-    background = 'blue'
-    type = 'lua'
-    style = 'powerline'
+[[blocks.segments]]
+template = '  {{ .Full }} '
+foreground = 'white'
+powerline_symbol = ''
+background = 'blue'
+type = 'lua'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = '  {{ .Full }} '
-    foreground = '#ffffff'
-    powerline_symbol = ''
-    background = '#7FD5EA'
-    type = 'go'
-    style = 'powerline'
+[[blocks.segments]]
+template = '  {{ .Full }} '
+foreground = '#ffffff'
+powerline_symbol = ''
+background = '#7FD5EA'
+type = 'go'
+style = 'powerline'
+parse_mod_file = true
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = '  {{ .Full }} '
-    foreground = '#100e23'
-    powerline_symbol = ''
-    background = '#906cff'
-    type = 'python'
-    style = 'powerline'
+[[blocks.segments]]
+template = '  {{ .Full }} '
+foreground = '#100e23'
+powerline_symbol = ''
+background = '#906cff'
+type = 'python'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = '  {{ .Full }} '
-    foreground = '#193549'
-    powerline_symbol = ''
-    background = '#99908a'
-    type = 'rust'
-    style = 'powerline'
+[[blocks.segments]]
+template = '  {{ .Full }} '
+foreground = '#193549'
+powerline_symbol = ''
+background = '#99908a'
+type = 'rust'
+style = 'powerline'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
-
-[[blocks]]
-  type = 'rprompt'
-  alignment = 'right'
-
-  [[blocks.segments]]
-    leading_diamond = ''
-    trailing_diamond = ' '
-    template = '{{ if eq .Shell "zsh" }} ⎈ {{.Context}} {{end}}'
-    foreground = '#FFFFFF'
-    background = '#326CE5'
-    type = 'kubectl'
-    style = 'diamond'
-
-    [blocks.segments.properties]
-      cache_duration = 'none'
-
-  [[blocks.segments]]
-    leading_diamond = ''
-    template = '  {{ .CurrentDate | date .Format }} '
-    foreground = '#ffffff'
-    background = '#003543'
-    type = 'time'
-    style = 'diamond'
-
-    [blocks.segments.properties]
-      cache_duration = 'none'
-
-  [[blocks.segments]]
-    trailing_diamond = ''
-    template = '  {{ .FormattedMs }} '
-    foreground = '#ffffff'
-    background = '#83769c'
-    type = 'executiontime'
-    style = 'diamond'
-
-    [blocks.segments.properties]
-      always_enabled = true
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
 [[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
+type = 'rprompt'
+alignment = 'right'
 
-  [[blocks.segments]]
-    template = '❯'
-    background = 'transparent'
-    type = 'text'
-    style = 'plain'
-    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}green{{end}}']
+[[blocks.segments]]
+leading_diamond = ''
+trailing_diamond = ' '
+template = '{{ if eq .Shell "zsh" }} ⎈ {{.Context}} {{end}}'
+foreground = '#FFFFFF'
+background = '#326CE5'
+type = 'kubectl'
+style = 'diamond'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
+
+[[blocks.segments]]
+leading_diamond = ''
+template = '  {{ .CurrentDate | date .Format }} '
+foreground = '#ffffff'
+background = '#003543'
+type = 'time'
+style = 'diamond'
+
+[blocks.segments.properties]
+cache_duration = 'none'
+
+[[blocks.segments]]
+trailing_diamond = ''
+template = '  {{ .FormattedMs }} '
+foreground = '#ffffff'
+background = '#83769c'
+type = 'executiontime'
+style = 'diamond'
+
+[blocks.segments.properties]
+always_enabled = true
+cache_duration = 'none'
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+newline = true
+
+[[blocks.segments]]
+template = '❯'
+background = 'transparent'
+type = 'text'
+style = 'plain'
+foreground_templates = [
+  '{{if gt .Code 0}}red{{end}}',
+  '{{if eq .Code 0}}green{{end}}',
+]
+
+[blocks.segments.properties]
+cache_duration = 'none'
