@@ -64,7 +64,7 @@ setopt hist_find_no_dups
 
 # Aliases
 alias ls="eza"
-alias k="kubectl"
+alias k="kubecolor"
 alias vim="nvim"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
