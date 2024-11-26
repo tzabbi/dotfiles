@@ -62,21 +62,12 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Aliases
-alias ls="eza"
-alias k="kubecolor"
-alias vim="nvim"
-alias cls="clear"
-alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
-alias ks="kubecm switch"
-
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-compdef kubecolor=kubectl
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -91,6 +82,15 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+compdef kubecolor=kubectl
+
+# Aliases
+alias ls="eza"
+alias k="kubecolor"
+alias vim="nvim"
+alias cls="clear"
+alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
+alias ks="kubecm switch"
 
 # Start tmux
 if [ "$TMUX" = "" ]; then tmux; fi
