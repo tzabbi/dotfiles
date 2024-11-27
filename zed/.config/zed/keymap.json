@@ -6,7 +6,8 @@
       "alt-shift-up": "editor::DuplicateLineUp",
       "alt-shift-down": "editor::DuplicateLineDown",
       "ctrl-d": "editor::SelectNext",
-      "ctrl-alt-l": "projects::OpenRecent"
+      "ctrl-alt-l": "projects::OpenRecent",
+      "ctrl-alt-a": "editor::SelectAll"
     }
   }
 ]

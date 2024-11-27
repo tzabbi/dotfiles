@@ -8,6 +8,17 @@
 // from the command palette or from `Zed` application menu.
 
 {
+  "ssh_connections": [
+    {
+      "host": "192.168.11.106",
+      "username": "tom",
+      "projects": [
+        {
+          "paths": ["/home"]
+        }
+      ]
+    }
+  ],
   "auto_install_extensions": {
     "html": true,
     "dockerfile": true,
@@ -134,5 +145,8 @@
     "border_size": 2.0,
     "magnification": 1.2,
     "inactive_opacity": 0.45
+  },
+  "file_finder": {
+    "modal_width": "medium"
   }
 }
