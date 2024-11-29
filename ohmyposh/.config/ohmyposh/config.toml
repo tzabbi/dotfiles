@@ -111,10 +111,10 @@ powerline_symbol = ''
 background = '#7FD5EA'
 type = 'go'
 style = 'powerline'
-parse_mod_file = true
 
 [blocks.segments.properties]
 cache_duration = 'none'
+parse_mod_file = true
 
 [[blocks.segments]]
 template = '  {{ .Full }} '
