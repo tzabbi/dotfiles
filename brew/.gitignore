@@ -1,1 +1,3 @@
 Brewfile.lock.json
+Brewfile.private.lock.json
+Brewfile.work.lock.json
