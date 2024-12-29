@@ -20,6 +20,7 @@
     }
   ],
   "auto_install_extensions": {
+    "ansible": true,
     "html": true,
     "dockerfile": true,
     "toml": true,
