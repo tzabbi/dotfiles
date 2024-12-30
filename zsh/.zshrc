@@ -85,6 +85,7 @@ fi
 compdef kubecolor=kubectl
 
 # Aliases
+alias flame="bash -c -- "QT_QPA_PLATFORM=wayland flameshot gui"
 alias ls="eza"
 alias k="kubecolor"
 alias vim="nvim"
