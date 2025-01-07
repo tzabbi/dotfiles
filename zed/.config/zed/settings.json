@@ -21,11 +21,13 @@
   ],
   "auto_install_extensions": {
     "ansible": true,
+    "jinja2": true,
     "html": true,
     "dockerfile": true,
     "toml": true,
     "ruby": true,
     "git-firefly": true,
+    "glsl",
     "make": true,
     "terraform": true,
     "xml": true,
