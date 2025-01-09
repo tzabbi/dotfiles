@@ -27,7 +27,7 @@
     "toml": true,
     "ruby": true,
     "git-firefly": true,
-    "glsl",
+    "glsl": true,
     "make": true,
     "terraform": true,
     "xml": true,
