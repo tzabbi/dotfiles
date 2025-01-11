@@ -8,17 +8,6 @@
 // from the command palette or from `Zed` application menu.
 
 {
-  "ssh_connections": [
-    {
-      "host": "192.168.11.106",
-      "username": "tom",
-      "projects": [
-        {
-          "paths": ["/home"]
-        }
-      ]
-    }
-  ],
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
@@ -33,13 +22,13 @@
     "ini": true,
     "jinja2": true,
     "make": true,
-    "marksman": true
+    "marksman": true,
     "lua": true,
     "ruby": true,
     "terraform": true,
     "toml": true,
     "tmux": true,
-    "xml": true,
+    "xml": true
   },
   "outline_panel": {
     "dock": "right"
