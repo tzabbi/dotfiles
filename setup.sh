@@ -23,6 +23,9 @@ if [ ! -d $HOME/.tmux/plugins/tpm ]; then
   git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 fi
 
+if [ ! grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig ]; then
+  echo "[include]\n    path = ./.dotfiles_gitconfig" >> $HOME/.gitconfig
+
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
 cd "$scriptdirectory"
 
