@@ -1,9 +1,7 @@
 [user]
-	signingkey = 339311B9A89BCC27
-	email = tom@zaspel.it
 	name = Tom Zaspel
 [commit]
-	gpgsign = false
+	gpgsign = true
 	verbose = true
 [merge]
 	conflictstyle = zdiff3
