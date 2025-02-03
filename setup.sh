@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 if [ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   echo "Installing and configuring brew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
