@@ -13,6 +13,11 @@ if [ ! -d "$ZINIT_HOME" ]; then
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+# load additional config
+if [ -f $HOME/.addtitional_zsh_config ]; then
+   source $HOME/.addtitional_zsh_config
+fi
+
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
