@@ -143,7 +143,7 @@
     "button": false
   },
   "chat_panel": {
-    "button": false
+    "button": "never"
   },
   "assistant": {
     "default_model": {
