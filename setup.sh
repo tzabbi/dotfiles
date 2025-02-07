@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   echo "Installing and configuring brew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo >> $HOME/.bashrc
-  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bashrc
+  echo >> "$HOME/.bashrc"
+  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  if [ $(grep "^ID=" /etc/os-release | cut -d "=" -f 2) == "ubuntu" ]; then
+  if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]; then
     sudo apt-get install build-essential
     brew install gcc
     brew bundle --file ./brew/Brewfile.work
   fi
-  if [ $(grep "^ID=" /etc/os-release | cut -d "=" -f 2) == "fedora" ]; then
+  if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]; then
     sudo dnf group install development-tools
     brew install gcc
     brew bundle --file ./brew/Brewfile.private
@@ -20,14 +20,15 @@ fi
 
 if [ ! -d $HOME/.tmux/plugins/tpm ]; then
   echo "Installing tmux plugin manager..."
-  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if [ ! grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig ]; then
-  echo "[include]\n    path = ./.dotfiles_gitconfig" >> $HOME/.gitconfig
+if [ ! "$(grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig)" ]; then
+  printf "[include]\n    path = ./.dotfiles_gitconfig" >> "$HOME/.gitconfig"
+fi
 
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
-cd "$scriptdirectory"
+cd "$scriptdirectory" || exit
 
 echo "Removing .bashrc"
 rm $HOME/.bashrc
