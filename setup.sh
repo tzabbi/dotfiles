@@ -6,16 +6,21 @@ if [ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   echo >> "$HOME/.bashrc"
   echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  brew install gcc
   if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]; then
     sudo apt-get install build-essential
-    brew install gcc
-    brew bundle --file ./brew/Brewfile.work
   fi
   if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]; then
     sudo dnf group install development-tools
-    brew install gcc
-    brew bundle --file ./brew/Brewfile.private
   fi
+fi
+
+if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]; then
+  brew bundle --file ./brew/Brewfile.work
+fi
+
+if [ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]; then
+  brew bundle --file ./brew/Brewfile.private
 fi
 
 if [ ! -d $HOME/.tmux/plugins/tpm ]; then
