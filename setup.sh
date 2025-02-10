@@ -62,4 +62,8 @@ if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
   chsh -s $(which zsh)
 fi
 
+# Debian: enable ping as normal user
+if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian") ]]; then
+  sudo setcap cap_net_raw+ep /bin/ping 
+fi
 
