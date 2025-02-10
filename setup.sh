@@ -14,11 +14,12 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   brew install gcc
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]]; then
-    sudo apt-get install build-essential
+    sudo apt-get install -y build-essential stow
   fi
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-    sudo dnf group install development-tools
-  fi
+    sudo dnf group install development-tools 
+    sudo dnf install stow
+    fi
 fi
 
 # install required brew packages based on used linux distro
