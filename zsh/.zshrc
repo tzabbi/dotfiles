@@ -98,5 +98,8 @@ alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
 
+# Env vars
+EDITOR="$(which nvim)"
+
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi
