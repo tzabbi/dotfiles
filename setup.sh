@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [[ ! command -v curl >/dev/null 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
-  echo "installing curl"
-  sudo apt update && sudo apt install -y curl
-fi
+# if [[ ! command -v curl >/dev/null 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
+#   echo "installing curl"
+#   sudo apt update && sudo apt install -y curl
+# fi
 
 # install homebrew if not installed
 if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
