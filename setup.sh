@@ -23,7 +23,7 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 fi
 
 # install required brew packages based on used linux distro
-if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]]; then
+if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
   brew bundle --file ./brew/Brewfile.work
 fi
 
