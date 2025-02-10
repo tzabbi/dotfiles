@@ -13,7 +13,7 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   brew install gcc
-  if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" ]]; then
+  if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
     sudo apt-get install -y build-essential stow
   fi
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
