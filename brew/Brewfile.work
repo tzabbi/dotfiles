@@ -1,3 +1,6 @@
+tab robusta-dev/krr
+tab hashicorp/tap
+
 brew 'argocd'
 brew 'awscli'
 brew 'bat'
