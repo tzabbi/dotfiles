@@ -14,8 +14,8 @@ if [ ! -d "$ZINIT_HOME" ]; then
 fi
 
 # load additional config
-if [ -f $HOME/.addtitional_zsh_config ]; then
-   source $HOME/.addtitional_zsh_config
+if [ -f $HOME/.additional_zsh_config ]; then
+   source $HOME/.additional_zsh_config
 fi
 
 # Source/Load zinit
