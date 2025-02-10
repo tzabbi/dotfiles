@@ -1,5 +1,5 @@
-tab robusta-dev/krr
-tab hashicorp/tap
+tap 'robusta-dev/homebrew-krr'
+tab 'hashicorp/tap'
 
 brew 'argocd'
 brew 'awscli'
