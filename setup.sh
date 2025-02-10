@@ -58,7 +58,7 @@ fi
 
 # set zsh as default shell
 if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
-  sudo echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells
+  sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
   chsh -s $(which zsh)
 fi
 
