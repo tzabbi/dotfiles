@@ -50,3 +50,16 @@ for dir in */; do
   echo "Creating link for  $dir ..."
   stow "$(basename "$dir")"
 done
+
+if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)" == "/home/linuxbrew/.linuxbrew/bin/git" && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
+  echo "Uninstalling curl and git..."
+  sudo sudo apt remove -y curl git
+fi
+
+# set zsh as default shell
+if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
+  echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells
+  chsh -s $(which zsh)
+fi
+
+
