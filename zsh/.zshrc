@@ -96,7 +96,7 @@ alias k="kubecolor"
 alias vim="nvim"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
-alias ks="kubecm switch"
+alias ks="kubectx"
 
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi
