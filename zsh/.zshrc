@@ -104,7 +104,8 @@ alias ks="kubectx"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
 # Env vars
-EDITOR="$(which nvim)"
+export EDITOR="$(which nvim)"
+export GPG_TTY=$(tty) # to fix gpg key issue
 
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi
