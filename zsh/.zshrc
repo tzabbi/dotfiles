@@ -88,6 +88,10 @@ if [[ -f "/opt/homebrew/bin/brew" ]] ; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 compdef kubecolor=kubectl
+if docker --version >/dev/null 2>&1; then
+  eval "$(docker completion zsh)"
+  complete -F __start_docker d
+fi
 
 # Aliases
 alias flame="bash -c -- 'QT_QPA_PLATFORM=wayland flameshot gui'"
