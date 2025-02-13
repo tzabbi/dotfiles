@@ -99,7 +99,6 @@ alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
-
 # Env vars
 EDITOR="$(which nvim)"
 
