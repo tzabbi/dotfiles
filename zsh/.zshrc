@@ -106,6 +106,8 @@ alias ks="kubectx"
 # Env vars
 export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty) # to fix gpg key issue
-
+if [[ "$(echo $XDG_SESSION_TYPE)" == "wayland" ]]; then
+  export QT_QPA_PLATFORM=wayland
+fi
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi
