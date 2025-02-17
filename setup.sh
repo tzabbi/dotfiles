@@ -46,6 +46,9 @@ cd "$scriptdirectory" || exit
 echo "Removing .bashrc"
 rm $HOME/.bashrc
 
+echo "Removing nvim config"
+rm $HOME/.config/nvim
+
 for dir in */; do
   echo "Creating link for  $dir ..."
   stow "$(basename "$dir")"
