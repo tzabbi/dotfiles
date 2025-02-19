@@ -109,5 +109,17 @@ export GPG_TTY=$(tty) # to fix gpg key issue
 if [[ "$(echo $XDG_SESSION_TYPE)" == "wayland" ]]; then
   export QT_QPA_PLATFORM=wayland
 fi
+
+# Open yazi in cwd
+# Source: https://yazi-rs.github.io/docs/quick-start
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi
