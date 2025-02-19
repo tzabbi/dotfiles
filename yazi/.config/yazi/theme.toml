@@ -10,8 +10,8 @@
 # : Flavor {{{
 
 [flavor]
-dark  = ""
-light = ""
+dark = "catppuccin-mocha"
+light = "catppuccin-latte"
 
 # : }}}
 
