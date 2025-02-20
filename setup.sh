@@ -9,17 +9,17 @@
 if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   echo "Installing and configuring brew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo >> "$HOME/.bashrc"
-  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
+  echo >>"$HOME/.bashrc"
+  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>"$HOME/.bashrc"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   brew install gcc
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
     sudo apt-get install -y build-essential stow
   fi
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-    sudo dnf group install development-tools 
+    sudo dnf group install development-tools
     sudo dnf install stow
-    fi
+  fi
 fi
 
 # install required brew packages based on used linux distro
@@ -37,7 +37,7 @@ if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
 fi
 
 if [[ ! "$(grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig)" ]]; then
-  printf "[include]\n    path = ./.dotfiles_gitconfig" >> "$HOME/.gitconfig"
+  printf "[include]\n    path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
 fi
 
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
@@ -68,7 +68,6 @@ if [[ "$SHELL" != "*zsh" ]]; then
 fi
 
 # Debian: enable ping as normal user
-if [[ ! test -x ping ]]; then
-  sudo setcap cap_net_raw+ep /bin/ping 
+if [[ ! -x ping ]]; then
+  sudo setcap cap_net_raw+ep /bin/ping
 fi
-
