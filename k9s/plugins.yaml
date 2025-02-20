@@ -1,0 +1,111 @@
+plugins:
+  cert-status:
+    shortCut: Shift-S
+    confirm: false
+    description: Certificate status
+    scopes:
+      - certificates
+    command: bash
+    background: false
+    args:
+      - -c
+      - "cmctl status certificate --context $CONTEXT -n $NAMESPACE $NAME |& less"
+  cert-renew:
+    shortCut: Shift-R
+    confirm: false
+    description: Certificate renew
+    scopes:
+      - certificates
+    command: bash
+    background: false
+    args:
+      - -c
+      - "cmctl renew --context $CONTEXT -n $NAMESPACE $NAME |& less"
+  secret-inspect:
+    shortCut: Shift-I
+    confirm: false
+    description: Inspect secret
+    scopes:
+      - secrets
+    command: bash
+    background: false
+    args:
+      - -c
+      - "cmctl inspect secret --context $CONTEXT -n $NAMESPACE $NAME |& less"
+  secret-openssl-ca:
+    shortCut: Ctrl-O
+    confirm: false
+    description: Openssl ca.crt
+    scopes:
+      - secrets
+    command: bash
+    background: false
+    args:
+      - -c
+      - kubectl get secret --context $CONTEXT -n $NAMESPACE $NAME -o jsonpath='{.data.ca\.crt}' | base64 -d | openssl storeutl -noout -text -certs /dev/stdin |& less
+  secret-openssl-tls:
+    shortCut: Shift-O
+    confirm: false
+    description: Openssl tls.crt
+    scopes:
+      - secrets
+    command: bash
+    background: false
+    args:
+      - -c
+      - kubectl get secret --context $CONTEXT -n $NAMESPACE $NAME -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl storeutl -noout -text -certs /dev/stdin |& less
+  dive:
+    shortCut: d
+    confirm: false
+    description: "Dive image"
+    scopes:
+      - containers
+    command: dive
+    background: false
+    args:
+      - $COL-IMAGE
+  krr:
+    shortCut: Shift-K
+    description: Get krr
+    scopes:
+      - deployments
+      - daemonsets
+      - statefulsets
+    command: bash
+    background: false
+    confirm: false
+    args:
+      - -c
+      - |
+        LABELS=$(kubectl get $RESOURCE_NAME $NAME -n $NAMESPACE  --context $CONTEXT  --show-labels | awk '{print $NF}' | awk '{if(NR>1)print}')
+        krr simple --cluster $CONTEXT --selector $LABELS 
+        echo "Press 'q' to exit"
+        while : ; do
+        read -n 1 k <&1
+        if [[ $k = q ]] ; then
+        break
+        fi
+        done
+  remove_finalizers:
+    shortCut: Ctrl-F
+    confirm: true
+    dangerous: true
+    scopes:
+      - all
+    description: |
+      Removes all finalizers from selected resource. Be careful when using it,
+      it may leave dangling resources or delete them
+    command: kubectl
+    background: true
+    args:
+      - patch
+      - --context
+      - $CONTEXT
+      - --namespace
+      - $NAMESPACE
+      - $RESOURCE_NAME.$RESOURCE_GROUP
+      - $NAME
+      - -p
+      - '{"metadata":{"finalizers":null}}'
+      - --type
+      - merge
