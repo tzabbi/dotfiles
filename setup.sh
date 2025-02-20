@@ -60,7 +60,7 @@ if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)"
 fi
 
 # set zsh as default shell
-if [[ "$SHELL" != "*zsh" ]]; then
+if [[ "$(basename "$SHELL")" != "zsh" ]]; then
   if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
     sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
     chsh -s $(which zsh)
@@ -68,6 +68,7 @@ if [[ "$SHELL" != "*zsh" ]]; then
 fi
 
 # Debian: enable ping as normal user
-if [[ ! -x ping ]]; then
-  sudo setcap cap_net_raw+ep /bin/ping
-fi
+# if [[ ! -x ping ]]; then
+# echo jojo
+# sudo setcap cap_net_raw+ep /bin/ping
+# fi
