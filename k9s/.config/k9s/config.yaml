@@ -13,6 +13,7 @@ k9s:
   noExitOnCtrlC: false
   ui: # NOTE! [K9s v0.30.0]
     # Enable mouse support. Default false
+    skin: catppuccin-mocha
     enableMouse: false
     # Set to true to hide K9s header. Default false
     headless: false

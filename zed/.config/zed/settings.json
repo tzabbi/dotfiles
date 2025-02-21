@@ -38,7 +38,7 @@
   },
   "base_keymap": "VSCode",
   "features": {
-    "inline_completion_provider": "none"
+    "edit_prediction_provider": "none"
   },
   "telemetry": {
     "diagnostics": false,

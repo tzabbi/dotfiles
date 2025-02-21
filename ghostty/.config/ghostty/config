@@ -2,8 +2,8 @@
 
 clipboard-read = allow
 clipboard-write = allow
-background-opacity = 0.8
-theme = GitLab-Light
+background-opacity = 0.9
+theme = GitLab-Dark-Grey
 background = #fafaff
 foreground = #303030
 selection-background = #ad95e9
