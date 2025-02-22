@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# if [[ ! command -v curl >/dev/null 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
+# if [[ ! "$(command -v curl > /dev/null)" 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
 #   echo "installing curl"
 #   sudo apt update && sudo apt install -y curl
 # fi
@@ -60,7 +60,7 @@ fi
 if [[ "$(basename "$SHELL")" != "zsh" ]]; then
   if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
     sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
-    chsh -s $(which zsh)
+    chsh -s "$(which zsh)"
   fi
 fi
 

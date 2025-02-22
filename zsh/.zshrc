@@ -9,13 +9,13 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
+   mkdir -p "$(dirname "$ZINIT_HOME")"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # load additional config
-if [ -f $HOME/.additional_zsh_config ]; then
-   source $HOME/.additional_zsh_config
+if [ -f "$HOME/.additional_zsh_config" ]; then
+   source "$HOME/.additional_zsh_config"
 fi
 
 # Source/Load zinit
@@ -106,7 +106,7 @@ alias ks="kubectx"
 # Env vars
 export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty) # to fix gpg key issue
-if [[ "$(echo $XDG_SESSION_TYPE)" == "wayland" ]]; then
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
   export QT_QPA_PLATFORM=wayland
 fi
 
