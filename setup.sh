@@ -36,15 +36,32 @@ if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if [[ ! "$(grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig)" ]]; then
-  printf "[include]\n    path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
+if ! grep --quiet "path = ./.dotfiles_gitconfig" $HOME/.gitconfig ; then
+  printf "[include]\n  path = ./.dotfiles_gitconfig" >> "$HOME/.gitconfig"
 fi
 
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
 cd "$scriptdirectory" || exit
 
-echo "Removing .bashrc"
-rm $HOME/.bashrc
+if [ ! -L "$HOME/.bashrc" ]; then
+  echo "Removing .bashrc"
+  rm "$HOME/.bashrc"
+fi
+
+if [ ! -L "$HOME/.config/nvim" ]; then
+  echo "Removing nvim config"
+  rm -rf "$HOME/.config/nvim"
+fi
+
+if [ ! -L "$HOME/.config/ghostty" ]; then
+  echo "Removing k9s config"
+  rm -rf "$HOME/.config/ghostty"
+fi
+
+if [ ! -L "$HOME/.config/k9s" ]; then
+  echo "Removing ghostty config"
+  rm -rf "$HOME/.config/k9s"
+fi
 
 for dir in */; do
   echo "Creating link for  $dir ..."
