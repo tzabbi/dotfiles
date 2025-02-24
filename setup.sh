@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # if [[ ! "$(command -v curl > /dev/null)" 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
-#   echo "installing curl"
-#   sudo apt update && sudo apt install -y curl
+#   echo "installing curl and python3-venv"
+#   sudo apt update && sudo apt install -y curl git python3-venv
 # fi
 
 # install homebrew if not installed
