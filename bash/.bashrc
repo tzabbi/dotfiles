@@ -27,3 +27,4 @@ command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config $
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #  exec tmux
 #fi
+. "$HOME/.cargo/env"
