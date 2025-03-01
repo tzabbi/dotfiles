@@ -8,6 +8,7 @@
 // from the command palette or from `Zed` application menu.
 
 {
+  "icon_theme": "Zed (Default)",
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
@@ -15,6 +16,7 @@
     "dockerfile": true,
     "env": true,
     "git-firefly": true,
+    "gitlab-ci-ls": true,
     "glsl": true,
     "golangci-lint": true,
     "groovy": true,
