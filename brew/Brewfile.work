@@ -1,3 +1,4 @@
+tap 'alesbrelih/gitlab-ci-ls'
 tap 'robusta-dev/homebrew-krr'
 tap 'hashicorp/tap'
 
