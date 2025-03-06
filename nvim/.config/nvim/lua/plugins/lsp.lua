@@ -12,6 +12,7 @@ return {
           filetypes = { "sh", "zsh" },
         },
         dockerls = {},
+        gitlab_ci_ls = {},
         helm_ls = {},
         jsonls = {},
         jsonnet_ls = {},
