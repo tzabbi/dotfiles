@@ -101,7 +101,7 @@ alias vim="nvim"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
-alias node20="/home/linuxbrew/.linuxbrew/Cellar/node@20/20.18.3/bin/node"
+alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
 # Env vars
