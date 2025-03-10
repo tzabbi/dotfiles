@@ -2,7 +2,7 @@
 
 GITHUB_PATH="$HOME/Documents/github"
 
-if ! command -v zig ; then
+if ! command -v zig; then
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
     echo "Installing zig and dependencies to install ghostty..."
     sudo dnf install gtk4-devel zig libadwaita-devel blueprint-compiler
@@ -19,6 +19,7 @@ fi
 
 echo "Installing/updating ghostty..."
 cd "$GITHUB_PATH/ghostty" || exit 1
+git pull
 git switch --detach "$(git describe --tags "$(git rev-list --tags --max-count=1)")"
 sudo zig build -p /usr -Doptimize=ReleaseFast
 
