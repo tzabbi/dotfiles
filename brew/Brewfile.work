@@ -1,5 +1,3 @@
-tap 'alesbrelih/gitlab-ci-ls'
-tap 'robusta-dev/homebrew-krr'
 tap 'hashicorp/tap'
 
 brew 'alesbrelih/gitlab-ci-ls/gitlab-ci-ls'
