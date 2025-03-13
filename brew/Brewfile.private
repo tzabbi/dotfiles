@@ -1,5 +1,3 @@
-tap alesbrelih/gitlab-ci-ls
-
 brew 'age'
 brew 'ansible'
 brew 'ansible-lint'
