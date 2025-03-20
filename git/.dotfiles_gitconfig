@@ -6,7 +6,7 @@
 [merge]
 	conflictstyle = zdiff3
 [pull]
-	rebase = false
+	rebase = true
 [push]
 	autoSetupRemote = true
 [rerere]
