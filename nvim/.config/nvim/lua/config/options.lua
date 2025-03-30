@@ -3,3 +3,5 @@
 -- Add any additional options here
 local opt = vim.opt
 opt.grepprg = "rg --vimgrep --hidden"
+
+vim.diagnostic.config({ virtual_lines = true })
