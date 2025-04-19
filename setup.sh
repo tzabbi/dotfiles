@@ -36,8 +36,8 @@ if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if ! grep --quiet "path = ./.dotfiles_gitconfig" $HOME/.gitconfig ; then
-  printf "[include]\n  path = ./.dotfiles_gitconfig" >> "$HOME/.gitconfig"
+if ! grep --quiet "path = ./.dotfiles_gitconfig" $HOME/.gitconfig; then
+  printf "[include]\n  path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
 fi
 
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
@@ -61,6 +61,10 @@ fi
 if [ ! -L "$HOME/.config/k9s" ]; then
   echo "Removing ghostty config"
   rm -rf "$HOME/.config/k9s"
+fi
+
+if [ ! -d "$HOME/Documents" ]; then
+  mkdir "$HOME/Documents"
 fi
 
 for dir in */; do
