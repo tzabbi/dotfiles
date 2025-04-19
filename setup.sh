@@ -23,12 +23,8 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 fi
 
 # install required brew packages based on used linux distro
-if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
-  brew bundle --file ./brew/Brewfile.work
-fi
-
 if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-  brew bundle --file ./brew/Brewfile.private
+  brew bundle --file ./brew/Brewfile
 fi
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
@@ -36,7 +32,7 @@ if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if ! grep --quiet "path = ./.dotfiles_gitconfig" $HOME/.gitconfig; then
+if ! grep --quiet "path = ./.dotfiles_gitconfig" "$HOME/.gitconfig"; then
   printf "[include]\n  path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
 fi
 
