@@ -22,10 +22,8 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   fi
 fi
 
-# install required brew packages based on used linux distro
-if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-  brew bundle --file ./brew/Brewfile
-fi
+# install required brew packages
+brew bundle --file ./brew/Brewfile
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   echo "Installing tmux plugin manager..."
