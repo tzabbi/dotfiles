@@ -58,7 +58,7 @@ if [ ! -L "$HOME/.config/k9s" ]; then
 fi
 
 if [ ! -d "$HOME/Documents" ]; then
-  mkdir "$HOME/Documents"
+  mkdir "$HOME/Documents/projects"
 fi
 
 for dir in */; do
