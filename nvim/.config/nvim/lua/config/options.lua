@@ -5,3 +5,7 @@ local opt = vim.opt
 opt.grepprg = "rg --vimgrep --hidden"
 
 vim.diagnostic.config({ virtual_lines = true })
+
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = vim.opt.shiftwidth
