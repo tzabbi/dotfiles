@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# if [[ ! "$(command -v curl > /dev/null)" 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
-#   echo "installing curl and python3-venv"
-#   sudo apt update && sudo apt install -y curl git python3-venv
+# if [[ ! command -v curl >/dev/null 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
+#   echo "installing curl"
+#   sudo apt update && sudo apt install -y curl
 # fi
 
 # install homebrew if not installed
@@ -22,52 +22,37 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   fi
 fi
 
-# install required brew packages
-brew bundle --file ./brew/Brewfile
+# install required brew packages based on used linux distro
+if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
+  brew bundle --file ./brew/Brewfile.work
+fi
+
+if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
+  brew bundle --file ./brew/Brewfile.private
+fi
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   echo "Installing tmux plugin manager..."
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if ! grep --quiet "path = ./.dotfiles_gitconfig" "$HOME/.gitconfig"; then
-  printf "[include]\n  path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
+if [[ ! "$(grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig)" ]]; then
+  printf "[include]\n    path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
 fi
 
 scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
 cd "$scriptdirectory" || exit
 
-if [ ! -L "$HOME/.bashrc" ]; then
-  echo "Removing .bashrc"
-  rm "$HOME/.bashrc"
-fi
+echo "Removing .bashrc"
+rm $HOME/.bashrc
 
-if [ ! -L "$HOME/.config/nvim" ]; then
-  echo "Removing nvim config"
-  rm -rf "$HOME/.config/nvim"
-fi
-
-if [ ! -L "$HOME/.config/ghostty" ]; then
-  echo "Removing k9s config"
-  rm -rf "$HOME/.config/ghostty"
-fi
-
-if [ ! -L "$HOME/.config/k9s" ]; then
-  echo "Removing ghostty config"
-  rm -rf "$HOME/.config/k9s"
-fi
-
-if [ ! -d "$HOME/Documents" ]; then
-  mkdir "$HOME/Documents/projects"
-fi
+echo "Removing nvim config"
+rm $HOME/.config/nvim
 
 for dir in */; do
   echo "Creating link for  $dir ..."
   stow "$(basename "$dir")"
 done
-
-# install gopls if go is installed
-command -v go >/dev/null 2>&1 && go install golang.org/x/tools/gopls@latest
 
 if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)" == "/home/linuxbrew/.linuxbrew/bin/git" && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
   echo "Uninstalling curl and git..."
@@ -75,15 +60,14 @@ if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)"
 fi
 
 # set zsh as default shell
-if [[ "$(basename "$SHELL")" != "zsh" ]]; then
+if [[ "$SHELL" != "*zsh" ]]; then
   if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
     sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
-    chsh -s "$(which zsh)"
+    chsh -s $(which zsh)
   fi
 fi
 
 # Debian: enable ping as normal user
-# if [[ ! -x ping ]]; then
-# echo jojo
-# sudo setcap cap_net_raw+ep /bin/ping
+# if [[ ! test -x ping ]]; then
+# sudo setcap cap_net_ra+ep /bin/ping
 # fi
