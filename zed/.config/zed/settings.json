@@ -124,8 +124,8 @@
       "LC_ALL": "C.UTF-8"
     },
     "font_family": "JetBrainsMonoNL Nerd Font",
-    "shell": {
-      "program": "/home/linuxbrew/.linuxbrew/bin/zsh"
+    "scrollbar": {
+      "show": "auto"
     }
   },
   "relative_line_numbers": true,
@@ -168,5 +168,20 @@
   },
   "file_finder": {
     "modal_width": "medium"
+  },
+  "vim": {
+    "cursor_shape": {
+      "normal": "block",
+      "insert": "bar",
+      "replace": "hollow",
+      "visual": "underline"
+    }
+  },
+  "hide_mouse": "on_typing_and_movement",
+  "inlay_hints": {
+    "enabled": true
+  },
+  "journal": {
+    "hour_format": "hour24"
   }
 }
