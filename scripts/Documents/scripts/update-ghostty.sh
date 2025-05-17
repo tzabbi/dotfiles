@@ -17,10 +17,15 @@ if [[ ! -d "$GITHUB_PATH/ghostty" ]]; then
   git clone https://github.com/ghostty-org/ghostty
 fi
 
-echo "Installing/updating ghostty..."
-cd "$GITHUB_PATH/ghostty" || exit 1
-git pull
-git switch --detach "$(git describe --tags "$(git rev-list --tags --max-count=1)")"
-sudo zig build -p /usr -Doptimize=ReleaseFast
 
-echo "Ghostty is now installed in version: $(git describe --tags "$(git rev-list --tags --max-count=1)")"
+if [[ ! "$(ghostty --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)" == "$(git describe --tags "$(git rev-list --tags --max-count=1)" | sed 's/^v//')" ]]; then
+  echo "Installing/updating ghostty..."
+  cd "$GITHUB_PATH/ghostty" || exit 1
+  git pull
+  git switch --detach "$(git describe --tags "$(git rev-list --tags --max-count=1)")"
+  sudo zig build -p /usr -Doptimize=ReleaseFast
+
+  echo "Ghostty is now installed in version: $(git describe --tags "$(git rev-list --tags --max-count=1)")"
+else
+  echo "The newest version of Ghostty is already installed!"
+fi
