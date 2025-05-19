@@ -2,7 +2,7 @@
 # confirmations, etc.) must go above this block; everything else may go below.
 
 # Edit PATH variable (set PATH to the and to fix issues with WSL)
-export PATH="$HOME/.krew/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin:$PATH"
+export PATH="/home/tom/.cargo/bin:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
