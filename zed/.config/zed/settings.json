@@ -41,6 +41,9 @@
   "outline_panel": {
     "dock": "right"
   },
+  "notification_panel": {
+    "button": false
+  },
   "project_panel": {
     "dock": "right"
   },
@@ -68,6 +71,9 @@
     "functionTypeParameters": true,
     "parameterNames": true,
     "rangeVariableTypes": true
+  },
+  "minimap": {
+    "show": "auto"
   },
   "languages": {
     "Go": {
@@ -128,7 +134,7 @@
       "show": "auto"
     }
   },
-  "relative_line_numbers": true,
+  "relative_line_numbers": false,
   "autosave": "on_focus_change",
   "format_on_save": "on",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font",
@@ -153,7 +159,10 @@
   "chat_panel": {
     "button": "never"
   },
-  "assistant": {
+  "search": {
+    "button": false
+  },
+  "agent": {
     "default_model": {
       "provider": "openai",
       "model": "gpt-4o"
