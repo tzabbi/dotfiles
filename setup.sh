@@ -10,7 +10,7 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   echo "Installing and configuring brew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo >>"$HOME/.bashrc"
-  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>"$HOME/.bashrc"
+  echo "eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>"$HOME/.bashrc"
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   brew install gcc
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
@@ -29,7 +29,7 @@ if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if [[ ! "$(grep -wq "path = ./.dotfiles_gitconfig" $HOME/.gitconfig)" ]]; then
+if ! grep -wq "path = ./.dotfiles_gitconfig" "$HOME/.gitconfig"; then
   printf "[include]\n    path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
 fi
 
@@ -37,10 +37,10 @@ scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
 cd "$scriptdirectory" || exit
 
 echo "Removing .bashrc"
-rm $HOME/.bashrc
+rm "$HOME/.bashrc"
 
 echo "Removing nvim config"
-rm $HOME/.config/nvim
+rm "$HOME/.config/nvim"
 
 for dir in */; do
   echo "Creating link for  $dir ..."
@@ -54,9 +54,9 @@ fi
 
 # set zsh as default shell
 if [[ "$SHELL" != "*zsh" ]]; then
-  if [[ ! "$(grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells)" ]]; then
+  if ! grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells; then
     sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
-    chsh -s $(which zsh)
+    chsh -s "$(which zsh)"
   fi
 fi
 

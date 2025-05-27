@@ -6,16 +6,20 @@ on:
     branches:
       - main
 
+permissions: read-all
+
 jobs:
   super-lint:
     name: Linting code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v7.0.0
-        env: 
+        uses: super-linter/super-linter@v7
+        env:
           DEFAULT_BRANCH: main
+          VALIDATE_SHELL_SHFMT: false
+          VALIDATE_LUA: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

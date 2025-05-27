@@ -1,15 +1,15 @@
-# Welcome to my dotfiles!
+# Welcome to my dotfiles
 
 Note that there are some initial steps you'll need to clone my entire config.
 
 ## Prerequisites
 
-* Git
-* stow
+- Git
+- stow
 
 ## Usage
 
-1. Clone this repo in our home directory.
+1. Clone this repository in our home directory.
 1. Change dir to the root directory of this repos.
 1. Run `./setup.sh`.
 
@@ -17,7 +17,7 @@ Note that there are some initial steps you'll need to clone my entire config.
 
 1. [Install brew][brew].
 1. Go into `~/.brew` subdirectory.
-1. Run `brew bundle`.  
+1. Run `brew bundle`.
 
 ## Tmux
 
