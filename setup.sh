@@ -17,19 +17,12 @@ if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
     sudo apt-get install -y build-essential stow
   fi
   if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-    sudo dnf group install development-tools
-    sudo dnf install stow
+    sudo dnf group install development-tools stow
   fi
 fi
 
-# install required brew packages based on used linux distro
-if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
-  brew bundle --file ./brew/Brewfile.work
-fi
+brew bundle --file ./brew/Brewfile
 
-if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-  brew bundle --file ./brew/Brewfile.private
-fi
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   echo "Installing tmux plugin manager..."
