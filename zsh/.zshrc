@@ -79,7 +79,7 @@ autoload -Uz compinit && compinit
 zinit cdreplay -q
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
 command -v helm >/dev/null 2>&1 && eval "$(helm completion zsh)"
-command -v kubectl >/dev/null 2>&1 && complete -F __start_kubectl k
+command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
 command -v talosctl >/dev/null 2>&1 && eval "$(talosctl completion zsh)"
 command -v trivy >/dev/null 2>&1 && eval "$(trivy completion zsh)"
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd z)"
