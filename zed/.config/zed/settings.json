@@ -144,6 +144,11 @@
       "show_commit_summary": false
     }
   },
+  "title_bar": {
+    "show_sign_in": false,
+    "show_branch_icon": true,
+    "show_branch_name": true
+  },
   "collaboration_panel": {
     "button": false
   },
