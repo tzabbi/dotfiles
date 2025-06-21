@@ -78,7 +78,8 @@
       "**/templates/**/*.yml",
       "**/helmfile.d/**/*.yaml",
       "**/helmfile.d/**/*.yml"
-    ]
+    ],
+    "Dockerfile": ["Dockerfile.*"]
   },
   "lsp": {
     "ansible-language-server": {
