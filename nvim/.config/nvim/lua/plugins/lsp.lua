@@ -23,7 +23,7 @@ return {
           },
         },
         sqlls = {},
-        tofu-ls = {},
+        tofu_ls = {},
         tsserver = {},
         yamlls = {},
       },
