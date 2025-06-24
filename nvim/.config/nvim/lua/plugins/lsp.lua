@@ -23,7 +23,7 @@ return {
           },
         },
         sqlls = {},
-        terraformls = {},
+        tofuls = {},
         tsserver = {},
         yamlls = {},
       },
