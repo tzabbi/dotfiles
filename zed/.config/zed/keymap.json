@@ -6,7 +6,9 @@
       "alt-shift-down": "editor::DuplicateLineDown",
       "ctrl-d": "editor::SelectNext",
       "ctrl-alt-l": "projects::OpenRecent",
-      "ctrl-alt-a": "editor::SelectAll"
+      "ctrl-alt-a": "editor::SelectAll",
+      "ctrl-alt-s": "editor::ConvertIndentationToSpaces",
+      "ctrl-alt-t": "editor::ConvertIndentationToTabs"
     }
   }
 ]
