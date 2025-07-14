@@ -2,7 +2,7 @@ return {
   "williamboman/mason.nvim",
   opts = function(_, opts)
     vim.list_extend(opts.ensure_installed, {
-      "ansible-lint
+      "ansible-lint",
       "bash-language-server",
       "biome",
       "codelldb",
