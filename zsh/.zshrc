@@ -99,7 +99,6 @@ fi
 alias flame="bash -c -- 'QT_QPA_PLATFORM=wayland flameshot gui'"
 alias ls="eza"
 alias k="kubecolor"
-alias vim="nvim"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
