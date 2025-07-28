@@ -28,4 +28,5 @@ return {
       },
     },
   },
-}
+},
+  vim.lsp.enable("tofuls")
