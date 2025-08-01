@@ -1,14 +1,8 @@
--- general nvim configuration
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- load lua/config/lazy.lua
+require("config.options")
 require("config.lazy")
-
+require("config.lsp")
+require("config.autocmds")
 -- set colorscheme
 vim.cmd.colorscheme "tokyonight-moon"
 
