@@ -6,9 +6,14 @@ return {
     "MunifTanjim/nui.nvim",
     "nvim-tree/nvim-web-devicons", -- optional, but recommended
   },
+  main = "neo-tree",
   opts = {
     window = {
       position = "right",
+      mappings = {
+        ["l"] = "open",
+        ["h"] = "close_node",
+      },
     },
     filesystem = {
       filtered_items = {
@@ -19,8 +24,12 @@ return {
       },
     },
   },
+  keys = {
+    {
+      "<leader>e",
+      function() vim.cmd("Neotree filesystem reveal right") end,
+      desc = "Open Neo-tree",
+    },
+  },
   lazy = false, -- neo-tree will lazily load itself
-  config = function()
-    vim.keymap.set('n','<leader>e', ':Neotree filesystem reveal right<CR>', {})
-  end
 }
