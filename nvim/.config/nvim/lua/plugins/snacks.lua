@@ -471,6 +471,12 @@ return {
 			desc = "Toggle Terminal",
 		},
 		{
+			"<c-/>",
+			"<cmd>close<cr>",
+			desc = "hide terminal",
+			mode = { "t" },
+		},
+		{
 			"<c-_>",
 			function()
 				Snacks.terminal()
