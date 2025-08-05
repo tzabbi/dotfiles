@@ -8,5 +8,6 @@ vim.lsp.config["tofu_ls"] = {
 
 vim.lsp.enable({
   "lua_ls",
+  "ruby_lsp",
   "tofu_ls",
 })
