@@ -89,22 +89,22 @@ return {
 
         map(
           "gd",
-          "<cmd>require('fzf-lua').lsp_definitions()     jump1=true ignore_current_line=true<cr>",
+          "<cmd>lua require('fzf-lua').lsp_definitions()     jump1=true ignore_current_line=true<cr>",
           "Goto Definition"
         )
         map(
           "gr",
-          "<cmd>require('fzf-lua').lsp_references()      jump1=true ignore_current_line=true<cr>",
+          "<cmd>lua require('fzf-lua').lsp_references()      jump1=true ignore_current_line=true<cr>",
           "References"
         )
         map(
           "gI",
-          "<cmd>require('fzf-lua').lsp_implementations()   jump1=true ignore_current_line=true<cr>",
+          "<cmd>lua require('fzf-lua').lsp_implementations()   jump1=true ignore_current_line=true<cr>",
           "Goto Implementation"
         )
         map(
           "gy",
-          "<cmd>require('fzf-lua').lsp_typedefs()        jump1=true ignore_current_line=true<cr>",
+          "<cmd>lua require('fzf-lua').lsp_typedefs()        jump1=true ignore_current_line=true<cr>",
           "Goto T[y]pe Definition"
         )
         -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
