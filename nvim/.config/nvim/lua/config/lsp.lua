@@ -1,12 +1,20 @@
 -- tofu-ls lsp setup
 vim.lsp.config["tofu_ls"] = {
-  -- Base filetypes
-  filetypes = { "terraform", "terraform-vars" },
+	-- Base filetypes
+	filetypes = { "terraform", "terraform-vars" },
 }
 
 vim.lsp.enable({
-  "gopls",
-  "lua_ls",
-  "ruby_lsp",
-  "tofu_ls",
+	"bashls",
+	"dockerls",
+	"gitlab_ci_ls",
+	"helm_ls",
+	"jsonls",
+	"jsonnet_ls",
+	"lua_ls",
+	"ruby_lsp",
+	"sqlls",
+	"tofu_ls",
+	"tsserver",
+	"yamlls",
 })
