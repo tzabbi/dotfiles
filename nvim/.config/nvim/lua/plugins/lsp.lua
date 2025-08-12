@@ -23,6 +23,10 @@ return {
           },
         },
         sqlls = {},
+        terraformls = {
+          cmd = { "tofu-ls", "serve" },
+        },
+        tflint = {},
         tsserver = {},
         yamlls = {},
       },
