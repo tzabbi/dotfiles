@@ -28,7 +28,18 @@ return {
         },
         tflint = {},
         tsserver = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              format = {
+                enable = true,
+              },
+              options = {
+                keepLevel = true,
+              },
+            },
+          },
+        },
       },
     },
   },
