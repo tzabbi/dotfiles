@@ -1,15 +1,17 @@
 -- general nvim configuration
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
-
+-- Convert toab to spaces
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
+vim.o.tabstop = 2
+vim.o.smarttab = true
+vim.o.smartindent = true
+vim.o.autoindent = true
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -88,7 +90,8 @@ vim.o.confirm = true
 
 vim.opt.winborder = "rounded"
 
-vim.diagnostic.config({ virtual_lines = true })
-
-vim.o.grepprg = "rg --vimgrep --hidden"
-
+vim.diagnostic.config({
+  virtual_lines = {
+    current_line = true,
+  },
+})
