@@ -31,4 +31,4 @@ vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap 
 vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
 -- diagnostics
-vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, { desc = "Open diagnostics in float" }
+vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, { desc = "Open diagnostics in float" })
