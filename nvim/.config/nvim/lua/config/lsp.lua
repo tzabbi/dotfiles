@@ -1,21 +1,29 @@
-vim.lsp.config('dockerls', {
-	cmd = { 'docker-ls', '--stdio' },
-})
-
-vim.lsp.config('tofu_ls', {
+vim.lsp.config("tofu_ls", {
 	filetypes = { "terraform", "terraform-vars" },
 })
 
 vim.lsp.enable({
 	"bashls",
+	"biome",
 	"dockerls",
+	"docker_compose_language_service",
+	"eslint",
+	"gopls",
+	"golangci_lint",
 	"gitlab_ci_ls",
 	"helm_ls",
-	-- "jsonls",
-	-- "jsonnet_ls",
+	"jsonls",
+	"jsonnet_ls",
 	"lua_ls",
+	"marksman",
+	"omnisharp",
+	"phpactor",
+	"pyright",
+	"ruff",
 	"ruby_lsp",
 	"sqlls",
+	"taplo",
+	"tflint",
 	"tofu_ls",
 	"ts_ls",
 	"yamlls",
