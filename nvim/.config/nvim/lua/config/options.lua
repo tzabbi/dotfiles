@@ -88,6 +88,7 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Set the default border for all floating windows
 vim.opt.winborder = "rounded"
 
 vim.diagnostic.config({
