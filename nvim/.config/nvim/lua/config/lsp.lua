@@ -42,7 +42,7 @@ vim.lsp.enable({
 	"docker_compose_language_service",
 	"eslint",
 	"gopls",
-	"golangci_lint",
+	"golangci_lint_ls",
 	"gitlab_ci_ls",
 	"helm_ls",
 	"jsonls",
