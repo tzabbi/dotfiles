@@ -15,7 +15,7 @@ return {
 				ensure_installed = {
 					"docker-compose-language-service",
 					"dockerfile-language-server",
-					"eslint_lsp",
+					"eslint_d",
 					"js-debug-adapter",
 					"json-lsp",
 					"jsonnet-language-server",

@@ -2,6 +2,39 @@ vim.lsp.config("tofu_ls", {
 	filetypes = { "terraform", "terraform-vars" },
 })
 
+vim.lsp.config("yamlls", {
+	capabilities = {
+		textDocument = {
+			foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			},
+		},
+	},
+	settings = {
+		redhat = { telemetry = { enabled = false } },
+		yaml = {
+			keyOrdering = false,
+			format = {
+				enable = true,
+			},
+			validate = true,
+			schemas = {
+				require("schemastore").yaml.schemas(),
+				kubernetes = "*.yaml",
+				-- ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/appproject_v1alpha1.json"] = "*.yaml",
+			},
+			schemaStore = {
+				-- Must disable built-in schemaStore support to use
+				-- schemas from SchemaStore.nvim plugin
+				enable = false,
+				-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+				url = "",
+			},
+		},
+	},
+})
+
 vim.lsp.enable({
 	"bashls",
 	"biome",
