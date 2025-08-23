@@ -1,3 +1,7 @@
+vim.lsp.config("tflint", {
+	filetypes = { "tf", "terraform", "terraform-vars" },
+})
+
 vim.lsp.config("tofu_ls", {
 	filetypes = { "tf", "terraform", "terraform-vars" },
 })
@@ -39,7 +43,7 @@ vim.lsp.enable({
 	"biome",
 	"dockerls",
 	"docker_compose_language_service",
-	"eslint",
+	-- "eslint",
 	"gopls",
 	"golangci_lint_ls",
 	"gitlab_ci_ls",
