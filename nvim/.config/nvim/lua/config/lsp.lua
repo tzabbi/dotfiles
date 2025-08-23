@@ -1,5 +1,5 @@
 vim.lsp.config("tofu_ls", {
-	filetypes = { "terraform", "terraform-vars" },
+	filetypes = { "tf", "terraform", "terraform-vars" },
 })
 
 vim.lsp.config("yamlls", {
@@ -20,9 +20,8 @@ vim.lsp.config("yamlls", {
 			},
 			validate = true,
 			schemas = {
-				require("schemastore").yaml.schemas(),
-				kubernetes = "*.yaml",
 				[require("kubernetes").yamlls_schema()] = "*.yaml",
+				require("schemastore").yaml.schemas(),
 			},
 			schemaStore = {
 				-- Must disable built-in schemaStore support to use

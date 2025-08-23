@@ -23,6 +23,7 @@ return {
 					"omnisharp",
 					"phpactor",
 					"phpcs",
+					"yaml-language-server",
 				},
 				auto_update = true,
 				run_on_start = true,

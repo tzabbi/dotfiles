@@ -9,14 +9,17 @@ return {
 		-- Patch yaml-language-server's validation.js file.
 		patch = true,
 		-- root path of the yamlls language server. by default it is assumed you are using mason but if not this option allows changing that path.
+		-- yamlls_root = function()
+		-- 	local handle = io.popen("brew --prefix yaml-language-server")
+		-- 	if not handle then
+		-- 		return nil
+		-- 	end
+		-- 	local prefix = handle:read("*a"):gsub("%s+$", "")
+		-- 	handle:close()
+		-- 	return prefix .. "/libexec/lib/node_modules/yaml-language-server/"
+		-- end,
 		yamlls_root = function()
-			local handle = io.popen("brew --prefix yaml-language-server")
-			if not handle then
-				return nil
-			end
-			local prefix = handle:read("*a"):gsub("%s+$", "")
-			handle:close()
-			return prefix .. "/libexec/lib/node_modules/yaml-language-server/"
+			return vim.fs.joinpath(vim.fn.stdpath("data"), "/mason/packages/yaml-language-server/")
 		end,
 	},
 }
