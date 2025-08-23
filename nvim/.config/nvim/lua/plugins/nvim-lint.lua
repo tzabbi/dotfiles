@@ -1,0 +1,11 @@
+return {}
+-- TODO: setup nvim lint
+-- return {
+-- 	"mfussenegger/nvim-lint",
+-- 	version = "*",
+-- 	opts = {
+-- 		linters_by_ft = {
+-- 			dockerfile = { "hadolint" },
+-- 		},
+-- 	},
+-- }

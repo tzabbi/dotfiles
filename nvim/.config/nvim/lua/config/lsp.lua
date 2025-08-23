@@ -22,7 +22,7 @@ vim.lsp.config("yamlls", {
 			schemas = {
 				require("schemastore").yaml.schemas(),
 				kubernetes = "*.yaml",
-				-- ["https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/appproject_v1alpha1.json"] = "*.yaml",
+				[require("kubernetes").yamlls_schema()] = "*.yaml",
 			},
 			schemaStore = {
 				-- Must disable built-in schemaStore support to use
