@@ -37,7 +37,7 @@ vim.o.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.o.clipboard = "unnamedplus"
+	vim.o.clipboard = "unnamedplus"
 end)
 
 -- Enable break indent
@@ -92,9 +92,9 @@ vim.o.confirm = true
 vim.opt.winborder = "rounded"
 
 vim.diagnostic.config({
-  virtual_lines = {
-    current_line = true,
-  },
+	virtual_lines = {
+		current_line = true,
+	},
 })
 
 vim.o.grepprg = "rg --vimgrep --hidden"
