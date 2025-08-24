@@ -1,9 +1,5 @@
-vim.lsp.config("tflint", {
-	filetypes = { "tf", "terraform", "terraform-vars" },
-})
-
 vim.lsp.config("tofu_ls", {
-	filetypes = { "tf", "terraform", "terraform-vars" },
+	filetypes = { "terraform", "terraform-vars" },
 })
 
 vim.lsp.config("yamlls", {
