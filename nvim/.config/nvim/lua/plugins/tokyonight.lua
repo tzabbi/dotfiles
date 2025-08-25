@@ -11,6 +11,8 @@ return {
 			},
 			on_highlights = function(hl)
 				hl.LineNr = { fg = "#b2b8cf" }
+				hl.Whitespace = { fg = "#c8d3f5" }
+				hl.NonText = { fg = "#c8d3f5" }
 			end,
 		})
 		vim.cmd.colorscheme("tokyonight-moon")
