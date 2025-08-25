@@ -98,14 +98,3 @@ vim.diagnostic.config({
 })
 
 vim.o.grepprg = "rg --vimgrep --hidden"
-
-vim.o.background = "dark"
--- control cursor color by nvim
-vim.opt.guicursor = {
-	"n-v-c:block-Cursor",
-	"i-ci-ve:ver25-Cursor",
-	"r-cr:hor20-Cursor",
-}
-
--- Cursor-Farbe überschreiben (nur in Neovim wirksam, nicht global in Ghostty)
-vim.api.nvim_set_hl(0, "Cursor", { fg = "NONE", bg = "#c8d3f5" })

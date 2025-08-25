@@ -5,5 +5,8 @@ return {
 		-- See `:help ibl`
 		main = "ibl",
 		opts = {},
+		config = function()
+			require("ibl").setup()
+		end,
 	},
 }

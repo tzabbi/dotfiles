@@ -35,7 +35,6 @@ return {
 			sh = { "shfmt" },
 			sqlfluff = { "sqlfluff" },
 			terraform = { "tofu_fmt" },
-			tf = { "tofu_fmt" },
 			tofu = { "tofu_fmt" }, -- this is a function from conform directly
 
 			yaml = { "yamlfmt" },

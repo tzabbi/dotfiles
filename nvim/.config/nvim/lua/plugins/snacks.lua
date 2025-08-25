@@ -1,3 +1,13 @@
+-- Terminal Mappings
+local function term_nav(dir)
+	---@param self snacks.terminal
+	return function(self)
+		return self:is_floating() and "<c-" .. dir .. ">" or vim.schedule(function()
+			vim.cmd.wincmd(dir)
+		end)
+	end
+end
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -19,6 +29,16 @@ return {
 		scope = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
+		terminal = {
+			win = {
+				keys = {
+					nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
+					nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
+					nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
+					nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
+				},
+			},
+		},
 		toggle = { enabled = true },
 		words = { enabled = true },
 		styles = {
@@ -29,27 +49,6 @@ return {
 	},
 	keys = {
 		-- Top Pickers & Explorer
-		{
-			"<leader><space>",
-			function()
-				Snacks.picker.smart()
-			end,
-			desc = "Smart Find Files",
-		},
-		{
-			"<leader>,",
-			function()
-				Snacks.picker.buffers()
-			end,
-			desc = "Buffers",
-		},
-		{
-			"<leader>/",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Grep",
-		},
 		{
 			"<leader>:",
 			function()
@@ -70,49 +69,6 @@ return {
 				Snacks.explorer()
 			end,
 			desc = "File Explorer",
-		},
-		-- find
-		{
-			"<leader>fb",
-			function()
-				Snacks.picker.buffers()
-			end,
-			desc = "Buffers",
-		},
-		{
-			"<leader>fc",
-			function()
-				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-			end,
-			desc = "Find Config File",
-		},
-		{
-			"<leader>ff",
-			function()
-				Snacks.picker.files()
-			end,
-			desc = "Find Files",
-		},
-		{
-			"<leader>fg",
-			function()
-				Snacks.picker.git_files()
-			end,
-			desc = "Find Git Files",
-		},
-		{
-			"<leader>fp",
-			function()
-				Snacks.picker.projects()
-			end,
-			desc = "Projects",
-		},
-		{
-			"<leader>fr",
-			function()
-				Snacks.picker.recent()
-			end,
-			desc = "Recent",
 		},
 		-- git
 		{
@@ -180,13 +136,6 @@ return {
 			desc = "Grep Open Buffers",
 		},
 		{
-			"<leader>sg",
-			function()
-				Snacks.picker.grep()
-			end,
-			desc = "Grep",
-		},
-		{
 			"<leader>sw",
 			function()
 				Snacks.picker.grep_word()
@@ -195,13 +144,6 @@ return {
 			mode = { "n", "x" },
 		},
 		-- search
-		{
-			'<leader>s"',
-			function()
-				Snacks.picker.registers()
-			end,
-			desc = "Registers",
-		},
 		{
 			"<leader>s/",
 			function()
@@ -224,13 +166,6 @@ return {
 			desc = "Buffer Lines",
 		},
 		{
-			"<leader>sc",
-			function()
-				Snacks.picker.command_history()
-			end,
-			desc = "Command History",
-		},
-		{
 			"<leader>sC",
 			function()
 				Snacks.picker.commands()
@@ -250,13 +185,6 @@ return {
 				Snacks.picker.diagnostics_buffer()
 			end,
 			desc = "Buffer Diagnostics",
-		},
-		{
-			"<leader>sh",
-			function()
-				Snacks.picker.help()
-			end,
-			desc = "Help Pages",
 		},
 		{
 			"<leader>sH",
@@ -342,43 +270,6 @@ return {
 			end,
 			desc = "Colorschemes",
 		},
-		-- LSP
-		{
-			"gd",
-			function()
-				Snacks.picker.lsp_definitions()
-			end,
-			desc = "Goto Definition",
-		},
-		{
-			"gD",
-			function()
-				Snacks.picker.lsp_declarations()
-			end,
-			desc = "Goto Declaration",
-		},
-		{
-			"gr",
-			function()
-				Snacks.picker.lsp_references()
-			end,
-			nowait = true,
-			desc = "References",
-		},
-		{
-			"gI",
-			function()
-				Snacks.picker.lsp_implementations()
-			end,
-			desc = "Goto Implementation",
-		},
-		{
-			"gy",
-			function()
-				Snacks.picker.lsp_type_definitions()
-			end,
-			desc = "Goto T[y]pe Definition",
-		},
 		{
 			"<leader>ss",
 			function()
@@ -393,27 +284,11 @@ return {
 			end,
 			desc = "LSP Workspace Symbols",
 		},
-		-- Other
-		{
-			"<leader>z",
-			function()
-				Snacks.zen()
-			end,
-			desc = "Toggle Zen Mode",
-		},
-		{
-			"<leader>Z",
-			function()
-				Snacks.zen.zoom()
-			end,
-			desc = "Toggle Zoom",
-		},
 		{
 			"<leader>.",
 			function()
 				Snacks.scratch()
 			end,
-			desc = "Toggle Scratch Buffer",
 		},
 		{
 			"<leader>S",
@@ -452,20 +327,6 @@ return {
 			mode = { "n", "v" },
 		},
 		{
-			"<leader>gg",
-			function()
-				Snacks.lazygit()
-			end,
-			desc = "Lazygit",
-		},
-		{
-			"<leader>un",
-			function()
-				Snacks.notifier.hide()
-			end,
-			desc = "Dismiss All Notifications",
-		},
-		{
 			"<c-/>",
 			function()
 				Snacks.terminal()
@@ -477,13 +338,6 @@ return {
 			"<cmd>close<cr>",
 			desc = "hide terminal",
 			mode = { "t" },
-		},
-		{
-			"<c-_>",
-			function()
-				Snacks.terminal()
-			end,
-			desc = "which_key_ignore",
 		},
 		{
 			"]]",
@@ -520,36 +374,7 @@ return {
 			end,
 		},
 	},
-	init = function()
-		vim.api.nvim_create_autocmd("User", {
-			pattern = "VeryLazy",
-			callback = function()
-				-- Setup some globals for debugging (lazy-loaded)
-				_G.dd = function(...)
-					Snacks.debug.inspect(...)
-				end
-				_G.bt = function()
-					Snacks.debug.backtrace()
-				end
-				vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-				-- Create some toggle mappings
-				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-				Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-				Snacks.toggle.diagnostics():map("<leader>ud")
-				Snacks.toggle.line_number():map("<leader>ul")
-				Snacks.toggle
-					.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-					:map("<leader>uc")
-				Snacks.toggle.treesitter():map("<leader>uT")
-				Snacks.toggle
-					.option("background", { off = "light", on = "dark", name = "Dark Background" })
-					:map("<leader>ub")
-				Snacks.toggle.inlay_hints():map("<leader>uh")
-				Snacks.toggle.indent():map("<leader>ug")
-				Snacks.toggle.dim():map("<leader>uD")
-			end,
-		})
+	config = function(_, opts)
+		require("snacks").setup(opts)
 	end,
 }

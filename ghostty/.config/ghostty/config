@@ -3,29 +3,31 @@
 clipboard-read = allow
 clipboard-write = allow
 background-opacity = 0.9
-theme = GitLab-Dark-Grey
-background = #fafaff
-foreground = #303030
-selection-background = #ad95e9
-selection-foreground = #fafaff
-cursor-color = #303030
 cursor-text = #000000
 cursor-style = bar
-palette = 0=#303030
-palette = 1=#a31700
-palette = 2=#0a7f3d
-palette = 3=#af551d
-palette = 4=#006cd8
-palette = 5=#583cac
-palette = 6=#00798a
-palette = 7=#303030
-palette = 8=#303030
-palette = 9=#a31700
-palette = 10=#0a7f3d
-palette = 11=#af551d
-palette = 12=#006cd8
-palette = 13=#583cac
-palette = 14=#00798a
-palette = 15=#303030
+
+palette = 0=#1b1d2b
+palette = 1=#ff757f
+palette = 2=#c3e88d
+palette = 3=#ffc777
+palette = 4=#82aaff
+palette = 5=#c099ff
+palette = 6=#86e1fc
+palette = 7=#828bb8
+palette = 8=#444a73
+palette = 9=#ff8d94
+palette = 10=#c7fb6d
+palette = 11=#ffd8ab
+palette = 12=#9ab8ff
+palette = 13=#caabff
+palette = 14=#b2ebff
+palette = 15=#c8d3f5
+background = #222436
+foreground = #c8d3f5
+cursor-color = #c8d3f5
+
+selection-background = #2d3f76
+selection-foreground = #c8d3f5
+
 font-family = "JetBrainsMonoNL Nerd Font"
 mouse-hide-while-typing = true
