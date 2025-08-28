@@ -8,15 +8,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank()
 	end,
 })
-
--- change cursor color in toggleterm/terminals
-vim.api.nvim_create_autocmd("TermOpen", {
-	callback = function()
-		vim.opt_local.guicursor = "n-v-c:block-Cursor"
-		vim.api.nvim_set_hl(0, "Cursor", { bg = "#c8d3f5", fg = "NONE" })
-	end,
-})
-
 -- autoformat on tofu_ls save
 
 -- vim.api.nvim_create_autocmd("LspAttach", {
