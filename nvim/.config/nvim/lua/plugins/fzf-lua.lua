@@ -1,7 +1,14 @@
 return {
 	"ibhagwan/fzf-lua",
 	dependencies = { "echasnovski/mini.icons" },
-	opts = {},
+	opts = {
+		live_grep = {
+			rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden",
+		},
+		grep = {
+			rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden",
+		},
+	},
 	keys = {
 		{
 			"<leader>ff",
