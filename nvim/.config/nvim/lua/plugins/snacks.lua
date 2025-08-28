@@ -334,6 +334,13 @@ return {
 			desc = "Toggle Terminal",
 		},
 		{
+			"<c-_>",
+			function()
+				Snacks.terminal(nil, { cwd = vim.fn.getcwd() })
+			end,
+			desc = "Toggle Terminal (Fallback)",
+		},
+		{
 			"<c-/>",
 			"<cmd>close<cr>",
 			desc = "hide terminal",
