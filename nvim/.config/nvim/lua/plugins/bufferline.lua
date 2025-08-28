@@ -7,13 +7,16 @@ return {
 			diagnostics = "nvim_lsp",
 			always_show_bufferline = true,
 			indicator = {
-				style = "underline",
+				style = "icon",
+				icon = "▍",
 			},
-			separator_style = "slant",
+			separator_style = "thick",
 		},
 		highlights = {
 			buffer_selected = {
 				italic = false,
+				underline = true,
+				sp = "#ff0000",
 			},
 		},
 	},
