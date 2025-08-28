@@ -32,7 +32,7 @@ return {
           settings = {
             yaml = {
               format = {
-                enable = true,
+                enable = false,
               },
               options = {
                 keepLevel = true,
