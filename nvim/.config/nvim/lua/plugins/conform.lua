@@ -44,5 +44,11 @@ return {
 			-- You can use 'stop_after_first' to run the first available formatter from the list
 			-- javascript = { "prettierd", "prettier", stop_after_first = true },
 		},
+			-- configure formatter options
+		formatters = {
+			stylua = {
+				extra_args = { "--indent-width", "2", "--indent-type", "Spaces" },
+			},
+		},
 	},
 }
