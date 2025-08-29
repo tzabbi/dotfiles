@@ -1,7 +1,7 @@
 return {
 	{
 		"mason-org/mason.nvim",
-		version = "*",
+		version = "2.*",
 		build = ":MasonUpdate",
 		config = function()
 			require("mason").setup()

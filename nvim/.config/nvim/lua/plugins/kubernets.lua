@@ -1,5 +1,6 @@
 return {
-	"diogo464/kubernetes.nvim",
+	"tzabbi/kubernetes.nvim",
+	-- no version available
 	opts = {
 		-- this can help with autocomplete. it sets the `additionalProperties` field on type definitions to false if it is not already present.
 		schema_strict = true,

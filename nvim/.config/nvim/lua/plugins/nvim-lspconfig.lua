@@ -1,6 +1,7 @@
 return {
 	-- Main LSP Configuration
 	"neovim/nvim-lspconfig",
+	version = "2.*",
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 

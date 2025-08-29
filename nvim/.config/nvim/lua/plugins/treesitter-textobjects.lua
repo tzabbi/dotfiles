@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
+	-- no version available
 	dependencies = {
 
 		"nvim-treesitter/nvim-treesitter",

@@ -2,6 +2,7 @@
 -- with the active keybindings of the command you started typing.
 return {
 	"folke/which-key.nvim",
+	version = "3.*",
 	event = "VeryLazy",
 	opts_extend = { "spec" },
 	opts = {
