@@ -16,5 +16,8 @@
 	# remembers how you resolved merge conflicts during a git rebase and automatically resolves conflicts
 	enabled = true
 [alias]
-	lg = log —graph —pretty=format:’%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+	# lg = log —graph —pretty=format:’%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+	lg = log --graph --oneline
 	s = switch
+[help]
+	autocorrect = 20

@@ -23,8 +23,23 @@ return {
           },
         },
         sqlls = {},
+        terraformls = {
+          cmd = { "tofu-ls", "serve" },
+        },
+        tflint = {},
         tsserver = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              format = {
+                enable = false,
+              },
+              options = {
+                keepLevel = true,
+              },
+            },
+          },
+        },
       },
     },
   },
