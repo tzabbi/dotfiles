@@ -23,7 +23,6 @@ fi
 
 brew bundle --file ./brew/Brewfile
 
-
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
   echo "Installing tmux plugin manager..."
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
@@ -43,8 +42,10 @@ echo "Removing nvim config"
 rm "$HOME/.config/nvim"
 
 for dir in */; do
-  echo "Creating link for  $dir ..."
-  stow "$(basename "$dir")"
+  if [[ "$dir" != "lazyvim/" ]]; then
+    echo "Creating link for  $dir ..."
+    stow "$(basename "$dir")"
+  fi
 done
 
 if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)" == "/home/linuxbrew/.linuxbrew/bin/git" && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
@@ -60,7 +61,12 @@ if [[ "$SHELL" != "*zsh" ]]; then
   fi
 fi
 
-# Debian: enable ping as normal user
-# if [[ ! test -x ping ]]; then
-# sudo setcap cap_net_ra+ep /bin/ping
-# fi
+# install optional neovim provider
+# Python provider for neovim is required for plugins written in python
+pip3 install neovim
+
+# Node.js provider for neovim is required for plugins written in JavaScript/TypeScript
+npm install -g neovim
+
+# Ruby provider for neovim is required for plugins written in Ruby
+gem install neovim
