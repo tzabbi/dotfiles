@@ -21,6 +21,9 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+# set color for suggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
+
 # add Oh-my-Posh
 command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
