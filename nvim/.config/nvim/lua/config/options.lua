@@ -98,3 +98,6 @@ vim.diagnostic.config({
 })
 
 vim.o.grepprg = "rg --vimgrep --hidden"
+
+-- deactivate checkhealth issue for neovim perl provider
+vim.g.loaded_perl_provider = 0

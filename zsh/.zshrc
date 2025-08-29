@@ -2,7 +2,7 @@
 # confirmations, etc.) must go above this block; everything else may go below.
 
 # Edit PATH variable
-export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin"
+export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin/$(ruby -e "puts Gem.user_dir")/bin"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -125,6 +125,11 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# For nvim
+# link Luarocks to LuaJIT
+export LUA_DIR="$(brew --prefix luajit)"
+eval "$(luarocks path --lua-dir=$LUA_DIR)"
 
 # Start tmux
 # if [ "$TMUX" = "" ]; then tmux; fi

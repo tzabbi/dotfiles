@@ -33,6 +33,7 @@ return {
 			php = { "php_cs_fixer" },
 			python = { "ruff" },
 			sh = { "shfmt" },
+			sql = { "sqlfluff" },
 			sqlfluff = { "sqlfluff" },
 			terraform = { "tofu_fmt" },
 			tofu = { "tofu_fmt" }, -- this is a function from conform directly
@@ -48,6 +49,11 @@ return {
 		formatters = {
 			stylua = {
 				extra_args = { "--indent-width", "2", "--indent-type", "Spaces" },
+			},
+			sqlfluff = {
+				command = "sqlfluff",
+				args = { "fix", "--disable_progress_bar", "--config-path", "/dev/null", "-" },
+				stdin = true,
 			},
 		},
 	},
