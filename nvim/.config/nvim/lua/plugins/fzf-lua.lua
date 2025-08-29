@@ -1,5 +1,6 @@
 return {
 	"ibhagwan/fzf-lua",
+	-- no version available
 	dependencies = { "echasnovski/mini.icons" },
 	opts = {
 		live_grep = {
