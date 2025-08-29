@@ -135,6 +135,22 @@ return {
 				--
 				-- When you move your cursor, the highlights will be cleared (the second autocommand).
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+				-- Workaround für gopls semantic tokens
+				-- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+				if client and client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
+					local semantic = client.config.capabilities.textDocument.semanticTokens
+					if semantic then
+						client.server_capabilities.semanticTokensProvider = {
+							full = true,
+							legend = {
+								tokenTypes = semantic.tokenTypes,
+								tokenModifiers = semantic.tokenModifiers,
+							},
+							range = true,
+						}
+					end
+				end
 				if
 					client
 					and client_supports_method(

@@ -2,7 +2,7 @@
 # confirmations, etc.) must go above this block; everything else may go below.
 
 # Edit PATH variable
-export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin/$(ruby -e "puts Gem.user_dir")/bin"
+export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/go/bin/"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
