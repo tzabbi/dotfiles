@@ -29,7 +29,7 @@ return {
 			javascript = { "prettier" },
 			json = { "jq" },
 			lua = { "stylua" },
-			markddown = { "prettier", "markdown-toc" },
+			markdown = { "prettier", "markdown-toc" },
 			php = { "php_cs_fixer" },
 			python = { "ruff" },
 			sh = { "shfmt" },
