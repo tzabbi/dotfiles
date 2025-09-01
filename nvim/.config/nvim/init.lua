@@ -1,6 +1,6 @@
+require("config.options")
 require("config.autocmds")
 require("config.filetypes")
 require("config.keymaps")
-require("config.lazy")
 require("config.lsp")
-require("config.options")
+require("config.lazy")
