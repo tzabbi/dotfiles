@@ -68,6 +68,10 @@ vim.lsp.config("yamlls", {
 				-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
 				url = "",
 			},
+			-- ignore tags
+			customTags = {
+        		"!reference",
+			},
 		},
 	},
 })
