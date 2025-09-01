@@ -13,6 +13,11 @@ return {
         markdown = { "markdownlint-cli2" },
       }
 
+      vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+        group = vim.api.nvim_create_augroup("linting", { clear = true }),
+        callback = function()
+          lint.try_lint()
+            
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
           lint.try_lint()
