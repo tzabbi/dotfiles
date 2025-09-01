@@ -55,6 +55,9 @@ return {
 				args = { "fix", "--disable_progress_bar", "--config-path", "/dev/null", "-" },
 				stdin = true,
 			},
+			yamlfmt = {
+				args = { "--retain-line-breaks" },
+			},
 		},
 	},
 }
