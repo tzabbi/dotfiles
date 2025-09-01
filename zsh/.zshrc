@@ -105,6 +105,7 @@ alias k="kubecolor"
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
+alias docker="podman"
 alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
