@@ -54,7 +54,7 @@ vim.lsp.config("yamlls", {
 		yaml = {
 			keyOrdering = false,
 			format = {
-				enable = true,
+				enable = false,
 			},
 			validate = true,
 			schemas = {
