@@ -10,11 +10,9 @@ return {
       local lint = require("lint")
 
       lint.linters_by_ft = {
-        -- ... andere Dateitypen ...
-        markdown = { "markdownlint" },
+        markdown = { "markdownlint-cli2" },
       }
 
-      -- Linter automatisch bei jedem Speichern ausführen
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         callback = function()
           lint.try_lint()
