@@ -29,6 +29,7 @@ return {
 			javascript = { "prettier" },
 			json = { "jq" },
 			lua = { "stylua" },
+			markdown = { "markdown_tables" },
 			php = { "php_cs_fixer" },
 			python = { "ruff" },
 			sh = { "shfmt" },
@@ -45,6 +46,33 @@ return {
 		},
 		-- configure formatter options
 		formatters = {
+			markdown_tables = {
+				command = "prettier",
+				args = { "--parser", "markdown" },
+				stdin = true,
+				range_args = function(ctx)
+					local lines = vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)
+					local ranges = {}
+
+					local start = nil
+					for i, l in ipairs(lines) do
+						if l:match("^|") then
+							start = start or (i - 1) -- nvim is 0-based
+						elseif start then
+							table.insert(ranges, { start, 0, i - 1, 999 })
+							start = nil
+						end
+					end
+					if start then
+						table.insert(ranges, { start, 0, #lines - 1, 999 })
+					end
+
+					-- conform only accepts a range → we will initially only take the first table
+					if #ranges > 0 then
+						return ranges[1]
+					end
+				end,
+			},
 			stylua = {
 				extra_args = { "--indent-width", "2", "--indent-type", "Spaces" },
 			},
