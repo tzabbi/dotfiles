@@ -61,6 +61,9 @@ if [[ "$SHELL" != "*zsh" ]]; then
   fi
 fi
 
+# install markdown formatter plugins
+pip3 install mdformat-tables mdformat-frontmatter
+
 # install optional neovim provider
 # Python provider for neovim is required for plugins written in python
 pip3 install neovim
