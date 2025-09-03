@@ -29,7 +29,6 @@ return {
 			javascript = { "prettier" },
 			json = { "jq" },
 			lua = { "stylua" },
-			markdown = { "prettier" },
 			php = { "php_cs_fixer" },
 			python = { "ruff" },
 			sh = { "shfmt" },
