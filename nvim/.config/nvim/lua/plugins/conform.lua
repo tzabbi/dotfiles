@@ -56,7 +56,6 @@ return {
 			},
 			prettier = {
 				command = "prettier",
-				args = { "--stdin-filepath", "%" }, -- important, prettier detects the filetype
 				stdin = true,
 			},
 		},
