@@ -2,6 +2,10 @@ vim.lsp.config("tofu_ls", {
 	filetypes = { "terraform", "terraform-vars" },
 })
 
+vim.lsp.config("gitlab_ci_ls", {
+	filetypes = { "yaml" },
+})
+
 vim.lsp.config("gopls", {
 	settings = {
 		gopls = {
