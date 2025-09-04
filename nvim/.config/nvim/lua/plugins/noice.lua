@@ -29,13 +29,14 @@ return {
 		},
 		routes = {
 			{
-			    filter = {
-			      event = "msg_show",
-			      find = "failed to execute 'kubectl get --raw /openapi/v2'",
-			    },
-			    opts = { skip = true }, -- Überspringt die Anzeige dieser Nachricht
-			  },
+				filter = {
+					event = "msg_show",
+					find = "failed to execute 'kubectl get --raw /openapi/v2'",
+				},
+				opts = { skip = true }, -- skips display notification
+			},
 		},
+	},
 	dependencies = {
 		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 		"MunifTanjim/nui.nvim",
