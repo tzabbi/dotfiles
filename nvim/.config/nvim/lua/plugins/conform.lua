@@ -37,7 +37,6 @@ return {
 			sqlfluff = { "sqlfluff" },
 			terraform = { "tofu_fmt" },
 			tofu = { "tofu_fmt" }, -- this is a function from conform directly
-			yaml = { "prettier" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
