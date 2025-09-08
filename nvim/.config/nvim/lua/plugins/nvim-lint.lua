@@ -2,11 +2,7 @@ return {
 	{
 		"mfussenegger/nvim-lint",
 		-- no version available
-		event = {
-			"BufReadPre",
-			"BufNewFile",
-			"InsertLeave",
-		},
+		event = "BufReadPost",
 		config = function()
 			local lint = require("lint")
 
