@@ -20,7 +20,6 @@ source <(helm completion bash)
 source <(kustomize completion bash)
 alias k=kubectl
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
-alias docker=podman
 
 # add Oh-my-Posh
 command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/config.toml)"
