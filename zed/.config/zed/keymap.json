@@ -1,11 +1,24 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
 [
   {
+    "context": "Workspace",
     "bindings": {
-      "ctrl-shift-j": "terminal_panel::ToggleFocus",
+      "ctrl-alt-l": "projects::OpenRecent"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
       "alt-shift-up": "editor::DuplicateLineUp",
       "alt-shift-down": "editor::DuplicateLineDown",
       "ctrl-d": "editor::SelectNext",
-      "ctrl-alt-l": "projects::OpenRecent",
       "ctrl-alt-a": "editor::SelectAll",
       "ctrl-alt-s": "editor::ConvertIndentationToSpaces",
       "ctrl-alt-t": "editor::ConvertIndentationToTabs"
