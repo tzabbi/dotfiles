@@ -23,5 +23,17 @@
       "ctrl-alt-s": "editor::ConvertIndentationToSpaces",
       "ctrl-alt-t": "editor::ConvertIndentationToTabs"
     }
+  },
+  {
+    "context": "Editor",
+      "bindings": {
+      "space g l": "editor::CopyPermalinkToLine"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "space g o": "editor::OpenPermalinkToLine"
+    }
   }
 ]
