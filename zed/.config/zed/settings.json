@@ -41,6 +41,7 @@
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
+    "comment": true,
     "docker-compose": true,
     "dockerfile": true,
     "env": true,
