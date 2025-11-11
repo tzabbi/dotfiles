@@ -115,7 +115,9 @@
       "**/helmfile.d/**/*.yaml",
       "**/helmfile.d/**/*.yml"
     ],
-    "Dockerfile": ["Dockerfile.*"]
+    "Dockerfile": ["Dockerfile.*"],
+    "OpenTofu": ["tf"],
+    "OpenTofu Vars": ["tfvars"]
   },
   "lsp": {
     "ansible-language-server": {
