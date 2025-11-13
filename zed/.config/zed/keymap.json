@@ -27,13 +27,13 @@
   {
     "context": "Editor",
       "bindings": {
-      "space g l": "editor::CopyPermalinkToLine"
+      "ctrl-g ctrl-l": "editor::CopyPermalinkToLine"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      "space g o": "editor::OpenPermalinkToLine"
+      "ctrl-g ctrl-o": "editor::OpenPermalinkToLine"
     }
   }
 ]
