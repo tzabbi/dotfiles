@@ -37,11 +37,75 @@
   },
   "cursor_shape": "bar",
   "disable_ai": true,
+  "wsl_connections": [
+    {
+      "distro_name": "FedoraLinux-42",
+      "user": null,
+      "projects": [
+        {
+          "paths": ["/home/tom_zaspel"]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents"]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/devops/./"]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/devops/Gitlab/monitoring/runner"
+          ]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/devops/Gitlab/onprem"]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/devops/aws/vault"]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/devops/container-images/app-argocd-plugins"
+          ]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/devops/joypaas/cluster"]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/devops/joypaas/helm-charts/./"
+          ]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/devops/templates/continuous-environment"
+          ]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/jc-universe"]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/jc-universe/async/message-queue-iac"
+          ]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/jc-web/identity-com"]
+        },
+        {
+          "paths": ["/home/tom_zaspel/Documents/gitlab/jc-web/joyclub-com"]
+        },
+        {
+          "paths": [
+            "/home/tom_zaspel/Documents/gitlab/jc-web/quality-assurance/joyclub-e2e-tests"
+          ]
+        }
+      ]
+    }
+  ],
   "icon_theme": "Zed (Default)",
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
-    "comment": true,
     "docker-compose": true,
     "dockerfile": true,
     "env": true,
@@ -99,12 +163,25 @@
     "light": "Ayu Mirage",
     "dark": "One Dark"
   },
+  "theme_overrides": {
+    "One Dark": {
+      "syntax": {
+        "constant.comment.todo": {
+          "color": "#00000000",
+          "background_color": "#4078f2ff"
+        }
+      }
+    }
+  },
   "minimap": {
     "show": "auto"
   },
   "languages": {
     "Go": {
       "hard_tabs": false
+    },
+    "YAML": {
+      "formatter": "language_server"
     }
   },
   "file_types": {
@@ -153,13 +230,31 @@
         }
       }
     },
+    "helm_ls": {
+      "settings": {
+        "helm-ls": {
+          "logLevel": "info",
+          "yamlls": {
+            "enabled": true
+          }
+        }
+      }
+    },
     "yaml-language-server": {
       "settings": {
-        "yaml": {
-          "customTags": ["!reference sequence"],
-          "schemas": {
-            "kubernetes": ["*.yaml", "*.yml"]
+        "redhat": {
+          "telemetry": {
+            "enabled": false
           }
+        },
+        "yaml": {
+          "format": {
+            "enable": true,
+            "singleQuote": true,
+            "printWidth": 120,
+            "bracketSpacing": false
+          },
+          "customTags": ["!reference sequence"]
         }
       }
     }
