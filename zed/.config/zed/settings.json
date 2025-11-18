@@ -177,6 +177,14 @@
         }
       }
     },
+    "tflint": {
+      "initialization_options": {
+        "command": [
+          "tflint",
+          "--langserver"
+        ]
+      }
+    },
     "yaml-language-server": {
       "settings": {
         "redhat": {
