@@ -63,6 +63,7 @@
     "ruby": true,
     "scheme": true,
     "sql": true,
+    "tflint": true,
     "toml": true,
     "tmux": true,
     "xml": true
