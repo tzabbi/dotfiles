@@ -35,5 +35,10 @@
     "bindings": {
       "ctrl-g ctrl-o": "editor::OpenPermalinkToLine"
     }
-  }
+  },
+  {
+    "bindings": {
+      "shift-y": "vim::YankToEndOfLine"
+    }
+  },
 ]
