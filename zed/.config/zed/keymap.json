@@ -37,8 +37,21 @@
     }
   },
   {
-    "bindings": {
+    "context": "vim_mode == normal",
+      "bindings": {
       "shift-y": "vim::YankToEndOfLine"
     }
   },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "y y": "vim::YankLine"
+    }
+  },
+  {
+    "context": "((vim_mode == normal || vim_mode == helix_normal) && !menu)",
+    "bindings": {
+      "y y": "vim::YankLine"
+    }
+  }
 ]
