@@ -43,7 +43,7 @@ zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
 # Update zinit
-zinit self-update >/dev/null 2>&1
+# zinit self-update >/dev/null 2>&1
 
 # Remove "zi" alias for default zoxide alias to work
 unalias zi
