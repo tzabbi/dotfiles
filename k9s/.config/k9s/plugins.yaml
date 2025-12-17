@@ -109,3 +109,15 @@ plugins:
       - '{"metadata":{"finalizers":null}}'
       - --type
       - merge
+  node-debug:
+    shortCut: Shift-D
+    description: Start Node Debug Container
+    dangerous: true
+    scopes:
+      - nodes
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - "kubectl debug node/$NAME -it --image=ubuntu --profile=sysadmin -- bash"
