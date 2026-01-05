@@ -42,11 +42,13 @@ echo "Removing nvim config"
 rm "$HOME/.config/nvim"
 
 for dir in */; do
-  if [[ "$dir" != "lazyvim/" ]]; then
+  if [[ "$dir" != "freecad/" ]]; then
     echo "Creating link for  $dir ..."
     stow "$(basename "$dir")"
   fi
 done
+
+ln -s ~/dotfiles/freecad/.var/app/org.freecadweb.FreeCAD/config/FreeCAD/user.cfg ~/.var/app/org.freecad.FreeCAD/config/FreeCAD/user.cfg
 
 if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)" == "/home/linuxbrew/.linuxbrew/bin/git" && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
   echo "Uninstalling curl and git..."
