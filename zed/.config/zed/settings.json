@@ -42,6 +42,7 @@
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
+    "biome": true,
     "color-highlight": true,
     "docker-compose": true,
     "dockerfile": true,
@@ -50,6 +51,8 @@
     "gitlab-ci-ls": true,
     "glsl": true,
     "golangci-lint": true,
+    "gosum": true,
+    "graphql": true,
     "groovy": true,
     "helm": true,
     "html": true,
