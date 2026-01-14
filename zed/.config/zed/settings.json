@@ -9,32 +9,32 @@
 {
   "colorize_brackets": true,
   "git_panel": {
-    "button": false
+    "button": false,
   },
   "preview_tabs": {
+    "enable_keep_preview_on_code_navigation": false,
     "enable_preview_from_file_finder": false,
-    "enable_preview_from_code_navigation": false
   },
   "use_system_window_tabs": false,
   "tab_bar": {
     "show": true,
-    "show_nav_history_buttons": false
+    "show_nav_history_buttons": false,
   },
   "tabs": {
     "file_icons": false,
-    "git_status": true
+    "git_status": true,
   },
   "debugger": {
-    "button": true
+    "button": true,
   },
   "diagnostics": {
     "inline": {
-      "enabled": true
-    }
+      "enabled": true,
+    },
   },
   "indent_guides": {
     "background_coloring": "disabled",
-    "coloring": "indent_aware"
+    "coloring": "indent_aware",
   },
   "cursor_shape": "bar",
   "disable_ai": true,
@@ -67,31 +67,31 @@
     "tflint": true,
     "toml": true,
     "tmux": true,
-    "xml": true
+    "xml": true,
   },
   "outline_panel": {
     "button": false,
-    "dock": "right"
+    "dock": "right",
   },
   "notification_panel": {
-    "button": false
+    "button": false,
   },
   "project_panel": {
     "hide_hidden": false,
     "hide_root": false,
     "indent_guides": {
-      "show": "always"
+      "show": "always",
     },
     "hide_gitignore": false,
-    "dock": "right"
+    "dock": "right",
   },
   "base_keymap": "VSCode",
   "features": {
-    "edit_prediction_provider": "none"
+    "edit_prediction_provider": "none",
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "vim_mode": true,
   "ui_font_size": 16,
@@ -99,28 +99,28 @@
   "theme": {
     "mode": "system",
     "light": "Ayu Mirage",
-    "dark": "One Dark"
+    "dark": "One Dark",
   },
   "theme_overrides": {
     "One Dark": {
       "syntax": {
         "constant.comment.todo": {
           "color": "#00000000",
-          "background_color": "#4078f2ff"
-        }
-      }
-    }
+          "background_color": "#4078f2ff",
+        },
+      },
+    },
   },
   "minimap": {
-    "show": "auto"
+    "show": "auto",
   },
   "languages": {
     "Go": {
-      "hard_tabs": false
+      "hard_tabs": false,
     },
     "YAML": {
-      "formatter": "language_server"
-    }
+      "formatter": "language_server",
+    },
   },
   "file_types": {
     "Helm": [
@@ -128,32 +128,32 @@
       "**/templates/**/*.yaml",
       "**/templates/**/*.yml",
       "**/helmfile.d/**/*.yaml",
-      "**/helmfile.d/**/*.yml"
+      "**/helmfile.d/**/*.yml",
     ],
     "Dockerfile": ["Dockerfile.*"],
     "OpenTofu": ["tf"],
-    "OpenTofu Vars": ["tfvars"]
+    "OpenTofu Vars": ["tfvars"],
   },
   "lsp": {
-    "ansible-language-server": {
+    "ansible": {
       "settings": {
         "ansible": {
-          "path": "ansible"
+          "path": "ansible",
         },
         "executionEnvironment": {
-          "enabled": false
+          "enabled": false,
         },
         "python": {
-          "interpreterPath": "python3"
+          "interpreterPath": "python3",
         },
         "validation": {
           "enabled": true,
           "lint": {
             "enabled": true,
-            "path": "ansible-lint"
-          }
-        }
-      }
+            "path": "ansible-lint",
+          },
+        },
+      },
     },
     "gopls": {
       "initialization_options": {
@@ -164,59 +164,59 @@
           "constantValues": true,
           "functionTypeParameters": true,
           "parameterNames": true,
-          "rangeVariableTypes": true
-        }
-      }
+          "rangeVariableTypes": true,
+        },
+      },
     },
-    "helm_ls": {
+    "helm": {
       "settings": {
         "helm-ls": {
           "logLevel": "info",
           "yamlls": {
-            "enabled": true
-          }
-        }
-      }
+            "enabled": true,
+          },
+        },
+      },
     },
     "tflint": {
       "initialization_options": {
-        "command": ["tflint", "--langserver"]
-      }
+        "command": ["tflint", "--langserver"],
+      },
     },
     "yaml-language-server": {
       "settings": {
         "redhat": {
           "telemetry": {
-            "enabled": false
-          }
+            "enabled": false,
+          },
         },
         "yaml": {
           "format": {
             "enable": true,
             "singleQuote": true,
             "printWidth": 120,
-            "bracketSpacing": false
+            "bracketSpacing": false,
           },
-          "customTags": ["!reference sequence"]
-        }
-      }
-    }
+          "customTags": ["!reference sequence"],
+        },
+      },
+    },
   },
   "terminal": {
     "toolbar": {
-      "breadcrumbs": false
+      "breadcrumbs": false,
     },
     "shell": "system",
     "env": {
       "LANG": "C.UTF-8",
-      "LC_ALL": "C.UTF-8"
+      "LC_ALL": "C.UTF-8",
     },
     "font_family": "JetBrainsMonoNL Nerd Font",
     "scrollbar": {
-      "show": "auto"
-    }
+      "show": "auto",
+    },
   },
-  "relative_line_numbers": false,
+  "relative_line_numbers": "disabled",
   "autosave": "on_focus_change",
   "format_on_save": "on",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font",
@@ -229,55 +229,55 @@
   "soft_wrap": "editor_width",
   "git": {
     "branch_picker": {
-      "show_author_name": true
+      "show_author_name": true,
     },
     "blame": {
-      "show_avatar": true
+      "show_avatar": true,
     },
     "git_gutter": "tracked_files",
     "gutter_debounce": 4,
     "inline_blame": {
-      "show_commit_summary": false
-    }
+      "show_commit_summary": false,
+    },
   },
   "title_bar": {
     "show_menus": false,
     "show_sign_in": false,
     "show_branch_icon": true,
-    "show_branch_name": true
+    "show_branch_name": true,
   },
   "collaboration_panel": {
-    "button": false
+    "button": false,
   },
   "search": {
-    "button": false
+    "button": false,
   },
   "agent": {
     "play_sound_when_agent_done": true,
     "default_model": {
       "provider": "openai",
-      "model": "gpt-4o"
+      "model": "gpt-4o",
     },
-    "button": false
+    "button": false,
   },
   "active_pane_modifiers": {
     "border_size": 2.0,
-    "inactive_opacity": 0.45
+    "inactive_opacity": 0.45,
   },
   "vim": {
     "cursor_shape": {
       "normal": "block",
       "insert": "bar",
       "replace": "hollow",
-      "visual": "underline"
-    }
+      "visual": "underline",
+    },
   },
   "hide_mouse": "on_typing_and_movement",
   "inlay_hints": {
     "show_background": true,
-    "enabled": true
+    "enabled": true,
   },
   "journal": {
-    "hour_format": "hour24"
-  }
+    "hour_format": "hour24",
+  },
 }
