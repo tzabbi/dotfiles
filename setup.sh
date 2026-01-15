@@ -18,10 +18,10 @@ echo "🚀 Start setup for: $OS"
 echo "📦 Install system dependencies..."
 case "$OS" in
     ubuntu|debian)
-        sudo apt update && sudo apt install -y build-essential stow git
+        sudo apt update && sudo apt install -y build-essential stow git libssl-dev
         ;;
     fedora)
-        sudo dnf group install development-tools && sudo dnf install -y stow git curl
+        sudo dnf group install development-tools && sudo dnf install -y stow git curl openssl-devel
         ;;
 esac
 
