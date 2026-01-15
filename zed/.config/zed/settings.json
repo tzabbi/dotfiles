@@ -24,6 +24,10 @@
     "file_icons": false,
     "git_status": true,
   },
+  "which_key": {
+    "enabled": true,
+    "delay_ms": 300,
+  },
   "debugger": {
     "button": true,
   },
@@ -120,6 +124,16 @@
   "languages": {
     "Go": {
       "hard_tabs": false,
+    },
+    "Plain Text": {
+      "completions": {
+        "words": "enabled",
+      },
+    },
+    "Markdown": {
+      "completions": {
+        "words": "enabled",
+      },
     },
     "YAML": {
       "formatter": "language_server",
