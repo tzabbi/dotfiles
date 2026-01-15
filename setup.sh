@@ -21,7 +21,7 @@ case "$OS" in
         sudo apt update && sudo apt install -y build-essential stow git
         ;;
     fedora)
-        sudo dnf group install -y "Development Tools" && sudo dnf install -y stow git curl
+        sudo dnf group install development-tools && sudo dnf install -y stow git curl
         ;;
 esac
 
