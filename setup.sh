@@ -1,77 +1,97 @@
 #!/bin/bash
 
-# if [[ ! command -v curl >/dev/null 2>&1 && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
-#   echo "installing curl"
-#   sudo apt update && sudo apt install -y curl
-# fi
+set -e
 
-# install homebrew if not installed
-if [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  echo "Installing and configuring brew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo >>"$HOME/.bashrc"
-  echo "eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>"$HOME/.bashrc"
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  brew install gcc
-  if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" ]]; then
-    sudo apt-get install -y build-essential stow
-  fi
-  if [[ "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "fedora" ]]; then
-    sudo dnf group install development-tools stow
-  fi
+# determine linux distro
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$ID
+else
+    OS=$(uname -s)
 fi
 
-brew bundle --file ./brew/Brewfile
+BREW_PATH="/home/linuxbrew/.linuxbrew/bin/brew"
+DOTFILES_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
+
+echo "🚀 Start setup for: $OS"
+
+# install homebrew if not installed
+if [[ ! -f "$BREW_PATH" ]]; then
+    echo "🍺 Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    echo "eval $($BREW_PATH shellenv)" >>"$HOME/.bashrc"
+    eval "$($BREW_PATH shellenv)"
+    brew install gcc
+else
+    eval "$($BREW_PATH shellenv)"
+fi
+
+echo "📦 Install system dependencies..."
+case "$OS" in
+    ubuntu|debian)
+        sudo apt update && sudo apt install -y build-essential stow git
+        ;;
+    fedora)
+        sudo dnf group install -y "Development Tools" && sudo dnf install -y stow git curl
+        ;;
+esac
+
+
+if [ -f "$DOTFILES_DIR/brew/Brewfile" ]; then
+    brew bundle --file "$DOTFILES_DIR/brew/Brewfile"
+fi
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
-  echo "Installing tmux plugin manager..."
+  echo "🪟 Installing tmux plugin manager..."
   git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
-if ! grep -wq "path = ./.dotfiles_gitconfig" "$HOME/.gitconfig"; then
-  printf "[include]\n    path = ./.dotfiles_gitconfig" >>"$HOME/.gitconfig"
+if [ -f "$HOME/.gitconfig" ] && ! grep -q ".dotfiles_gitconfig" "$HOME/.gitconfig"; then
+    echo "📝 add .gitconfig..."
+    git config --global include.path "../.dotfiles_gitconfig"
 fi
 
-scriptdirectory=$(cd -- "$(dirname -- "$0")" && pwd)
-cd "$scriptdirectory" || exit
+cd "$DOTFILES_DIR" | exit
 
-echo "Removing .bashrc"
-rm "$HOME/.bashrc"
-
-echo "Removing nvim config"
-rm "$HOME/.config/nvim"
+echo "🔗 Createting Symlinks with GNU Stow..."
+[ -f "$HOME/.bashrc" ] && [ ! -L "$HOME/.bashrc" ] && rm "$HOME/.bashrc"
+[ -d "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ] && rm -rf "$HOME/.config/nvim"
 
 for dir in */; do
-  if [[ "$dir" != "freecad/" ]]; then
-    echo "Creating link for  $dir ..."
-    stow "$(basename "$dir")"
-  fi
+    dir=${dir%/}
+    if [[ "$dir" != "freecad" && "$dir" != "brew" && "$dir" != ".git" ]]; then
+        echo "   Stowing $dir"
+        stow "$dir"
+    fi
 done
 
-ln -s ~/dotfiles/freecad/.var/app/org.freecadweb.FreeCAD/config/FreeCAD/user.cfg ~/.var/app/org.freecad.FreeCAD/config/FreeCAD/user.cfg
+FREECAD_TARGET="$HOME/.var/app/org.freecad.FreeCAD/config/FreeCAD/user.cfg"
+FREECAD_SOURCE="$DOTFILES_DIR/freecad/.var/app/org.freecadweb.FreeCAD/config/FreeCAD/user.cfg"
 
-if [[ "$(which curl)" == "/home/linuxbrew/.linuxbrew/bin/curl" && "$(which git)" == "/home/linuxbrew/.linuxbrew/bin/git" && ("$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "debian" || "$(grep "^ID=" /etc/os-release | cut -d "=" -f 2)" == "ubuntu") ]]; then
-  echo "Uninstalling curl and git..."
-  sudo sudo apt remove -y curl git
+if [ -f "$FREECAD_SOURCE" ]; then
+    mkdir -p "$(dirname "$FREECAD_TARGET")"
+    ln -sf "$FREECAD_SOURCE" "$FREECAD_TARGET"
+fi
+
+if [[ "$GIT_BIN" == "/home/linuxbrew/.linuxbrew/bin/git" ]]; then
+  echo "🧹 removing sytem git since we are using brew installed git ..."
+  if [[ "$OS" == "debian" || "$OS" == "ubuntu" ]]; then
+    sudo apt remove -y git
+    sudo apt autoremove -y
+  elif [[ "$OS" == "fedora" ]]; then
+    sudo dnf remove git
+  fi
 fi
 
 # set zsh as default shell
-if [[ "$SHELL" != "*zsh" ]]; then
-  if ! grep -q "/home/linuxbrew/.linuxbrew/bin/zsh" /etc/shells; then
-    sudo bash -c 'echo "/home/linuxbrew/.linuxbrew/bin/zsh" >> /etc/shells'
-    chsh -s "$(which zsh)"
-  fi
+ZSH_PATH=$(command -v zsh)
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    echo "🐚 change default shell to zsh..."
+    if ! grep -q "$ZSH_PATH" /etc/shells; then
+        sudo bash -c "echo $ZSH_PATH >> /etc/shells"
+    fi
+    chsh -s "$ZSH_PATH"
 fi
 
-# install markdown formatter plugins
-# pip3 install mdformat-tables mdformat_frontmatter
-
-# install optional neovim provider
-# Python provider for neovim is required for plugins written in python
-# pip3 install neovim
-
-# Node.js provider for neovim is required for plugins written in JavaScript/TypeScript
-# npm install -g neovim
-
-# Ruby provider for neovim is required for plugins written in Ruby
-# gem install neovim
+echo "✅ Setup finished!"
