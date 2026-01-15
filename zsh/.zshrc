@@ -127,6 +127,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# Disable brew analytics
+export HOMEBREW_NO_ANALYTICS=1
+
 # For nvim
 # link Luarocks to LuaJIT
 export LUA_DIR="$(brew --prefix luajit)"
