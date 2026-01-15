@@ -10,6 +10,8 @@ export PS1='\[\e[0;1;38;5;34m\]\u\[\e[0;1;38;5;34m\]@\[\e[0;1;38;5;34m\]\h\[\e[0
 export GOPATH="$HOME/go"
 export PATH="/home/tom/.cargo/bin/cargo:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.local/share/JetBrains/Toolbox/scripts:$HOME/.kubescape/bin:/home/linuxbrew/.linuxbrew/bin:${KREW_ROOT:-$HOME/.krew}/bin:$GOPATH/bin"
 export BAT_THEME="OneHalfLight"
+# Disable brew analytics
+export HOMEBREW_NO_ANALYTICS=1
 source <(kubectl completion bash)
 complete -o default -F __start_kubectl k
 complete -C '/home/linuxbrew/.linuxbrew/bin/aws_completer' aws
