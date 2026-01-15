@@ -21,7 +21,7 @@ case "$OS" in
         sudo apt update && sudo apt install -y build-essential stow git libssl-dev
         ;;
     fedora)
-        sudo dnf group install development-tools && sudo dnf install -y stow git curl openssl-devel
+        sudo dnf group install development-tools && sudo dnf install -y stow git curl openssl-devel dbus-daemon dbus-x11
         ;;
 esac
 
