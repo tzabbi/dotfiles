@@ -92,6 +92,10 @@ if [[ -f "/opt/homebrew/bin/brew" ]] ; then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+
+
 compdef kubecolor=kubectl
 if docker --version >/dev/null 2>&1; then
   eval "$(docker completion zsh)"
