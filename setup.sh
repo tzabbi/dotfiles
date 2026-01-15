@@ -22,6 +22,7 @@ if [[ ! -f "$BREW_PATH" ]]; then
     
     echo "eval $($BREW_PATH shellenv)" >>"$HOME/.bashrc"
     eval "$($BREW_PATH shellenv)"
+    brew analytics off
     brew install gcc
 else
     eval "$($BREW_PATH shellenv)"
