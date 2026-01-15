@@ -30,8 +30,7 @@ if [[ ! -f "$BREW_PATH" ]]; then
     echo "🍺 Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
-    echo "eval $($BREW_PATH shellenv)" >>"$HOME/.bashrc"
-    eval "$($BREW_PATH shellenv)"
+    eval "$($BREW_PATH shellenv bash)"
     brew analytics off
     brew install gcc
 else
