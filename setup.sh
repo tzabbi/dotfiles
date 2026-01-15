@@ -15,6 +15,16 @@ DOTFILES_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
 
 echo "🚀 Start setup for: $OS"
 
+echo "📦 Install system dependencies..."
+case "$OS" in
+    ubuntu|debian)
+        sudo apt update && sudo apt install -y build-essential stow git
+        ;;
+    fedora)
+        sudo dnf group install -y "Development Tools" && sudo dnf install -y stow git curl
+        ;;
+esac
+
 # install homebrew if not installed
 if [[ ! -f "$BREW_PATH" ]]; then
     echo "🍺 Installing Homebrew..."
@@ -27,17 +37,6 @@ if [[ ! -f "$BREW_PATH" ]]; then
 else
     eval "$($BREW_PATH shellenv)"
 fi
-
-echo "📦 Install system dependencies..."
-case "$OS" in
-    ubuntu|debian)
-        sudo apt update && sudo apt install -y build-essential stow git
-        ;;
-    fedora)
-        sudo dnf group install -y "Development Tools" && sudo dnf install -y stow git curl
-        ;;
-esac
-
 
 if [ -f "$DOTFILES_DIR/brew/Brewfile" ]; then
     brew bundle --file "$DOTFILES_DIR/brew/Brewfile"
