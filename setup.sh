@@ -25,6 +25,11 @@ case "$OS" in
         ;;
 esac
 
+if [[ ! -d $HOME/Documents ]]; then
+    echo "Creating Documents dir..."
+    mkdir $HOME/Documents
+fi
+
 # install homebrew if not installed
 if [[ ! -f "$BREW_PATH" ]]; then
     echo "🍺 Installing Homebrew..."
