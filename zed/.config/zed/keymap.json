@@ -53,5 +53,15 @@
     "bindings": {
       "y y": "vim::YankLine"
     }
-  }
+  },
+  {
+    "context": "Workspace || Dock",
+    "bindings": {
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-j": "workspace::ActivatePaneDown",
+      "alt-k": "workspace::ActivatePaneUp",
+      "alt-l": "workspace::ActivatePaneRight",
+      "alt-o": "workspace::CloseAllDocks",
+    },
+  },
 ]
