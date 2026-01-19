@@ -9,8 +9,9 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-alt-l": "projects::OpenRecent"
-    }
+      "ctrl-alt-l": "projects::OpenRecent",
+      "ctrl-/": "terminal_panel::Toggle",
+    },
   },
   {
     "context": "Editor && vim_mode == insert",
@@ -21,38 +22,23 @@
       "ctrl-d": "editor::SelectNext",
       "ctrl-alt-a": "editor::SelectAll",
       "ctrl-alt-s": "editor::ConvertIndentationToSpaces",
-      "ctrl-alt-t": "editor::ConvertIndentationToTabs"
-    }
-  },
-  {
-    "context": "Editor",
-      "bindings": {
-      "ctrl-g ctrl-l": "editor::CopyPermalinkToLine"
-    }
+      "ctrl-alt-t": "editor::ConvertIndentationToTabs",
+    },
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-g ctrl-o": "editor::OpenPermalinkToLine"
-    }
-  },
-  {
-    "context": "vim_mode == normal",
-      "bindings": {
-      "shift-y": "vim::YankToEndOfLine"
-    }
-  },
-  {
-    "context": "vim_mode == normal",
-    "bindings": {
-      "y y": "vim::YankLine"
-    }
+      "ctrl-g ctrl-o": "editor::OpenPermalinkToLine",
+      "ctrl-g ctrl-l": "editor::CopyPermalinkToLine",
+      "ctrl-/": null,
+    },
   },
   {
     "context": "((vim_mode == normal || vim_mode == helix_normal) && !menu)",
     "bindings": {
-      "y y": "vim::YankLine"
-    }
+      "shift-y": "vim::YankToEndOfLine",
+      "y y": "vim::YankLine",
+    },
   },
   {
     "context": "Workspace || Dock",
