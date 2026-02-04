@@ -41,7 +41,7 @@
     "coloring": "indent_aware",
   },
   "cursor_shape": "bar",
-  "disable_ai": true,
+  "disable_ai": false,
   "icon_theme": "Zed (Default)",
   "auto_install_extensions": {
     "ansible": true,
@@ -274,11 +274,23 @@
     "button": false,
   },
   "agent": {
+<<<<<<< HEAD
+||||||| parent of c51e6fe (feat: add ki in zed)
+    "play_sound_when_agent_done": true,
+=======
+    "always_allow_tool_actions": true,
+    "play_sound_when_agent_done": true,
+>>>>>>> c51e6fe (feat: add ki in zed)
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
     },
+<<<<<<< HEAD
     "play_sound_when_agent_done": true,
+||||||| parent of c51e6fe (feat: add ki in zed)
+    "button": false,
+=======
+>>>>>>> c51e6fe (feat: add ki in zed)
     "button": true,
   },
   "edit_predictions": {
