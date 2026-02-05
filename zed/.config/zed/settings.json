@@ -93,9 +93,6 @@
     "dock": "right",
   },
   "base_keymap": "VSCode",
-  "features": {
-    "edit_prediction_provider": "none",
-  },
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
@@ -270,12 +267,12 @@
     "button": false,
   },
   "agent": {
-    "play_sound_when_agent_done": true,
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-4o",
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
     },
-    "button": false,
+    "play_sound_when_agent_done": true,
+    "button": true,
   },
   "active_pane_modifiers": {
     "border_size": 2.0,
