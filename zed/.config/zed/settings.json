@@ -274,6 +274,10 @@
     "play_sound_when_agent_done": true,
     "button": true,
   },
+  "edit_predictions": {
+    "provider": "none"
+  },
+  "show_edit_predictions": false,
   "active_pane_modifiers": {
     "border_size": 2.0,
     "inactive_opacity": 0.45,
