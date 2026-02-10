@@ -61,7 +61,7 @@ if [[ ! -f "$COMP_DUMPFILE" ]]; then
     command -v kubectl >/dev/null && kubectl completion zsh
     command -v talosctl >/dev/null && talosctl completion zsh
     command -v trivy >/dev/null && trivy completion zsh
-    command -v tofu >/dev/null && complete -C "$(which tofu)" tofu
+    command -v tofu >/dev/null && complete -o nospace -C "$(which tofu)" tofu && complete -o nospace -C "$(which tofu)" t
   } > "$COMP_DUMPFILE"
 fi
 source "$COMP_DUMPFILE"
