@@ -29,12 +29,7 @@ zinit ice wait'0' lucid
 zinit light Aloxaf/fzf-tab
 
 # OMZ Snippets (Lazy loaded)
-zinit ice wait'1' lucid; zinit snippet OMZP::git
 zinit ice wait'1' lucid; zinit snippet OMZP::sudo
-zinit ice wait'1' lucid; zinit snippet OMZP::archlinux
-zinit ice wait'1' lucid; zinit snippet OMZP::aws
-zinit ice wait'1' lucid; zinit snippet OMZP::kubectl
-zinit ice wait'1' lucid; zinit snippet OMZP::kubectx
 zinit ice wait'1' lucid; zinit snippet OMZP::command-not-found
 
 # --- COMPLETION SYSTEM ---
