@@ -65,6 +65,7 @@
     "log": true,
     "lua": true,
     "make": true,
+    "markdownlint": true,
     "marksman": true,
     "opentofu": true,
     "php": true,
