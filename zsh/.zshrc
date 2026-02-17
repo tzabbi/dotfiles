@@ -6,6 +6,13 @@ export HOMEBREW_NO_ANALYTICS=1
 if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
   export QT_QPA_PLATFORM=wayland
 fi
+# --- BREW ---
+# Handling Linux/Mac in one block efficiently
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 # Edit PATH variable
 export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/"
@@ -66,14 +73,6 @@ source "$COMP_DUMPFILE"
 if docker --version >/dev/null 2>&1; then
   source <(docker completion zsh)
   compdef _docker d
-fi
-
-# --- BREW ---
-# Handling Linux/Mac in one block efficiently
-if [[ -f "/opt/homebrew/bin/brew" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # --- STYLES & CONFIG ---
