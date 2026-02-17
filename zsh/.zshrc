@@ -65,7 +65,7 @@ source "$COMP_DUMPFILE"
 
 if docker --version >/dev/null 2>&1; then
   source <(docker completion zsh)
-  complete -F __start_docker d
+  compdef _docker d
 fi
 
 # --- BREW ---
