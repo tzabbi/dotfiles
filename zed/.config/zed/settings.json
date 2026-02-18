@@ -212,6 +212,12 @@
             "printWidth": 120,
             "bracketSpacing": false,
           },
+          "schemaStore": {
+            "enable": true,
+          },
+          "kubernetesCRDStore": {
+            "enable": true,
+          },
           "customTags": ["!reference sequence"],
         },
       },
