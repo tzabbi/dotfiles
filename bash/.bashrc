@@ -32,3 +32,5 @@ command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config $
 #  exec tmux
 #fi
 . "$HOME/.cargo/env"
+
+complete -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu

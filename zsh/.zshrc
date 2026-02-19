@@ -61,9 +61,9 @@ if [[ ! -f "$COMP_DUMPFILE" ]]; then
   {
     command -v helm >/dev/null && helm completion zsh
     command -v kubectl >/dev/null && kubectl completion zsh
-    command -v npm && npm completion
+    command -v npm >/dev/null && npm completion -- zsh
     command -v talosctl >/dev/null && talosctl completion zsh
-    command -v tofu >/dev/null && complete -o nospace -C "$(which tofu)" tofu && complete -o nospace -C "$(which tofu)" t
+    command -v tofu >/dev/null && tofu -install-autocomplete
     command -v trivy >/dev/null && trivy completion zsh
 
   } > "$COMP_DUMPFILE"
@@ -109,6 +109,7 @@ compdef kubecolor=kubectl
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
+alias t="tofu"
 alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 alias fix-zsh-history="$HOME/Documents/scripts/fix-zsh-history.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
@@ -143,3 +144,6 @@ fi
 # Lua config (slow call, consider caching path if possible)
 export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
