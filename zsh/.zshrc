@@ -1,4 +1,3 @@
-
 # --- PATH & CORE VARS ---
 export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty)
@@ -29,7 +28,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice wait'0' lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait'0' lucid
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait'0' lucid
