@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "github-copilot": {
+      "type": "registry"
+    }
+  },
   "colorize_brackets": true,
   "git_panel": {
     "button": false,
@@ -274,27 +279,18 @@
     "button": false,
   },
   "agent": {
-<<<<<<< HEAD
-||||||| parent of c51e6fe (feat: add ki in zed)
+    "tool_permissions": {
+      "default": "allow",
+    },
     "play_sound_when_agent_done": true,
-=======
-    "always_allow_tool_actions": true,
-    "play_sound_when_agent_done": true,
->>>>>>> c51e6fe (feat: add ki in zed)
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-4.1",
     },
-<<<<<<< HEAD
-    "play_sound_when_agent_done": true,
-||||||| parent of c51e6fe (feat: add ki in zed)
-    "button": false,
-=======
->>>>>>> c51e6fe (feat: add ki in zed)
     "button": true,
   },
   "edit_predictions": {
-    "provider": "none"
+    "provider": "none",
   },
   "show_edit_predictions": false,
   "active_pane_modifiers": {
