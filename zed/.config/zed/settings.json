@@ -47,6 +47,7 @@
     "ansible": true,
     "basher": true,
     "biome": true,
+    "caddyfile": true,
     "color-highlight": true,
     "docker-compose": true,
     "dockerfile": true,
@@ -75,6 +76,7 @@
     "tflint": true,
     "toml": true,
     "tmux": true,
+    "vue": true,
     "xml": true,
   },
   "outline_panel": {
