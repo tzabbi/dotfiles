@@ -6,4 +6,18 @@
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
   },
+  {
+    "label": "Television Text Finder",
+    "command": "zed \"$(tv text)\"",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+  },
+  {
+    "label": "Television GitRepo Finder",
+    "command": "zed \"$(tv git-repos)\"",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+  },
 ]

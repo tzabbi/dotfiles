@@ -54,8 +54,16 @@
     "bindings": {
       "ctrl-p": [
         "task::Spawn",
-        { "task_name": "Television File Finder", "reveal_target": "center" }
-      ]
-    }
-  }
+        { "task_name": "Television File Finder", "reveal_target": "center" },
+      ],
+      // "ctrl-space-f": [
+      //   "task::Spawn",
+      //   { "task_name": "Television Text Finder", "reveal_target": "center" },
+      // ],
+      // "ctrl-space-g": [
+      //   "task::Spawn",
+      //   { "task_name": "Television GitRepo Finder", "reveal_target": "center" },
+      // ],
+    },
+  },
 ]
