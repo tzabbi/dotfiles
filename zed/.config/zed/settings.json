@@ -9,11 +9,11 @@
 {
   "agent_servers": {
     "github-copilot-cli": {
-      "type": "registry"
+      "type": "registry",
     },
     "github-copilot": {
-      "type": "registry"
-    }
+      "type": "registry",
+    },
   },
   "colorize_brackets": true,
   "git_panel": {
@@ -155,7 +155,7 @@
       "**/helmfile.d/**/*.yaml",
       "**/helmfile.d/**/*.yml",
     ],
-    "Dockerfile": ["Dockerfile.*"],
+    "Dockerfile": ["Dockerfile.*", "Containerfile.*"],
     "OpenTofu": ["tf"],
     "OpenTofu Vars": ["tfvars"],
   },
