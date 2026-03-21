@@ -8,9 +8,6 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "agent_servers": {
-    "github-copilot-cli": {
-      "type": "registry",
-    },
     "github-copilot": {
       "type": "registry",
     },
@@ -29,7 +26,7 @@
     "show_nav_history_buttons": false,
   },
   "tabs": {
-    "file_icons": false,
+    "file_icons": true,
     "git_status": true,
   },
   "which_key": {
@@ -112,8 +109,8 @@
   "ui_font_size": 16,
   "buffer_font_size": 16,
   "theme": {
-    "mode": "system",
-    "light": "Ayu Mirage",
+    "mode": "light",
+    "light": "One Light",
     "dark": "One Dark",
   },
   "theme_overrides": {
@@ -284,9 +281,6 @@
     "button": false,
   },
   "agent": {
-    "tool_permissions": {
-      "default": "allow",
-    },
     "play_sound_when_agent_done": true,
     "default_model": {
       "provider": "copilot_chat",

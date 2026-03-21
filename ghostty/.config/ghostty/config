@@ -39,3 +39,5 @@ quick-terminal-animation-duration = 0.15
 
 quit-after-last-window-closed = false
 
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish = unfocused
