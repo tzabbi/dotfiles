@@ -8,6 +8,9 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry",
+    },
     "github-copilot": {
       "type": "registry",
     },
@@ -115,10 +118,22 @@
   },
   "theme_overrides": {
     "One Dark": {
+      "conflict": "#f5460c",
+      "version_control.conflict": "#f5460c",
       "syntax": {
         "constant.comment.todo": {
           "color": "#00000000",
           "background_color": "#4078f2ff",
+          "font_style": "italic",
+        },
+      },
+    },
+    "One Light": {
+      "conflict": "#d62c0eff",
+      "version_control.conflict": "#d62c0eff",
+      "syntax": {
+        "constant.comment.todo": {
+          "font_style": "italic",
         },
       },
     },
@@ -283,8 +298,10 @@
   "agent": {
     "play_sound_when_agent_done": true,
     "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-4.1",
+      "model": "claude-sonnet-4.6",
     },
     "button": true,
   },
