@@ -34,6 +34,11 @@
     },
   },
   {
+    "context": "vim_mode == visual",
+    "bindings": {
+    "shift-s": "vim::PushAddSurrounds
+  }
+  {
     "context": "((vim_mode == normal || vim_mode == helix_normal) && !menu)",
     "bindings": {
       "shift-y": "vim::YankToEndOfLine",
