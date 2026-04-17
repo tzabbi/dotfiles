@@ -57,7 +57,6 @@
     "biome": true,
     "caddyfile": true,
     "color-highlight": true,
-    "docker-compose": true,
     "dockerfile": true,
     "env": true,
     "git-firefly": true,
@@ -90,9 +89,6 @@
   "outline_panel": {
     "button": false,
     "dock": "right",
-  },
-  "notification_panel": {
-    "button": false,
   },
   "project_panel": {
     "hide_hidden": false,
@@ -296,7 +292,7 @@
     "button": false,
   },
   "agent": {
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
     "default_model": {
       "effort": "high",
       "enable_thinking": true,
