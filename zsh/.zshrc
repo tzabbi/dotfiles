@@ -63,6 +63,7 @@ if [[ ! -f "$COMP_DUMPFILE" ]]; then
     command -v talosctl >/dev/null && talosctl completion zsh
     command -v tofu >/dev/null && tofu -install-autocomplete
     command -v trivy >/dev/null && trivy completion zsh
+    command -v tv >/dev/null && tv init zsh 
 
   } > "$COMP_DUMPFILE"
 fi
