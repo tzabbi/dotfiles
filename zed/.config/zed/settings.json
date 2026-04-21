@@ -138,6 +138,9 @@
     "show": "auto",
   },
   "languages": {
+    "Helm": {
+      "language_servers": ["helm"]
+    },
     "Go": {
       "hard_tabs": false,
     },
