@@ -17,6 +17,7 @@
   },
   "colorize_brackets": true,
   "git_panel": {
+    "dock": null,
     "button": false,
   },
   "preview_tabs": {
@@ -91,6 +92,7 @@
     "dock": "right",
   },
   "project_panel": {
+    "git_status_indicator": true,
     "hide_hidden": false,
     "hide_root": false,
     "indent_guides": {
@@ -139,7 +141,7 @@
   },
   "languages": {
     "Helm": {
-      "language_servers": ["helm"]
+      "language_servers": ["helm"],
     },
     "Go": {
       "hard_tabs": false,
@@ -285,16 +287,18 @@
   "title_bar": {
     "show_menus": false,
     "show_sign_in": false,
-    "show_branch_icon": true,
+    "show_branch_status_icon": true,
     "show_branch_name": true,
   },
   "collaboration_panel": {
+    "dock": "right",
     "button": false,
   },
   "search": {
     "button": false,
   },
   "agent": {
+    "dock": "left",
     "play_sound_when_agent_done": "always",
     "default_model": {
       "effort": "high",
