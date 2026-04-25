@@ -162,6 +162,15 @@
   },
   "file_types": {
     "Helm": [
+      "helmfile.yaml",
+      "helmfile.yml",
+      "Chart.yaml",
+      "Chart.yml",
+      "Chart.lock",
+      "values.yaml",
+      "values.yml",
+      "requirements.yaml",
+      "requirements.yml",
       "**/templates/**/*.tpl",
       "**/templates/**/*.yaml",
       "**/templates/**/*.yml",
