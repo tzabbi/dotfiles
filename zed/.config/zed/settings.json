@@ -161,6 +161,12 @@
     },
   },
   "file_types": {
+    "Git Attributes": ["**/{git,.git,.git/info}/attributes"],
+    "Git Config": [
+      "*.gitconfig",
+      "**/{git,.git/modules,.git/modules/*}/config",
+    ],
+    "Git Ignore": ["**/{git,.git}/ignore", "**/.git/info/exclude"],
     "Helm": [
       "helmfile.yaml",
       "helmfile.yml",
@@ -263,6 +269,7 @@
     "env": {
       "LANG": "C.UTF-8",
       "LC_ALL": "C.UTF-8",
+      "GIT_EDITOR": "zed --wait",
     },
     "font_family": "JetBrainsMonoNL Nerd Font",
     "scrollbar": {
