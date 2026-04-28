@@ -247,8 +247,8 @@
           "format": {
             "enable": true,
             "singleQuote": true,
-            "printWidth": 120,
-            "bracketSpacing": false,
+            "printWidth": 200,
+            "bracketSpacing": true,
           },
           "schemaStore": {
             "enable": true,
