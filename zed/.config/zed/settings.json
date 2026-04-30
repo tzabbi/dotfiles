@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "cli_default_open_behavior": "new_window",
   "agent_servers": {
     "github-copilot-cli": {
       "type": "registry",
@@ -57,6 +58,7 @@
     "basher": true,
     "biome": true,
     "caddyfile": true,
+    "codebook": true,
     "color-highlight": true,
     "dockerfile": true,
     "env": true,
@@ -76,8 +78,10 @@
     "make": true,
     "markdownlint": true,
     "marksman": true,
+    "mermaid": true,
     "opentofu": true,
     "php": true,
+    "rainbow-csv": true,
     "ruby": true,
     "scheme": true,
     "sql": true,
@@ -210,6 +214,7 @@
     },
     "gopls": {
       "initialization_options": {
+        "templateExtensions": ["tmpl", "gotmpl", "gohtml", "html"],
         "hints": {
           "assignVariableTypes": true,
           "compositeLiteralFields": true,
@@ -269,7 +274,7 @@
     "env": {
       "LANG": "C.UTF-8",
       "LC_ALL": "C.UTF-8",
-      "GIT_EDITOR": "zed --wait",
+      "GIT_EDITOR": "vim",
     },
     "font_family": "JetBrainsMonoNL Nerd Font",
     "scrollbar": {
