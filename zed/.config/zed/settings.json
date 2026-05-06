@@ -324,8 +324,8 @@
     "default_model": {
       "effort": "high",
       "enable_thinking": true,
-      "provider": "zed-agent",
-      "model": "claude-sonnet-4.6",
+      "provider": "copilot_chat",
+      "model": "gpt-5.4",
     },
     "button": true,
   },
@@ -345,7 +345,8 @@
       "visual": "underline",
     },
   },
-  "hide_mouse": "on_typing_and_movement",
+  "code_lens": "on",
+  "hide_mouse": "on_typing",
   "inlay_hints": {
     "show_background": true,
     "enabled": true,
