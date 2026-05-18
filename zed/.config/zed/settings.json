@@ -165,6 +165,24 @@
     },
   },
   "file_types": {
+    "Ansible": [
+      "**.ansible.yml",
+      "**.ansible.yaml",
+      "**/defaults/*.yml",
+      "**/defaults/*.yaml",
+      "**/meta/*.yml",
+      "**/meta/*.yaml",
+      "**/tasks/*.yml",
+      "**/tasks/*.yaml",
+      "**/handlers/*.yml",
+      "**/handlers/*.yaml",
+      "**/group_vars/*.yml",
+      "**/group_vars/*.yaml",
+      "**/playbooks/*.yaml",
+      "**/playbooks/*.yml",
+      "**playbook*.yaml",
+      "**playbook*.yml"
+    ],
     "Git Attributes": ["**/{git,.git,.git/info}/attributes"],
     "Git Config": [
       "*.gitconfig",
@@ -190,26 +208,6 @@
     "OpenTofu Vars": ["tfvars"],
   },
   "lsp": {
-    "ansible": {
-      "settings": {
-        "ansible": {
-          "path": "ansible",
-        },
-        "executionEnvironment": {
-          "enabled": false,
-        },
-        "python": {
-          "interpreterPath": "python3",
-        },
-        "validation": {
-          "enabled": true,
-          "lint": {
-            "enabled": true,
-            "path": "ansible-lint",
-          },
-        },
-      },
-    },
     "gopls": {
       "initialization_options": {
         "templateExtensions": ["tmpl", "gotmpl", "gohtml", "html"],
