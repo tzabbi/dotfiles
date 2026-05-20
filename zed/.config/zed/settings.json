@@ -85,6 +85,7 @@
     "ruby": true,
     "scheme": true,
     "sql": true,
+    "superhtml": true,
     "tflint": true,
     "toml": true,
     "tmux": true,
