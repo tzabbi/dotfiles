@@ -183,7 +183,7 @@
       "**/playbooks/*.yaml",
       "**/playbooks/*.yml",
       "**playbook*.yaml",
-      "**playbook*.yml"
+      "**playbook*.yml",
     ],
     "Git Attributes": ["**/{git,.git,.git/info}/attributes"],
     "Git Config": [
@@ -349,6 +349,7 @@
     "show_background": true,
     "enabled": true,
   },
+  "completion_menu_item_kind": "symbol",
   "journal": {
     "hour_format": "hour24",
   },
