@@ -1,9 +1,9 @@
-tap 'hashicorp/tap'
+tap 'hashicorp/tap', trusted: true
 
 brew 'age'
 brew 'ansible'
 brew 'ansible-lint'
-brew 'alesbrelih/gitlab-ci-ls/gitlab-ci-ls'
+brew 'alesbrelih/gitlab-ci-ls/gitlab-ci-ls', trusted: true
 brew 'argocd'
 brew 'awk'
 brew 'awscli'
@@ -36,8 +36,8 @@ brew 'go-task'
 brew 'glibc'
 brew 'hadolint'
 brew 'harper'
-brew 'hashicorp/tap/vagrant'
-brew 'hashicorp/tap/vault'
+brew 'hashicorp/tap/vagrant', trusted: true
+brew 'hashicorp/tap/vault', trusted: true
 brew 'helm'
 brew 'helm-ls'
 brew 'istioctl'
@@ -74,7 +74,7 @@ brew 'pyright'
 brew 'redis'
 brew 'ruff'
 brew 'ripgrep'
-brew 'robusta-dev/homebrew-krr/krr'
+brew 'robusta-dev/homebrew-krr/krr', trusted: true
 brew 'ruby-lsp'
 brew 'shellcheck'
 brew 'shfmt'
