@@ -10,45 +10,45 @@
   "cli_default_open_behavior": "new_window",
   "agent_servers": {
     "github-copilot-cli": {
-      "type": "registry",
+      "type": "registry"
     },
     "github-copilot": {
-      "type": "registry",
-    },
+      "type": "registry"
+    }
   },
   "colorize_brackets": true,
   "git_panel": {
     "dock": null,
-    "button": false,
+    "button": false
   },
   "preview_tabs": {
     "enable_keep_preview_on_code_navigation": false,
-    "enable_preview_from_file_finder": false,
+    "enable_previe_from_file_finder": false
   },
   "use_system_window_tabs": false,
   "tab_bar": {
     "show": true,
-    "show_nav_history_buttons": false,
+    "show_nav_history_buttons": false
   },
   "tabs": {
     "file_icons": true,
-    "git_status": true,
+    "git_status": true
   },
   "which_key": {
     "enabled": true,
-    "delay_ms": 300,
+    "delay_ms": 300
   },
   "debugger": {
-    "button": true,
+    "button": true
   },
   "diagnostics": {
     "inline": {
-      "enabled": true,
-    },
+      "enabled": true
+    }
   },
   "indent_guides": {
     "background_coloring": "disabled",
-    "coloring": "indent_aware",
+    "coloring": "indent_aware"
   },
   "cursor_shape": "bar",
   "disable_ai": false,
@@ -58,7 +58,6 @@
     "basher": true,
     "biome": true,
     "caddyfile": true,
-    "codebook": true,
     "color-highlight": true,
     "dockerfile": true,
     "env": true,
@@ -91,26 +90,26 @@
     "toml": true,
     "tmux": true,
     "vue": true,
-    "xml": true,
+    "xml": true
   },
   "outline_panel": {
     "button": false,
-    "dock": "right",
+    "dock": "right"
   },
   "project_panel": {
     "git_status_indicator": true,
     "hide_hidden": false,
     "hide_root": false,
     "indent_guides": {
-      "show": "always",
+      "show": "always"
     },
     "hide_gitignore": false,
-    "dock": "right",
+    "dock": "right"
   },
   "base_keymap": "VSCode",
   "telemetry": {
     "diagnostics": false,
-    "metrics": false,
+    "metrics": false
   },
   "vim_mode": true,
   "ui_font_size": 16,
@@ -118,7 +117,7 @@
   "theme": {
     "mode": "light",
     "light": "One Light",
-    "dark": "One Dark",
+    "dark": "One Dark"
   },
   "theme_overrides": {
     "One Dark": {
@@ -128,43 +127,45 @@
         "constant.comment.todo": {
           "color": "#00000000",
           "background_color": "#4078f2ff",
-          "font_style": "italic",
-        },
-      },
+          "font_style": "italic"
+        }
+      }
     },
     "One Light": {
       "conflict": "#d62c0eff",
       "version_control.conflict": "#d62c0eff",
       "syntax": {
         "constant.comment.todo": {
-          "font_style": "italic",
-        },
-      },
-    },
+          "font_style": "italic"
+        }
+      }
+    }
   },
   "minimap": {
-    "show": "auto",
+    "show": "auto"
   },
   "languages": {
     "Helm": {
-      "language_servers": ["helm"],
+      "language_servers": [
+        "helm"
+      ]
     },
     "Go": {
-      "hard_tabs": false,
+      "hard_tabs": false
     },
     "Plain Text": {
       "completions": {
-        "words": "enabled",
-      },
+        "words": "enabled"
+      }
     },
     "Markdown": {
       "completions": {
-        "words": "enabled",
-      },
+        "words": "enabled"
+      }
     },
     "YAML": {
-      "formatter": "language_server",
-    },
+      "formatter": "language_server"
+    }
   },
   "file_types": {
     "Ansible": [
@@ -183,14 +184,19 @@
       "**/playbooks/*.yaml",
       "**/playbooks/*.yml",
       "**playbook*.yaml",
-      "**playbook*.yml",
+      "**playbook*.yml"
     ],
-    "Git Attributes": ["**/{git,.git,.git/info}/attributes"],
+    "Git Attributes": [
+      "**/{git,.git,.git/info}/attributes"
+    ],
     "Git Config": [
       "*.gitconfig",
-      "**/{git,.git/modules,.git/modules/*}/config",
+      "**/{git,.git/modules,.git/modules/*}/config"
     ],
-    "Git Ignore": ["**/{git,.git}/ignore", "**/.git/info/exclude"],
+    "Git Ignore": [
+      "**/{git,.git}/ignore",
+      "**/.git/info/exclude"
+    ],
     "Helm": [
       "helmfile.yaml",
       "helmfile.yml",
@@ -203,16 +209,28 @@
       "**/templates/**/*.yaml",
       "**/templates/**/*.yml",
       "**/helmfile.d/**/*.yaml",
-      "**/helmfile.d/**/*.yml",
+      "**/helmfile.d/**/*.yml"
     ],
-    "Dockerfile": ["Dockerfile.*", "Containerfile.*"],
-    "OpenTofu": ["tf"],
-    "OpenTofu Vars": ["tfvars"],
+    "Dockerfile": [
+      "Dockerfile.*",
+      "Containerfile.*"
+    ],
+    "OpenTofu": [
+      "tf"
+    ],
+    "OpenTofu Vars": [
+      "tfvars"
+    ]
   },
   "lsp": {
     "gopls": {
       "initialization_options": {
-        "templateExtensions": ["tmpl", "gotmpl", "gohtml", "html"],
+        "templateExtensions": [
+          "tmpl",
+          "gotmpl",
+          "gohtml",
+          "html"
+        ],
         "hints": {
           "assignVariableTypes": true,
           "compositeLiteralFields": true,
@@ -220,64 +238,69 @@
           "constantValues": true,
           "functionTypeParameters": true,
           "parameterNames": true,
-          "rangeVariableTypes": true,
-        },
-      },
+          "rangeVariableTypes": true
+        }
+      }
     },
     "helm": {
       "settings": {
         "helm-ls": {
           "logLevel": "info",
           "yamlls": {
-            "enabled": true,
-          },
-        },
-      },
+            "enabled": true
+          }
+        }
+      }
     },
     "tflint": {
       "initialization_options": {
-        "command": ["tflint", "--langserver"],
-      },
+        "command": [
+          "tflint",
+          "--langserver"
+        ]
+      }
     },
     "yaml-language-server": {
       "settings": {
         "redhat": {
           "telemetry": {
-            "enabled": false,
-          },
+            "enabled": false
+          }
         },
         "yaml": {
           "format": {
             "enable": true,
-            "singleQuote": true,
+            "singleQuote": false,
             "printWidth": 200,
-            "bracketSpacing": true,
+            "bracketSpacing": true
           },
           "schemaStore": {
-            "enable": true,
+            "enable": true
           },
           "kubernetesCRDStore": {
-            "enable": true,
+            "enable": true
           },
-          "customTags": ["!reference sequence"],
-        },
-      },
-    },
+          "customTags": [
+            "!reference sequence"
+          ]
+        }
+      }
+    }
   },
   "terminal": {
     "toolbar": {
-      "breadcrumbs": false,
+      "breadcrumbs": false
     },
     "shell": "system",
     "env": {
       "LANG": "C.UTF-8",
       "LC_ALL": "C.UTF-8",
-      "GIT_EDITOR": "vim",
+      "GIT_EDITOR": "vim"
     },
     "font_family": "JetBrainsMonoNL Nerd Font",
     "scrollbar": {
-      "show": "auto",
-    },
+      "show": "auto"
+    }
   },
   "relative_line_numbers": "disabled",
   "autosave": "on_focus_change",
@@ -292,29 +315,29 @@
   "soft_wrap": "editor_width",
   "git": {
     "branch_picker": {
-      "show_author_name": true,
+      "show_author_name": true
     },
     "blame": {
-      "show_avatar": true,
+      "show_avatar": true
     },
     "git_gutter": "tracked_files",
     "gutter_debounce": 4,
     "inline_blame": {
-      "show_commit_summary": false,
-    },
+      "show_commit_summary": false
+    }
   },
   "title_bar": {
     "show_menus": false,
     "show_sign_in": false,
     "show_branch_status_icon": true,
-    "show_branch_name": true,
+    "show_branch_name": true
   },
   "collaboration_panel": {
     "dock": "right",
-    "button": false,
+    "button": false
   },
   "search": {
-    "button": false,
+    "button": false
   },
   "agent": {
     "dock": "left",
@@ -323,34 +346,34 @@
       "effort": "high",
       "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.4",
+      "model": "gpt-5.4"
     },
-    "button": true,
+    "button": true
   },
   "edit_predictions": {
-    "provider": "none",
+    "provider": "none"
   },
   "show_edit_predictions": false,
   "active_pane_modifiers": {
     "border_size": 2.0,
-    "inactive_opacity": 0.45,
+    "inactive_opacity": 0.45
   },
   "vim": {
     "cursor_shape": {
       "normal": "block",
       "insert": "bar",
       "replace": "hollow",
-      "visual": "underline",
-    },
+      "visual": "underline"
+    }
   },
   "code_lens": "on",
   "hide_mouse": "on_typing",
   "inlay_hints": {
     "show_background": true,
-    "enabled": true,
+    "enabled": true
   },
   "completion_menu_item_kind": "symbol",
   "journal": {
-    "hour_format": "hour24",
-  },
+    "hour_format": "hour24"
+  }
 }
