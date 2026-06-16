@@ -148,7 +148,8 @@
     "Helm": {
       "language_servers": [
         "helm"
-      ]
+      ],
+      "formatter": "language_server"
     },
     "Go": {
       "hard_tabs": false
