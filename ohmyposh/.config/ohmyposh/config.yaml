@@ -1,0 +1,155 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+secondary_prompt:
+    template: '❯❯ '
+    foreground: magenta
+    background: transparent
+transient_prompt:
+    template: '❯ '
+    background: transparent
+    foreground_templates:
+        - '{{if gt .Code 0}}red{{end}}'
+        - '{{if eq .Code 0}}green{{end}}'
+upgrade:
+    source: cdn
+    interval: 168h
+    auto: false
+    notice: false
+console_title_template: '{{ .Shell }} in {{ .Folder }}'
+blocks:
+    - type: prompt
+      alignment: left
+      segments:
+        - options:
+            cache_duration: none
+          leading_diamond: 
+          trailing_diamond: 
+          template: '{{ if .WSL }}WSL at {{ end }}{{.Icon}} '
+          foreground: '#ffffff'
+          background: '#24a824'
+          type: os
+          style: diamond
+        - options:
+            cache_duration: none
+          template: ' {{ if .SSHSession }} {{ end }}{{ .UserName }} '
+          foreground: '#ffffff'
+          powerline_symbol: 
+          background: '#9e2944'
+          type: session
+          style: powerline
+        - options:
+            cache_duration: none
+          template: '{{ if eq .Shell "bash" }} ⎈ {{.Context}} {{end}}'
+          foreground: '#FFFFFF'
+          powerline_symbol: 
+          background: '#326CE5'
+          type: kubectl
+          style: powerline
+        - options:
+            cache_duration: none
+            style: full
+          template: ' {{ .Path }} '
+          foreground: '#ffffff'
+          powerline_symbol: 
+          background: '#4e3b2b'
+          type: path
+          style: powerline
+        - options:
+            cache_duration: none
+            fetch_status: true
+            fetch_upstream_icon: true
+            mapped_branches:
+                bugfix/*: "\U0001F41B "
+                feature/*: "\U0001F680 "
+            source: cli
+            untracked_modes:
+                /Users/user/Projects/oh-my-posh/: "no"
+          template: '{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
+          foreground: '#193549'
+          powerline_symbol: 
+          background: '#fcde65'
+          type: git
+          style: powerline
+          background_templates:
+            - '{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}'
+            - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}'
+            - '{{ if gt .Ahead 0 }}#B388FF{{ end }}'
+            - '{{ if gt .Behind 0 }}#B388FB{{ end }}'
+        - options:
+            cache_duration: none
+          template: '  {{ .Full }} '
+          foreground: white
+          powerline_symbol: 
+          background: blue
+          type: lua
+          style: powerline
+        - options:
+            cache_duration: none
+            parse_mod_file: true
+          template: '  {{ .Full }} '
+          foreground: '#ffffff'
+          powerline_symbol: 
+          background: '#7FD5EA'
+          type: go
+          style: powerline
+        - options:
+            cache_duration: none
+          template: '  {{ .Full }} '
+          foreground: '#100e23'
+          powerline_symbol: 
+          background: '#906cff'
+          type: python
+          style: powerline
+        - options:
+            cache_duration: none
+          template: '  {{ .Full }} '
+          foreground: '#193549'
+          powerline_symbol: 
+          background: '#99908a'
+          type: rust
+          style: powerline
+      newline: true
+    - type: rprompt
+      alignment: right
+      segments:
+        - options:
+            cache_duration: none
+          leading_diamond: 
+          trailing_diamond: ' '
+          template: '{{ if eq .Shell "zsh" }} ⎈ {{.Context}} {{end}}'
+          foreground: '#FFFFFF'
+          background: '#326CE5'
+          type: kubectl
+          style: diamond
+        - options:
+            cache_duration: none
+          leading_diamond: 
+          template: '  {{ .CurrentDate | date .Format }} '
+          foreground: '#ffffff'
+          background: '#003543'
+          type: time
+          style: diamond
+        - options:
+            always_enabled: true
+            cache_duration: none
+          trailing_diamond: 
+          template: '  {{ .FormattedMs }} '
+          foreground: '#ffffff'
+          background: '#83769c'
+          type: executiontime
+          style: diamond
+    - type: prompt
+      alignment: left
+      segments:
+        - options:
+            cache_duration: none
+          template: ❯
+          background: transparent
+          type: text
+          style: plain
+          foreground_templates:
+            - '{{if gt .Code 0}}red{{end}}'
+            - '{{if eq .Code 0}}green{{end}}'
+      newline: true
+version: 3
+final_space: true

@@ -125,7 +125,7 @@ function y() {
 
 # --- PROMPT ---
 # Load Oh-My-Posh near the end but before Syntax Highlighting
-command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.yaml)"
 
 # --- FINAL LOAD ---
 # Syntax Highlighting MUST be last to work correctly

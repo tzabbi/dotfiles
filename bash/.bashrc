@@ -26,7 +26,7 @@ alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # add Oh-my-Posh
-command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/config.toml)"
+command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/config.yaml)"
 
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #  exec tmux
