@@ -60,6 +60,7 @@
     "caddyfile": true,
     "color-highlight": true,
     "dockerfile": true,
+    "editorconfig": true,
     "env": true,
     "git-firefly": true,
     "gitlab-ci-ls": true,
