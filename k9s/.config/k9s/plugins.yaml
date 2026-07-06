@@ -121,3 +121,21 @@ plugins:
     args:
       - -c
       - "kubectl debug node/$NAME -it --image=ubuntu --profile=sysadmin -- bash"
+  sync-external-secret:
+    shortCut: s
+    description: Force sync external secret
+    scopes:
+      - externalsecrets
+    confirm: true
+    command: kubectl
+    background: true
+    args:
+      - --context
+      - $CONTEXT
+      - -n
+      - $NAMESPACE
+      - annotate
+      - externalsecret
+      - $NAME
+      - external-secrets.io/force-sync=$(date +%s)
+      - --overwrite
