@@ -92,7 +92,7 @@ brew 'taplo'
 brew 'television'
 brew 'terragrunt'
 brew 'tofu-ls'
-brew 'tflint'
+brew 'terraform-linters/tap/tflint', trusted: true
 brew 'tmux'
 brew 'tree-sitter'
 brew 'trivy'
