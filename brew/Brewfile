@@ -75,6 +75,7 @@ brew 'redis'
 brew 'ruff'
 brew 'ripgrep'
 brew 'robusta-dev/homebrew-krr/krr', trusted: true
+brew 'rsync'
 brew 'ruby-lsp'
 brew 'shellcheck'
 brew 'shfmt'
