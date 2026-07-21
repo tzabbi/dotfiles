@@ -22,7 +22,7 @@ ubuntu | debian)
   sudo apt update && sudo apt install -y build-essential stow git libssl-dev pkg-config
   ;;
 fedora)
-  sudo dnf group install development-tools && sudo dnf install -y stow git curl openssl-devel dbus-daemon dbus-x11
+  sudo dnf group install development-tools && sudo dnf install -y stow git curl openssl-devel dbus-daemon dbus-x11 pkgconf
   ;;
 esac
 
