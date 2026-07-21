@@ -14,7 +14,7 @@ elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
 fi
 
 # Edit PATH variable
-export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/"
+export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
 
 # --- ZINIT SETUP ---
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
