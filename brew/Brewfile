@@ -1,5 +1,7 @@
 tap 'hashicorp/tap', trusted: true
 
+cask  'terraform-linters/tap/tflint', trusted: true
+
 brew 'age'
 brew 'ansible'
 brew 'ansible-lint'
@@ -93,7 +95,6 @@ brew 'taplo'
 brew 'television'
 brew 'terragrunt'
 brew 'tofu-ls'
-brew 'terraform-linters/tap/tflint', trusted: true
 brew 'tmux'
 brew 'tree-sitter'
 brew 'trivy'
