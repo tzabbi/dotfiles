@@ -83,6 +83,7 @@
     "nginx": true,
     "opentofu": true,
     "php": true,
+    "powershell": true,
     "rainbow-csv": true,
     "ruby": true,
     "scheme": true,
