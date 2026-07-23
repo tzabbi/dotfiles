@@ -80,6 +80,7 @@
     "markdownlint": true,
     "marksman": true,
     "mermaid": true,
+    "nginx": true,
     "opentofu": true,
     "php": true,
     "rainbow-csv": true,
