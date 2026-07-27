@@ -145,4 +145,7 @@ export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
+
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
