@@ -1,3 +1,5 @@
+# remove duplicated entries in PATH var
+typeset -U path PATH
 # --- PATH & CORE VARS ---
 export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty)
@@ -7,14 +9,9 @@ if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
 fi
 # --- BREW ---
 # Handling Linux/Mac in one block efficiently
-if [[ -f "/opt/homebrew/bin/brew" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
+[[ -z "$HOMEBREW_PREFIX" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Edit PATH variable
-export PATH="/usr/local/sbin/npm:$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
 
 # --- ZINIT SETUP ---
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -63,7 +60,7 @@ if [[ ! -f "$COMP_DUMPFILE" ]]; then
     command -v talosctl >/dev/null && talosctl completion zsh
     command -v tofu >/dev/null 2>&1 && complete -C "$(which tofu)" tofu
     command -v trivy >/dev/null && trivy completion zsh
-    command -v tv >/dev/null && tv init zsh 
+    command -v tv >/dev/null && tv init zsh
 
   } > "$COMP_DUMPFILE"
 fi
@@ -145,6 +142,10 @@ export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
 autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
+
+# guarantee that nvm is first dir in PATH
+command -v nvm >/dev/null 2>&1 && export PATH="$NVM_BIN:$PATH"
 
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
