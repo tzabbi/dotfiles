@@ -35,13 +35,11 @@ fi
 if [[ ! -f "$BREW_PATH" ]]; then
   echo "🍺 Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  eval "$($BREW_PATH shellenv bash)"
-  brew analytics off
-  brew install gcc
-else
-  eval "$($BREW_PATH shellenv)"
 fi
+
+eval "$($BREW_PATH shellenv)"
+brew analytics off
+brew install gcc
 
 if [ -f "$DOTFILES_DIR/brew/Brewfile" ]; then
   brew trust alesbrelih/gitlab-ci-ls
