@@ -185,8 +185,6 @@
       "**/playbooks/*.yaml",
       "**/playbooks/*.yml",
       "**playbook*.yaml",
-      "**playbook*.yml",
-      "**/roles/**/*.yaml",
     ],
     "Git Attributes": ["**/{git,.git,.git/info}/attributes"],
     "Git Config": [
@@ -268,8 +266,6 @@
     },
     "shell": "system",
     "env": {
-      "LANG": "de_DE.UTF-8`",
-      "LC_ALL": "de_DE.UTF-8`",
       "GIT_EDITOR": "vim",
     },
     "font_family": "JetBrainsMonoNL Nerd Font",

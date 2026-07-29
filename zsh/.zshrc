@@ -16,8 +16,8 @@ export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/b
 # --- ZINIT SETUP ---
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname "$ZINIT_HOME")"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+  mkdir -p "$(dirname "$ZINIT_HOME")"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -31,15 +31,17 @@ zinit ice wait'0' lucid
 zinit light Aloxaf/fzf-tab
 
 # OMZ Snippets (Lazy loaded)
-zinit ice wait'1' lucid; zinit snippet OMZP::sudo
-zinit ice wait'1' lucid; zinit snippet OMZP::command-not-found
+zinit ice wait'1' lucid
+zinit snippet OMZP::sudo
+zinit ice wait'1' lucid
+zinit snippet OMZP::command-not-found
 
 # --- COMPLETION SYSTEM ---
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-  compinit;
+  compinit
 else
-  compinit -C;
+  compinit -C
 fi
 
 zinit cdreplay -q
@@ -62,7 +64,7 @@ if [[ ! -f "$COMP_DUMPFILE" ]]; then
     command -v trivy >/dev/null && trivy completion zsh
     command -v tv >/dev/null && tv init zsh
 
-  } > "$COMP_DUMPFILE"
+  } >"$COMP_DUMPFILE"
 fi
 source "$COMP_DUMPFILE"
 
@@ -112,12 +114,12 @@ alias fix-zsh-history="$HOME/Documents/scripts/fix-zsh-history.sh"
 
 # --- FUNCTIONS ---
 function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
 # --- PROMPT ---
@@ -134,7 +136,7 @@ unalias zi 2>/dev/null
 
 # Load additional config last (in case it overwrites aliases)
 if [ -f "$HOME/.additional_zsh_config" ]; then
-   source "$HOME/.additional_zsh_config"
+  source "$HOME/.additional_zsh_config"
 fi
 
 # Lua config (slow call, consider caching path if possible)
@@ -142,6 +144,7 @@ export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
 autoload -U +X bashcompinit && bashcompinit
+<<<<<<< Updated upstream
 complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
 
 # guarantee that nvm is first dir in PATH
