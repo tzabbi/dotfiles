@@ -71,7 +71,7 @@ zinit snippet OMZP::command-not-found
 
 # --- COMPLETION SYSTEM ----------------------------------------------------
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -185,7 +185,7 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
 # guarantee that nvm is first dir in PATH
-command -v nvm >/dev/null 2>&1 && export PATH="$NVM_BIN:$PATH"
+command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
 # --- PROFILING REPORT -----------------------------------------------------
 # Print the profile and stop here (don't exec tmux) when profiling is enabled.
