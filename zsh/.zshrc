@@ -17,9 +17,8 @@ ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 [[ -d "$ZSH_CACHE_DIR" ]] || mkdir -p "$ZSH_CACHE_DIR"
 
 zcache() {
-  # usage: zcache <name> <command> [args...]
+  # usage: zcache <command> [args...]
   local name="$1"
-  shift
   local file="$ZSH_CACHE_DIR/$name.zsh"
   local fresh=(${file}(Nmh-24)) # non-empty only if file exists & <24h old
   if ((!${#fresh})); then
@@ -40,7 +39,8 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # --- BREW -----------------------------------------------------------------
 # Skip entirely if a parent/company .zshrc already set the brew env up.
-[[ -z "$HOMEBREW_PREFIX" ]] && zcache brew /home/linuxbrew/.linuxbrew/bin/brew shellenv
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+[[ -z "$HOMEBREW_PREFIX" ]] && zcache brew shellenv
 
 # Edit PATH variable
 export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
@@ -93,21 +93,15 @@ _tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
 if ((!${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
-    command -v helm >/dev/null && helm completion zsh
-    command -v kubectl >/dev/null && kubectl completion zsh
     command -v npm >/dev/null && npm completion -- zsh
-    command -v talosctl >/dev/null && talosctl completion zsh
     command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
-    command -v trivy >/dev/null && trivy completion zsh
     command -v tv >/dev/null && tv init zsh
     command -v docker >/dev/null && docker completion zsh # slow daemon call -> cached
+    command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
   } >|"$COMP_DUMPFILE"
 fi
 [[ -s "$COMP_DUMPFILE" ]] && source "$COMP_DUMPFILE"
 unset _tools_fresh
-
-command -v docker >/dev/null 2>&1 && compdef _docker d
-command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 
 # --- STYLES & CONFIG ------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
@@ -158,9 +152,9 @@ function y() {
 }
 
 # --- PROMPT ---------------------------------------------------------------
-# Load Oh-My-Posh (cached). Skip if a parent .zshrc already started it ($POSH_PID).
-if [[ -z "$POSH_PID" ]] && command -v oh-my-posh >/dev/null 2>&1; then
-  zcache ohmyposh oh-my-posh init zsh --config "$HOME/.config/ohmyposh/config.yaml"
+# Load Oh-My-Posh. Skip if a parent .zshrc already started it ($POSH_SESSION_ID).
+if [[ -z "$POSH_SESSION_ID" ]] && command -v oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
 # --- FINAL LOAD -----------------------------------------------------------
@@ -192,9 +186,4 @@ command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$
 if [[ -n "$ZSH_PROFILE" ]]; then
   zprof
   return 0 2>/dev/null || exit 0
-fi
-
-# Auto-start tmux for interactive login shells
-if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
 fi
