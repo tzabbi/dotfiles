@@ -97,11 +97,12 @@ if ((!${#_tools_fresh})); then
     command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
     command -v tv >/dev/null && tv init zsh
     command -v docker >/dev/null && docker completion zsh # slow daemon call -> cached
-    command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
   } >|"$COMP_DUMPFILE"
 fi
 [[ -s "$COMP_DUMPFILE" ]] && source "$COMP_DUMPFILE"
 unset _tools_fresh
+
+command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 
 # --- STYLES & CONFIG ------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
