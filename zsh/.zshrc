@@ -144,12 +144,11 @@ export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
 autoload -U +X bashcompinit && bashcompinit
-<<<<<<< Updated upstream
 complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
 
 # guarantee that nvm is first dir in PATH
 command -v nvm >/dev/null 2>&1 && export PATH="$NVM_BIN:$PATH"
 
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
 fi
