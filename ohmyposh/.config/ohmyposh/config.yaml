@@ -64,7 +64,7 @@ blocks:
             source: cli
             untracked_modes:
                 /Users/user/Projects/oh-my-posh/: "no"
-          template: '{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
+          template: '{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}'
           foreground: '#193549'
           powerline_symbol: 
           background: '#fcde65'
@@ -151,5 +151,5 @@ blocks:
             - '{{if gt .Code 0}}red{{end}}'
             - '{{if eq .Code 0}}green{{end}}'
       newline: true
-version: 3
+version: 4
 final_space: true
