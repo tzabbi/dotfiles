@@ -56,12 +56,8 @@ COMP_DUMPFILE=~/.zsh_tools_completions
 if [[ ! -f "$COMP_DUMPFILE" ]]; then
   echo "Generating completions cache..."
   {
-    command -v helm >/dev/null && helm completion zsh
-    command -v kubectl >/dev/null && kubectl completion zsh
     command -v npm >/dev/null && npm completion -- zsh
-    command -v talosctl >/dev/null && talosctl completion zsh
     command -v tofu >/dev/null 2>&1 && complete -C "$(which tofu)" tofu
-    command -v trivy >/dev/null && trivy completion zsh
     command -v tv >/dev/null && tv init zsh
 
   } >"$COMP_DUMPFILE"
