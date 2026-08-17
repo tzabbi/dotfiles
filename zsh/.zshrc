@@ -84,8 +84,8 @@ zinit cdreplay -q
 autoload -U +X bashcompinit && bashcompinit
 
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
-command -v fzf >/dev/null 2>&1 && zcache fzf fzf --zsh
-command -v zoxide >/dev/null 2>&1 && zcache zoxide zoxide init zsh --cmd z
+command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
+command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
 
 # CLI completions (cached in one file; regenerated on first run / after 24h)
 COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
