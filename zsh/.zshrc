@@ -1,19 +1,51 @@
+# =============================================================================
+#  ZSH CONFIG
+# =============================================================================
+# Startup profiling: run `ZSH_PROFILE=1 zsh -i -c exit` to get a timing report.
+# When set, tmux auto-start is skipped and a zprof table is printed at the end.
+[[ -n "$ZSH_PROFILE" ]] && zmodload zsh/zprof
+
 # remove duplicated entries in PATH var
 typeset -U path PATH
-# --- PATH & CORE VARS ---
-export EDITOR="$(which nvim)"
-export GPG_TTY=$(tty)
+
+# --- CACHE HELPER ---------------------------------------------------------
+# Caches the (static) output of slow `eval "$(tool init)"` style commands to a
+# file and sources that instead of forking a subprocess on every startup.
+# Regenerates automatically when the cache is missing or older than 24h.
+# Force a full refresh anytime with:  zsh-refresh-cache
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d "$ZSH_CACHE_DIR" ]] || mkdir -p "$ZSH_CACHE_DIR"
+
+zcache() {
+  # usage: zcache <command> [args...]
+  local name="$1"
+  local file="$ZSH_CACHE_DIR/$name.zsh"
+  local fresh=(${file}(Nmh-24)) # non-empty only if file exists & <24h old
+  if ((!${#fresh})); then
+    "$@" >|"$file" 2>/dev/null || rm -f "$file"
+  fi
+  [[ -s "$file" ]] && source "$file"
+}
+zsh-refresh-cache() {
+  rm -f "$ZSH_CACHE_DIR"/*.zsh "$COMP_DUMPFILE" ~/.zcompdump*
+  echo "zsh caches cleared - restart your shell"
+}
+
+# --- PATH & CORE VARS -----------------------------------------------------
+export EDITOR=nvim  # resolved via PATH by callers; no `which` fork
+export GPG_TTY=$TTY # zsh sets $TTY automatically; no `tty` fork
 export HOMEBREW_NO_ANALYTICS=1
-if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
-  export QT_QPA_PLATFORM=wayland
-fi
-# --- BREW ---
-# Handling Linux/Mac in one block efficiently
-[[ -z "$HOMEBREW_PREFIX" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+[[ "$XDG_SESSION_TYPE" == "wayland" ]] && export QT_QPA_PLATFORM=wayland
+
+# --- BREW -----------------------------------------------------------------
+# Skip entirely if a parent/company .zshrc already set the brew env up.
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+[[ -z "$HOMEBREW_PREFIX" ]] && zcache brew shellenv
+
 # Edit PATH variable
 export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
 
-# --- ZINIT SETUP ---
+# --- ZINIT SETUP ----------------------------------------------------------
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
   mkdir -p "$(dirname "$ZINIT_HOME")"
@@ -21,10 +53,11 @@ if [ ! -d "$ZINIT_HOME" ]; then
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
-# --- PLUGINS (TURBO MODE) ---
+# --- PLUGINS (TURBO MODE) -------------------------------------------------
 zinit ice wait'0' lucid
 zinit light zsh-users/zsh-completions
 
+zinit ice wait'0' lucid
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait'0' lucid
@@ -36,9 +69,9 @@ zinit snippet OMZP::sudo
 zinit ice wait'1' lucid
 zinit snippet OMZP::command-not-found
 
-# --- COMPLETION SYSTEM ---
+# --- COMPLETION SYSTEM ----------------------------------------------------
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -46,30 +79,32 @@ fi
 
 zinit cdreplay -q
 
-# FZF
-command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
+# bashcompinit provides `complete`, which the cached tool-completions below use.
+# It MUST be loaded before those caches are sourced.
+autoload -U +X bashcompinit && bashcompinit
 
-# Zoxide (Integrated via Zinit is often faster, but eval is fine)
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd z)"
+# --- TOOL INTEGRATIONS (cached) -------------------------------------------
+command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
+command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
 
-COMP_DUMPFILE=~/.zsh_tools_completions
-if [[ ! -f "$COMP_DUMPFILE" ]]; then
+# CLI completions (cached in one file; regenerated on first run / after 24h)
+COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
+_tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
+if ((!${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
     command -v npm >/dev/null && npm completion -- zsh
-    command -v tofu >/dev/null 2>&1 && complete -C "$(which tofu)" tofu
+    command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
     command -v tv >/dev/null && tv init zsh
-
-  } >"$COMP_DUMPFILE"
+    command -v docker >/dev/null && docker completion zsh # slow daemon call -> cached
+  } >|"$COMP_DUMPFILE"
 fi
-source "$COMP_DUMPFILE"
+[[ -s "$COMP_DUMPFILE" ]] && source "$COMP_DUMPFILE"
+unset _tools_fresh
 
-if docker --version >/dev/null 2>&1; then
-  source <(docker completion zsh)
-  compdef _docker d
-fi
+command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 
-# --- STYLES & CONFIG ---
+# --- STYLES & CONFIG ------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
 
 # History
@@ -95,11 +130,10 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# --- ALIASES ---
+# --- ALIASES --------------------------------------------------------------
 alias flame="bash -c -- 'QT_QPA_PLATFORM=wayland flameshot gui'"
 alias ls="eza"
 alias k="kubecolor"
-compdef kubecolor=kubectl
 alias cls="clear"
 alias fzf-preview="fzf --preview 'bat --color=always {}' --preview-window '~3'"
 alias ks="kubectx"
@@ -108,7 +142,7 @@ alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 alias fix-zsh-history="$HOME/Documents/scripts/fix-zsh-history.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
-# --- FUNCTIONS ---
+# --- FUNCTIONS ------------------------------------------------------------
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
@@ -118,11 +152,13 @@ function y() {
   rm -f -- "$tmp"
 }
 
-# --- PROMPT ---
-# Load Oh-My-Posh near the end but before Syntax Highlighting
-command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.yaml)"
+# --- PROMPT ---------------------------------------------------------------
+# Load Oh-My-Posh. Skip if a parent .zshrc already started it ($POSH_SESSION_ID).
+if [[ -z "$POSH_SESSION_ID" ]] && command -v oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
+fi
 
-# --- FINAL LOAD ---
+# --- FINAL LOAD -----------------------------------------------------------
 # Syntax Highlighting MUST be last to work correctly
 zinit ice wait'0' lucid atinit"zpcompinit; zicdreplay"
 zinit light zsh-users/zsh-syntax-highlighting
@@ -135,15 +171,22 @@ if [ -f "$HOME/.additional_zsh_config" ]; then
   source "$HOME/.additional_zsh_config"
 fi
 
-# Lua config (slow call, consider caching path if possible)
-export LUA_DIR="$(brew --prefix luajit 2>/dev/null || echo /usr/local)"
+# Lua config for luarocks (cached path; brew --prefix is slow).
+# Only relevant when the luarocks eval below is enabled.
+if [[ ! -s "$ZSH_CACHE_DIR/lua_dir" ]]; then
+  { brew --prefix luajit 2>/dev/null || echo /usr/local; } >|"$ZSH_CACHE_DIR/lua_dir"
+fi
+export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 # eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.11.5/bin/tofu tofu
-
 # guarantee that nvm is first dir in PATH
-command -v nvm >/dev/null 2>&1 && export PATH="$NVM_BIN:$PATH"
+command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
+
+# --- PROFILING REPORT -----------------------------------------------------
+# Print the profile and stop here (don't exec tmux) when profiling is enabled.
+if [[ -n "$ZSH_PROFILE" ]]; then
+  zprof
+  return 0 2>/dev/null || exit 0
 
 if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
