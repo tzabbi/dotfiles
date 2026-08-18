@@ -188,7 +188,3 @@ if [[ -n "$ZSH_PROFILE" ]]; then
   zprof
   return 0 2>/dev/null || exit 0
 fi
-
-if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi
