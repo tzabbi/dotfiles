@@ -1,26 +1,21 @@
 # =============================================================================
 #  ZSH CONFIG
+#  Läuft standalone als ~/.zshrc *und* als ~/.zsh/zz-private.sh (Firmen-WSL).
+#  Alles hier überschreibt bewusst die Firmen-Defaults.
 # =============================================================================
-# Startup profiling: run `ZSH_PROFILE=1 zsh -i -c exit` to get a timing report.
-# When set, tmux auto-start is skipped and a zprof table is printed at the end.
 [[ -n "$ZSH_PROFILE" ]] && zmodload zsh/zprof
 
-# remove duplicated entries in PATH var
+setopt extendedglob
 typeset -U path PATH
 
 # --- CACHE HELPER ---------------------------------------------------------
-# Caches the (static) output of slow `eval "$(tool init)"` style commands to a
-# file and sources that instead of forking a subprocess on every startup.
-# Regenerates automatically when the cache is missing or older than 24h.
-# Force a full refresh anytime with:  zsh-refresh-cache
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 [[ -d "$ZSH_CACHE_DIR" ]] || mkdir -p "$ZSH_CACHE_DIR"
 
 zcache() {
-  # usage: zcache <command> [args...]
   local name="$1"
   local file="$ZSH_CACHE_DIR/$name.zsh"
-  local fresh=(${file}(Nmh-24)) # non-empty only if file exists & <24h old
+  local fresh=(${file}(Nmh-24))
   if ((!${#fresh})); then
     "$@" >|"$file" 2>/dev/null || rm -f "$file"
   fi
@@ -32,18 +27,40 @@ zsh-refresh-cache() {
 }
 
 # --- PATH & CORE VARS -----------------------------------------------------
-export EDITOR=nvim  # resolved via PATH by callers; no `which` fork
-export GPG_TTY=$TTY # zsh sets $TTY automatically; no `tty` fork
+export EDITOR=nvim
+export GPG_TTY=$TTY
 export HOMEBREW_NO_ANALYTICS=1
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 [[ "$XDG_SESSION_TYPE" == "wayland" ]] && export QT_QPA_PLATFORM=wayland
 
 # --- BREW -----------------------------------------------------------------
-# Skip entirely if a parent/company .zshrc already set the brew env up.
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-[[ -z "$HOMEBREW_PREFIX" ]] && zcache brew shellenv
+# Die Firmen-.zshenv setzt HOMEBREW_PREFIX + PATH bereits.
+if [[ -z "$HOMEBREW_PREFIX" ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+  zcache brew shellenv
+fi
 
-# Edit PATH variable
-export PATH="$PATH:$HOME/.krew/bin:$HOME/.local/bin:/snap/bin:$HOME/.kubescape/bin:$HOME/go/bin/:$HOME/.cargo/bin"
+path+=(
+  "$HOME/.krew/bin"
+  "$HOME/.local/bin"
+  /snap/bin
+  "$HOME/.kubescape/bin"
+  "$HOME/go/bin"
+  "$HOME/.cargo/bin"
+)
+export PATH
+
+# --- COMPLETION SYSTEM ----------------------------------------------------
+# Firmen-.zshrc hat compinit/bashcompinit ggf. schon ausgeführt.
+if ((!$+functions[compdef])); then
+  autoload -Uz compinit
+  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+  else
+    compinit -C
+  fi
+fi
+((!$+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit }
 
 # --- ZINIT SETUP ----------------------------------------------------------
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -57,46 +74,37 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice wait'0' lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait'0' lucid
-zinit light zsh-users/zsh-autosuggestions
+# Firma lädt zsh-autosuggestions bereits aus Homebrew -> nicht doppelt laden.
+if ((!$+functions[_zsh_autosuggest_start])); then
+  zinit ice wait'0' lucid
+  zinit light zsh-users/zsh-autosuggestions
+fi
 
 zinit ice wait'0' lucid
 zinit light Aloxaf/fzf-tab
 
-# OMZ Snippets (Lazy loaded)
 zinit ice wait'1' lucid
 zinit snippet OMZP::sudo
 zinit ice wait'1' lucid
 zinit snippet OMZP::command-not-found
 
-# --- COMPLETION SYSTEM ----------------------------------------------------
-autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
-
 zinit cdreplay -q
-
-# bashcompinit provides `complete`, which the cached tool-completions below use.
-# It MUST be loaded before those caches are sourced.
-autoload -U +X bashcompinit && bashcompinit
 
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
 command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
 command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
 
-# CLI completions (cached in one file; regenerated on first run / after 24h)
 COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
 _tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
 if ((!${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
     command -v npm >/dev/null && npm completion -- zsh
-    command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
-    command -v tv >/dev/null && tv init zsh
-    command -v docker >/dev/null && docker completion zsh # slow daemon call -> cached
+    # Docker/tofu macht die Firmen-.zshrc bereits selbst
+    if [[ -z "$_COMPANY_ZSHRC" ]]; then
+      command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
+      command -v docker >/dev/null && docker completion zsh
+    fi
   } >|"$COMP_DUMPFILE"
 fi
 [[ -s "$COMP_DUMPFILE" ]] && source "$COMP_DUMPFILE"
@@ -107,14 +115,12 @@ command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 # --- STYLES & CONFIG ------------------------------------------------------
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
 
-# History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
-# Keybindings
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -123,7 +129,6 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
-# Completion Styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
@@ -153,37 +158,38 @@ function y() {
 }
 
 # --- PROMPT ---------------------------------------------------------------
-# Load Oh-My-Posh. Skip if a parent .zshrc already started it ($POSH_SESSION_ID).
-if [[ -z "$POSH_SESSION_ID" ]] && command -v oh-my-posh >/dev/null 2>&1; then
+# Bewusst ohne POSH_SESSION_ID-Guard: überschreibt den Firmen-Prompt.
+if command -v oh-my-posh >/dev/null 2>&1 && [[ -f ~/.config/ohmyposh/config.yaml ]]; then
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
 # --- FINAL LOAD -----------------------------------------------------------
-# Syntax Highlighting MUST be last to work correctly
 zinit ice wait'0' lucid atinit"zpcompinit; zicdreplay"
 zinit light zsh-users/zsh-syntax-highlighting
 
-# Remove "zi" alias
 unalias zi 2>/dev/null
 
-# Load additional config last (in case it overwrites aliases)
 if [ -f "$HOME/.additional_zsh_config" ]; then
   source "$HOME/.additional_zsh_config"
 fi
 
-# Lua config for luarocks (cached path; brew --prefix is slow).
-# Only relevant when the luarocks eval below is enabled.
 if [[ ! -s "$ZSH_CACHE_DIR/lua_dir" ]]; then
   { brew --prefix luajit 2>/dev/null || echo /usr/local; } >|"$ZSH_CACHE_DIR/lua_dir"
 fi
 export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
-# eval "$(luarocks path --lua-dir=$LUA_DIR)" # Only run if needed
 
-# guarantee that nvm is first dir in PATH
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
+# --- KEYBINDING OWNERSHIP -------------------------------------------------
+# Muss ganz zum Schluss stehen: atuin (Firmen-.zshrc) und ggf. tv binden ^r
+# ebenfalls. fzf soll gewinnen
+if ((${+widgets[fzf-history-widget]})); then
+  bindkey '^r' fzf-history-widget
+  bindkey '^t' fzf-file-widget
+  bindkey '\ec' fzf-cd-widget
+fi
+
 # --- PROFILING REPORT -----------------------------------------------------
-# Print the profile and stop here (don't exec tmux) when profiling is enabled.
 if [[ -n "$ZSH_PROFILE" ]]; then
   zprof
   return 0 2>/dev/null || exit 0
