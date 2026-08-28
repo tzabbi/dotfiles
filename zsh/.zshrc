@@ -182,9 +182,25 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 # guarantee that nvm is first dir in PATH
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
-# --- PROFILING REPORT -----------------------------------------------------
-# Print the profile and stop here (don't exec tmux) when profiling is enabled.
-if [[ -n "$ZSH_PROFILE" ]]; then
-  zprof
-  return 0 2>/dev/null || exit 0
+# --- TMUX AUTOSTART ---
+# Replace this shell with tmux, but ONLY in a real interactive terminal session.
+# Each condition guards against a specific case where exec'ing tmux would break:
+#   [[ -o interactive ]]        -> skip non-interactive shells (scripts, `zsh -c`)
+#   [[ -t 0 && -t 1 ]]          -> stdin AND stdout must be a TTY. Editors/IDEs like
+#                                  Zed capture the environment by running
+#                                  `zsh -l -i -c '<dump env>'` with pipes attached.
+#                                  That shell IS interactive, so -o interactive is
+#                                  not enough; without this check tmux replaces the
+#                                  shell, dies with "open terminal failed: not a
+#                                  terminal" and the env dump never runs.
+#   [[ "$TERM" != "dumb" ]]     -> skip dumb terminals (Emacs TRAMP, CI, some tools)
+#   [[ ! "$TERM" =~ ... ]]      -> already inside a screen/tmux terminal
+#   [[ -z "$TMUX" ]]            -> already inside a tmux pane; prevents nesting
+#   command -v tmux             -> tmux is actually installed
+# Note: the previous guard `[ -n "$PS1" ]` was useless in zsh, because PS1 always
+# has a default value, even in non-interactive shells.
+if [[ -o interactive ]] && [[ -t 0 && -t 1 ]] &&
+  [[ "$TERM" != "dumb" ]] && [[ ! "$TERM" =~ (screen|tmux) ]] &&
+  [[ -z "$TMUX" ]] && command -v tmux &>/dev/null; then
+  exec tmux
 fi
