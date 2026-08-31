@@ -14,7 +14,7 @@ zcache() {
   local name="$1"
   local file="$ZSH_CACHE_DIR/$name.zsh"
   local fresh=(${file}(Nmh-24))
-  if ((!${#fresh})); then
+  if ((! ${#fresh})); then
     "$@" >|"$file" 2>/dev/null || rm -f "$file"
   fi
   [[ -s "$file" ]] && source "$file"
@@ -49,7 +49,7 @@ export PATH
 
 # --- COMPLETION SYSTEM ----------------------------------------------------
 # Firmen-.zshrc hat compinit/bashcompinit ggf. schon ausgeführt.
-if ((!$+functions[compdef])); then
+if ((! $+functions[compdef])); then
   autoload -Uz compinit
   if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
     compinit
@@ -57,7 +57,7 @@ if ((!$+functions[compdef])); then
     compinit -C
   fi
 fi
-((!$+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit }
+((! $+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit; }
 
 # --- ZINIT SETUP ----------------------------------------------------------
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -72,7 +72,7 @@ zinit ice wait'0' lucid
 zinit light zsh-users/zsh-completions
 
 # Firma lädt zsh-autosuggestions bereits aus Homebrew -> nicht doppelt laden.
-if ((!$+functions[_zsh_autosuggest_start])); then
+if ((! $+functions[_zsh_autosuggest_start])); then
   zinit ice wait'0' lucid
   zinit light zsh-users/zsh-autosuggestions
 fi
@@ -93,7 +93,7 @@ command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
 
 COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
 _tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
-if ((!${#_tools_fresh})); then
+if ((! ${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
     command -v npm >/dev/null && npm completion -- zsh
@@ -177,7 +177,7 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
 # --- KEYBINDING OWNERSHIP -------------------------------------------------
-if ((${+widgets[fzf-history-widget]})); then
+if ((${+widgets[fzf - history - widget]})); then
   bindkey '^r' fzf-history-widget
   bindkey '^t' fzf-file-widget
   bindkey '\ec' fzf-cd-widget
@@ -192,22 +192,26 @@ fi
 # --- TMUX AUTOSTART ---
 # Replace this shell with tmux, but ONLY in a real interactive terminal session.
 # Each condition guards against a specific case where exec'ing tmux would break:
-#   [[ -o interactive ]]        -> skip non-interactive shells (scripts, `zsh -c`)
-#   [[ -t 0 && -t 1 ]]          -> stdin AND stdout must be a TTY. Editors/IDEs like
-#                                  Zed capture the environment by running
-#                                  `zsh -l -i -c '<dump env>'` with pipes attached.
-#                                  That shell IS interactive, so -o interactive is
-#                                  not enough; without this check tmux replaces the
-#                                  shell, dies with "open terminal failed: not a
-#                                  terminal" and the env dump never runs.
-#   [[ "$TERM" != "dumb" ]]     -> skip dumb terminals (Emacs TRAMP, CI, some tools)
-#   [[ ! "$TERM" =~ ... ]]      -> already inside a screen/tmux terminal
-#   [[ -z "$TMUX" ]]            -> already inside a tmux pane; prevents nesting
-#   command -v tmux             -> tmux is actually installed
+#   [[ -o interactive ]]           -> skip non-interactive shells (scripts)
+#   [[ -z "$ZSH_EXECUTION_STRING" ]] -> set whenever zsh runs as `zsh -c '<cmd>'`,
+#                                  even with -i. Editors/IDEs use that form for the
+#                                  env dump, for tasks and - most importantly - for
+#                                  agent/AI terminals, which run in a REAL pty.
+#                                  Without this check tmux replaces the shell before
+#                                  the command ever runs: the command produces no
+#                                  output and never exits, so the caller hangs.
+#   [[ -t 0 && -t 1 ]]             -> stdin AND stdout must be a TTY (pipes, CI, ...)
+#   [[ "$TERM" != "dumb" ]]        -> skip dumb terminals (Emacs TRAMP, CI, some tools)
+#   [[ ! "$TERM" =~ ... ]]         -> already inside a screen/tmux terminal
+#   [[ -z "$TMUX" ]]               -> already inside a tmux pane; prevents nesting
+#   [[ -z "$NO_TMUX_AUTOSTART" ]]  -> manual escape hatch for hosts/tools that need
+#                                  a plain shell (export it in the tool's env)
+#   command -v tmux                -> tmux is actually installed
 # Note: the previous guard `[ -n "$PS1" ]` was useless in zsh, because PS1 always
 # has a default value, even in non-interactive shells.
-if [[ -o interactive ]] && [[ -t 0 && -t 1 ]] &&
-  [[ "$TERM" != "dumb" ]] && [[ ! "$TERM" =~ (screen|tmux) ]] &&
-  [[ -z "$TMUX" ]] && command -v tmux &>/dev/null; then
+if [[ -o interactive ]] && [[ -z "$ZSH_EXECUTION_STRING" ]] &&
+  [[ -t 0 && -t 1 ]] && [[ "$TERM" != "dumb" ]] &&
+  [[ ! "$TERM" =~ (screen|tmux) ]] && [[ -z "$TMUX" ]] &&
+  [[ -z "$NO_TMUX_AUTOSTART" ]] && command -v tmux &>/dev/null; then
   exec tmux
 fi
