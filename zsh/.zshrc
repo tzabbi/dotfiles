@@ -187,6 +187,8 @@ fi
 if [[ -n "$ZSH_PROFILE" ]]; then
   zprof
   return 0 2>/dev/null || exit 0
+fi
+
 # --- TMUX AUTOSTART ---
 # Replace this shell with tmux, but ONLY in a real interactive terminal session.
 # Each condition guards against a specific case where exec'ing tmux would break:
