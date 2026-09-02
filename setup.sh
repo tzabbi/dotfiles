@@ -71,7 +71,7 @@ for dir in */; do
   dir=${dir%/}
   if [[ "$dir" != "freecad" && "$dir" != "brew" && "$dir" != ".git" ]]; then
     if [[ "$dir" == "zsh" && "$USER" == "developer" ]]; then
-      if [[! -h "$HOME/.zsh/dotfiles-zshrc.sh"]]; then
+      if [[ ! -h "$HOME/.zsh/dotfiles-zshrc.sh" ]]; then
         ln -s "$HOME/dotfiles/zsh/.zshrc" "$HOME/.zsh/dotfiles-zshrc.sh"
       fi
     else
