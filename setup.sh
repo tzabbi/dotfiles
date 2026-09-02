@@ -70,7 +70,7 @@ echo "🔗 Createting Symlinks with GNU Stow..."
 for dir in */; do
   dir=${dir%/}
   if [[ "$dir" != "freecad" && "$dir" != "brew" && "$dir" != ".git" ]]; then
-    if [[ "$dir" == "zsh" && "$USER" == "developer" ]]; then
+    if [[ "$dir" == "zsh" && "$USER" == "developer" && ! -h "$HOME/.zsh/dotfiles-zshrc.sh" ]]; then
       ln -s "$HOME/dotfiles/zsh/.zshrc" "$HOME/.zsh/dotfiles-zshrc.sh"
     else
       echo "   Stowing $dir"
