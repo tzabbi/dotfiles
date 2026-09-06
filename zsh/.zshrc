@@ -1,5 +1,5 @@
 # =============================================================================
-#  ZSH CONFIG
+#  ZSH CONFIG (without Zinit, native Brew plugins)
 # =============================================================================
 [[ -n "$ZSH_PROFILE" ]] && zmodload zsh/zprof
 
@@ -19,6 +19,7 @@ zcache() {
   fi
   [[ -s "$file" ]] && source "$file"
 }
+
 zsh-refresh-cache() {
   rm -f "$ZSH_CACHE_DIR"/*.zsh "$COMP_DUMPFILE" ~/.zcompdump*
   echo "zsh caches cleared - restart your shell"
@@ -31,11 +32,13 @@ export HOMEBREW_NO_ANALYTICS=1
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 [[ "$XDG_SESSION_TYPE" == "wayland" ]] && export QT_QPA_PLATFORM=wayland
 
-# --- BREW -----------------------------------------------------------------
+# --- BREW ENVIRONMENT -----------------------------------------------------
 if [[ -z "$HOMEBREW_PREFIX" ]]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
   zcache brew shellenv
 fi
+# Fallback if HOMEBREW_PREFIX is not set yet
+HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
 
 path+=(
   "$HOME/.krew/bin"
@@ -47,7 +50,13 @@ path+=(
 )
 export PATH
 
-# --- COMPLETION SYSTEM ----------------------------------------------------
+# --- COMPLETIONS SETUP ----------------------------------------------------
+# 1. Prepend zsh-completions to fpath BEFORE compinit
+if [[ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]]; then
+  fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath)
+fi
+
+# 2. Initialize compinit (with fast 24h cache check)
 if ((! $+functions[compdef])); then
   autoload -Uz compinit
   if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
@@ -58,33 +67,9 @@ if ((! $+functions[compdef])); then
 fi
 ((! $+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit; }
 
-# --- ZINIT SETUP ----------------------------------------------------------
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [ ! -d "$ZINIT_HOME" ]; then
-  mkdir -p "$(dirname "$ZINIT_HOME")"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-source "${ZINIT_HOME}/zinit.zsh"
-
-# --- PLUGINS (TURBO MODE) -------------------------------------------------
-zinit ice wait'0' lucid
-zinit light zsh-users/zsh-completions
-
-# Firma lädt zsh-autosuggestions bereits aus Homebrew -> nicht doppelt laden.
-if ((! $+functions[_zsh_autosuggest_start])); then
-  zinit ice wait'0' lucid
-  zinit light zsh-users/zsh-autosuggestions
-fi
-
-zinit ice wait'0' lucid
-zinit light Aloxaf/fzf-tab
-
-zinit ice wait'1' lucid
-zinit snippet OMZP::sudo
-zinit ice wait'1' lucid
-zinit snippet OMZP::command-not-found
-
-zinit cdreplay -q
+# 3. fzf-tab (MUST be loaded directly after compinit!)
+[[ -f "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh" ]] &&
+  source "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh"
 
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
 command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
@@ -96,7 +81,6 @@ if ((! ${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
     command -v npm >/dev/null && npm completion -- zsh
-    # Docker/tofu macht die Firmen-.zshrc bereits selbst
     if [[ -z "$_COMPANY_ZSHRC" ]]; then
       command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
       command -v docker >/dev/null && docker completion zsh
@@ -108,15 +92,8 @@ unset _tools_fresh
 
 command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 
-# --- STYLES & CONFIG ------------------------------------------------------
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
-
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
-
+# --- KEYBINDINGS & ZLE CONFIG ---------------------------------------------
+# Set keymap first so subsequent plugins can wrap these widgets
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -125,13 +102,42 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+# Replacement for OMZP::sudo (double-ESC prepends 'sudo' to current command)
+sudo-command-line() {
+  [[ -z $BUFFER ]] && zle up-history
+  if [[ $BUFFER == sudo\ * ]]; then
+    LBUFFER="${LBUFFER#sudo }"
+  else
+    LBUFFER="sudo $LBUFFER"
+  fi
+}
+zle -N sudo-command-line
+bindkey "\e\e" sudo-command-line
+
+# Replacement for OMZP::command-not-found (Linux default handler)
+[[ -f /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found
+
+# FZF widgets (if available)
+if ((${+widgets[fzf - history - widget]})); then
+  bindkey '^r' fzf-history-widget
+  bindkey '^t' fzf-file-widget
+  bindkey '\ec' fzf-cd-widget
+fi
+
+# --- STYLES & HISTORY -----------------------------------------------------
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# --- ALIASES --------------------------------------------------------------
+# --- ALIASES & FUNCTIONS --------------------------------------------------
 alias flame="bash -c -- 'QT_QPA_PLATFORM=wayland flameshot gui'"
 alias ls="eza"
 alias k="kubecolor"
@@ -143,7 +149,6 @@ alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 alias fix-zsh-history="$HOME/Documents/scripts/fix-zsh-history.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
-# --- FUNCTIONS ------------------------------------------------------------
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
@@ -158,12 +163,17 @@ if command -v oh-my-posh >/dev/null 2>&1 && [[ -f ~/.config/ohmyposh/config.yaml
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
-# --- FINAL LOAD -----------------------------------------------------------
-zinit ice wait'0' lucid atinit"zpcompinit; zicdreplay"
-zinit light zsh-users/zsh-syntax-highlighting
+# --- HIGHLIGHTING & AUTOSUGGESTIONS (LOAD AT THE VERY END) ----------------
+# 1. Syntax highlighting (must be loaded before autosuggestions)
+[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-unalias zi 2>/dev/null
+# 2. Autosuggestions (styling + initialization)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
+[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
+  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
+# --- ADDITIONAL CONFIG & ENVS ---------------------------------------------
 if [ -f "$HOME/.additional_zsh_config" ]; then
   source "$HOME/.additional_zsh_config"
 fi
@@ -175,15 +185,14 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
-# --- KEYBINDING OWNERSHIP -------------------------------------------------
-if ((${+widgets[fzf - history - widget]})); then
-  bindkey '^r' fzf-history-widget
-  bindkey '^t' fzf-file-widget
-  bindkey '\ec' fzf-cd-widget
+# --- PROFILING REPORT -----------------------------------------------------
+if [[ -n "$ZSH_PROFILE" ]]; then
+  zprof
+  return 0 2>/dev/null || exit 0
 fi
 
-# --- TMUX AUTOSTART ---
-# Replace this shell with tmux, but ONLY in a real interactive terminal session.
+# --- TMUX AUTOSTART -------------------------------------------------------
+# Replace this shell with tmux, but ONLY in a real interactive terminal session
 # Each condition guards against a specific case where exec'ing tmux would break:
 #   [[ -o interactive ]]           -> skip non-interactive shells (scripts)
 #   [[ -z "$ZSH_EXECUTION_STRING" ]] -> set whenever zsh runs as `zsh -c '<cmd>'`,
