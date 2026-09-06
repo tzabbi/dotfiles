@@ -48,7 +48,6 @@ path+=(
 export PATH
 
 # --- COMPLETION SYSTEM ----------------------------------------------------
-# Firmen-.zshrc hat compinit/bashcompinit ggf. schon ausgeführt.
 if ((! $+functions[compdef])); then
   autoload -Uz compinit
   if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
@@ -177,16 +176,10 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
 # --- KEYBINDING OWNERSHIP -------------------------------------------------
-if ((${+widgets[fzf-history-widget]})); then
+if ((${+widgets[fzf - history - widget]})); then
   bindkey '^r' fzf-history-widget
   bindkey '^t' fzf-file-widget
   bindkey '\ec' fzf-cd-widget
-fi
-
-# --- PROFILING REPORT -----------------------------------------------------
-if [[ -n "$ZSH_PROFILE" ]]; then
-  zprof
-  return 0 2>/dev/null || exit 0
 fi
 
 # --- TMUX AUTOSTART ---
