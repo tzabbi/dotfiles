@@ -20,8 +20,9 @@ zcache() {
   [[ -s "$file" ]] && source "$file"
 }
 
+# Ensure cache refresh also cleans our dedicated completion dump
 zsh-refresh-cache() {
-  rm -f "$ZSH_CACHE_DIR"/*.zsh "$COMP_DUMPFILE" ~/.zcompdump*
+  rm -f "$ZSH_CACHE_DIR"/*.zsh(N) "$ZSH_CACHE_DIR"/zcompdump*(N) "$COMP_DUMPFILE" ~/.zcompdump*(N)
   echo "zsh caches cleared - restart your shell"
 }
 
@@ -51,20 +52,23 @@ path+=(
 export PATH
 
 # --- COMPLETIONS SETUP ----------------------------------------------------
-# 1. Prepend zsh-completions to fpath BEFORE compinit
+# 1. Prepend zsh-completions to fpath BEFORE refreshing compinit
 if [[ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]]; then
   fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath)
 fi
 
-# 2. Initialize compinit (with fast 24h cache check)
-if ((! $+functions[compdef])); then
-  autoload -Uz compinit
-  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-  else
-    compinit -C
-  fi
+# 2. Re-initialize compinit so new fpath entries are registered in _comps
+autoload -Uz compinit
+zcompdump="${ZSH_CACHE_DIR}/zcompdump-${ZSH_VERSION}"
+
+if [[ -n "$zcompdump"(#qN.mh+24) || ! -s "$zcompdump" ]]; then
+  compinit -d "$zcompdump"
+else
+  compinit -C -d "$zcompdump"
 fi
+unset zcompdump
+
+# Initialize bash completions if not already loaded
 ((! $+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit; }
 
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
@@ -142,7 +146,7 @@ elif [[ -x /usr/bin/command-not-found ]]; then
 fi
 
 # FZF widgets (if available)
-if ((${+widgets[fzf-history-widget]})); then
+if (( $+functions[fzf-history-widget] )); then
   bindkey '^r' fzf-history-widget
   bindkey '^t' fzf-file-widget
   bindkey '\ec' fzf-cd-widget
@@ -187,21 +191,20 @@ if command -v oh-my-posh >/dev/null 2>&1 && [[ -f ~/.config/ohmyposh/config.yaml
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
-# --- AUTOSUGGESTIONS & HIGHLIGHTING (ORDER MATTERS!) ----------------------
-# 1. Autosuggestions FIRST (wraps widgets)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
-if ((! $+functions[_zsh_autosuggest_start])) && [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
-  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-
-# 2. Syntax highlighting MUST BE LAST so it can wrap all previous widgets
-[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
 # --- ADDITIONAL CONFIG & ENVS ---------------------------------------------
 if [ -f "$HOME/.additional_zsh_config" ]; then
   source "$HOME/.additional_zsh_config"
 fi
+
+# --- AUTOSUGGESTIONS & HIGHLIGHTING (ORDER MATTERS!) ----------------------
+# 1. Autosuggestions FIRST (wraps widgets)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
+[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# 2. Syntax highlighting MUST BE LAST so it can wrap all previous widgets
+[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 if [[ ! -s "$ZSH_CACHE_DIR/lua_dir" ]]; then
   { brew --prefix luajit 2>/dev/null || echo /usr/local; } >|"$ZSH_CACHE_DIR/lua_dir"
