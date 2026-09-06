@@ -1,5 +1,5 @@
 # =============================================================================
-#  ZSH CONFIG
+#  ZSH CONFIG (without Zinit, native Brew plugins)
 # =============================================================================
 [[ -n "$ZSH_PROFILE" ]] && zmodload zsh/zprof
 
@@ -19,8 +19,10 @@ zcache() {
   fi
   [[ -s "$file" ]] && source "$file"
 }
+
+# Ensure cache refresh also cleans our dedicated completion dump
 zsh-refresh-cache() {
-  rm -f "$ZSH_CACHE_DIR"/*.zsh "$COMP_DUMPFILE" ~/.zcompdump*
+  rm -f "$ZSH_CACHE_DIR"/*.zsh(N) "$ZSH_CACHE_DIR"/zcompdump*(N) "$COMP_DUMPFILE" ~/.zcompdump*(N)
   echo "zsh caches cleared - restart your shell"
 }
 
@@ -31,11 +33,13 @@ export HOMEBREW_NO_ANALYTICS=1
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 [[ "$XDG_SESSION_TYPE" == "wayland" ]] && export QT_QPA_PLATFORM=wayland
 
-# --- BREW -----------------------------------------------------------------
+# --- BREW ENVIRONMENT -----------------------------------------------------
 if [[ -z "$HOMEBREW_PREFIX" ]]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
   zcache brew shellenv
 fi
+# Fallback if HOMEBREW_PREFIX is not set yet
+HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}"
 
 path+=(
   "$HOME/.krew/bin"
@@ -47,49 +51,34 @@ path+=(
 )
 export PATH
 
-# --- COMPLETION SYSTEM ----------------------------------------------------
-# Firmen-.zshrc hat compinit/bashcompinit ggf. schon ausgeführt.
-if ((! $+functions[compdef])); then
-  autoload -Uz compinit
-  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-  else
-    compinit -C
-  fi
+# --- COMPLETIONS SETUP ----------------------------------------------------
+# 1. Prepend zsh-completions to fpath BEFORE refreshing compinit
+if [[ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]]; then
+  fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath)
 fi
+
+# 2. Re-initialize compinit so new fpath entries are registered in _comps
+autoload -Uz compinit
+zcompdump="${ZSH_CACHE_DIR}/zcompdump-${ZSH_VERSION}"
+
+if [[ -n "$zcompdump"(#qN.mh+24) || ! -s "$zcompdump" ]]; then
+  compinit -d "$zcompdump"
+else
+  compinit -C -d "$zcompdump"
+fi
+unset zcompdump
+
+# Initialize bash completions if not already loaded
 ((! $+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit; }
 
-# --- ZINIT SETUP ----------------------------------------------------------
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [ ! -d "$ZINIT_HOME" ]; then
-  mkdir -p "$(dirname "$ZINIT_HOME")"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-source "${ZINIT_HOME}/zinit.zsh"
-
-# --- PLUGINS (TURBO MODE) -------------------------------------------------
-zinit ice wait'0' lucid
-zinit light zsh-users/zsh-completions
-
-# Firma lädt zsh-autosuggestions bereits aus Homebrew -> nicht doppelt laden.
-if ((! $+functions[_zsh_autosuggest_start])); then
-  zinit ice wait'0' lucid
-  zinit light zsh-users/zsh-autosuggestions
-fi
-
-zinit ice wait'0' lucid
-zinit light Aloxaf/fzf-tab
-
-zinit ice wait'1' lucid
-zinit snippet OMZP::sudo
-zinit ice wait'1' lucid
-zinit snippet OMZP::command-not-found
-
-zinit cdreplay -q
-
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
+# fzf MUST be sourced before fzf-tab, otherwise fzf overwrites the Tab binding (^I)
 command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
 command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
+
+# fzf-tab (after compinit AND after fzf --zsh)
+[[ -f "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh"
 
 COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
 _tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
@@ -97,7 +86,6 @@ if ((! ${#_tools_fresh})); then
   echo "Generating completions cache..."
   {
     command -v npm >/dev/null && npm completion -- zsh
-    # Docker/tofu macht die Firmen-.zshrc bereits selbst
     if [[ -z "$_COMPANY_ZSHRC" ]]; then
       command -v tofu >/dev/null && complete -o nospace -C "$(command -v tofu)" tofu
       command -v docker >/dev/null && docker completion zsh
@@ -109,15 +97,8 @@ unset _tools_fresh
 
 command -v kubecolor >/dev/null 2>&1 && compdef kubecolor=kubectl
 
-# --- STYLES & CONFIG ------------------------------------------------------
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
-
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
-
+# --- KEYBINDINGS & ZLE CONFIG ---------------------------------------------
+# Set keymap first so subsequent plugins can wrap these widgets
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -126,13 +107,65 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+# Replacement for OMZP::sudo (double-ESC prepends 'sudo' to current command)
+sudo-command-line() {
+  [[ -z $BUFFER ]] && zle up-history
+  if [[ $BUFFER == sudo\ * ]]; then
+    BUFFER="${BUFFER#sudo }"
+    CURSOR=$(( CURSOR > 5 ? CURSOR - 5 : 0 ))
+  else
+    LBUFFER="sudo $LBUFFER"
+  fi
+}
+zle -N sudo-command-line
+bindkey "\e\e" sudo-command-line
+
+# Replacement for OMZP::command-not-found (Linux default handler)
+# --- COMMAND NOT FOUND HANDLER (Multi-Platform) ---------------------------
+if [[ -f /etc/zsh_command_not_found ]]; then
+  # Debian / Ubuntu (native handler script)
+  source /etc/zsh_command_not_found
+elif [[ -x /usr/lib/command-not-found ]]; then
+  # Debian / Ubuntu fallback binary
+  command_not_found_handler() {
+    /usr/lib/command-not-found -- "$1"
+    return $?
+  }
+elif [[ -x /usr/libexec/pk-command-not-found ]]; then
+  # Fedora / RHEL / CentOS (PackageKit)
+  command_not_found_handler() {
+    /usr/libexec/pk-command-not-found "$@"
+    return $?
+  }
+elif [[ -x /usr/bin/command-not-found ]]; then
+  # openSUSE / SLES / Homebrew generic
+  command_not_found_handler() {
+    /usr/bin/command-not-found "$@"
+    return $?
+  }
+fi
+
+# FZF widgets (if available)
+if (( $+functions[fzf-history-widget] )); then
+  bindkey '^r' fzf-history-widget
+  bindkey '^t' fzf-file-widget
+  bindkey '\ec' fzf-cd-widget
+fi
+
+# --- STYLES & HISTORY -----------------------------------------------------
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups hist_save_no_dups hist_ignore_dups hist_find_no_dups
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# --- ALIASES --------------------------------------------------------------
+# --- ALIASES & FUNCTIONS --------------------------------------------------
 alias flame="bash -c -- 'QT_QPA_PLATFORM=wayland flameshot gui'"
 alias ls="eza"
 alias k="kubecolor"
@@ -144,7 +177,6 @@ alias update-ghostty="$HOME/Documents/scripts/update-ghostty.sh"
 alias fix-zsh-history="$HOME/Documents/scripts/fix-zsh-history.sh"
 ! command -v python >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && alias python="python3"
 
-# --- FUNCTIONS ------------------------------------------------------------
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
@@ -159,15 +191,20 @@ if command -v oh-my-posh >/dev/null 2>&1 && [[ -f ~/.config/ohmyposh/config.yaml
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
-# --- FINAL LOAD -----------------------------------------------------------
-zinit ice wait'0' lucid atinit"zpcompinit; zicdreplay"
-zinit light zsh-users/zsh-syntax-highlighting
-
-unalias zi 2>/dev/null
-
+# --- ADDITIONAL CONFIG & ENVS ---------------------------------------------
 if [ -f "$HOME/.additional_zsh_config" ]; then
   source "$HOME/.additional_zsh_config"
 fi
+
+# --- AUTOSUGGESTIONS & HIGHLIGHTING (ORDER MATTERS!) ----------------------
+# 1. Autosuggestions FIRST (wraps widgets)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
+[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# 2. Syntax highlighting MUST BE LAST so it can wrap all previous widgets
+[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 if [[ ! -s "$ZSH_CACHE_DIR/lua_dir" ]]; then
   { brew --prefix luajit 2>/dev/null || echo /usr/local; } >|"$ZSH_CACHE_DIR/lua_dir"
@@ -176,21 +213,14 @@ export LUA_DIR="$(<"$ZSH_CACHE_DIR/lua_dir")"
 
 command -v nvm >/dev/null 2>&1 && [[ -n "$NVM_BIN" ]] && export PATH="$NVM_BIN:$PATH"
 
-# --- KEYBINDING OWNERSHIP -------------------------------------------------
-if ((${+widgets[fzf-history-widget]})); then
-  bindkey '^r' fzf-history-widget
-  bindkey '^t' fzf-file-widget
-  bindkey '\ec' fzf-cd-widget
-fi
-
 # --- PROFILING REPORT -----------------------------------------------------
 if [[ -n "$ZSH_PROFILE" ]]; then
   zprof
   return 0 2>/dev/null || exit 0
 fi
 
-# --- TMUX AUTOSTART ---
-# Replace this shell with tmux, but ONLY in a real interactive terminal session.
+# --- TMUX AUTOSTART -------------------------------------------------------
+# Replace this shell with tmux, but ONLY in a real interactive terminal session
 # Each condition guards against a specific case where exec'ing tmux would break:
 #   [[ -o interactive ]]           -> skip non-interactive shells (scripts)
 #   [[ -z "$ZSH_EXECUTION_STRING" ]] -> set whenever zsh runs as `zsh -c '<cmd>'`,
