@@ -116,7 +116,29 @@ zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
 # Replacement for OMZP::command-not-found (Linux default handler)
-[[ -f /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found
+# --- COMMAND NOT FOUND HANDLER (Multi-Platform) ---------------------------
+if [[ -f /etc/zsh_command_not_found ]]; then
+  # Debian / Ubuntu (native handler script)
+  source /etc/zsh_command_not_found
+elif [[ -x /usr/lib/command-not-found ]]; then
+  # Debian / Ubuntu fallback binary
+  command_not_found_handler() {
+    /usr/lib/command-not-found -- "$1"
+    return $?
+  }
+elif [[ -x /usr/libexec/pk-command-not-found ]]; then
+  # Fedora / RHEL / CentOS (PackageKit)
+  command_not_found_handler() {
+    /usr/libexec/pk-command-not-found "$@"
+    return $?
+  }
+elif [[ -x /usr/bin/command-not-found ]]; then
+  # openSUSE / SLES / Homebrew generic
+  command_not_found_handler() {
+    /usr/bin/command-not-found "$@"
+    return $?
+  }
+fi
 
 # FZF widgets (if available)
 if ((${+widgets[fzf-history-widget]})); then
