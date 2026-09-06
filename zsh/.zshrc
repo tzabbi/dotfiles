@@ -67,13 +67,14 @@ if ((! $+functions[compdef])); then
 fi
 ((! $+functions[complete])) && { autoload -U +X bashcompinit && bashcompinit; }
 
-# 3. fzf-tab (MUST be loaded directly after compinit!)
-[[ -f "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh" ]] &&
-  source "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh"
-
 # --- TOOL INTEGRATIONS (cached) -------------------------------------------
+# fzf MUST be sourced before fzf-tab, otherwise fzf overwrites the Tab binding (^I)
 command -v fzf >/dev/null 2>&1 && zcache fzf --zsh
 command -v zoxide >/dev/null 2>&1 && zcache zoxide init zsh --cmd z
+
+# fzf-tab (after compinit AND after fzf --zsh)
+[[ -f "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh"
 
 COMP_DUMPFILE="$ZSH_CACHE_DIR/tools_completions.zsh"
 _tools_fresh=(${COMP_DUMPFILE}(Nmh-24))
@@ -186,15 +187,15 @@ if command -v oh-my-posh >/dev/null 2>&1 && [[ -f ~/.config/ohmyposh/config.yaml
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.yaml)"
 fi
 
-# --- HIGHLIGHTING & AUTOSUGGESTIONS (LOAD AT THE VERY END) ----------------
-# 1. Syntax highlighting (must be loaded before autosuggestions)
-[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
-  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-# 2. Autosuggestions (styling + initialization)
+# --- AUTOSUGGESTIONS & HIGHLIGHTING (ORDER MATTERS!) ----------------------
+# 1. Autosuggestions FIRST (wraps widgets)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
-[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
+[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
   source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# 2. Syntax highlighting MUST BE LAST so it can wrap all previous widgets
+[[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # --- ADDITIONAL CONFIG & ENVS ---------------------------------------------
 if [ -f "$HOME/.additional_zsh_config" ]; then
