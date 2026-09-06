@@ -106,7 +106,8 @@ bindkey "^[[1;5D" backward-word
 sudo-command-line() {
   [[ -z $BUFFER ]] && zle up-history
   if [[ $BUFFER == sudo\ * ]]; then
-    LBUFFER="${LBUFFER#sudo }"
+    BUFFER="${BUFFER#sudo }"
+    CURSOR=$(( CURSOR > 5 ? CURSOR - 5 : 0 ))
   else
     LBUFFER="sudo $LBUFFER"
   fi
