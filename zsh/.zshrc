@@ -118,7 +118,7 @@ bindkey "\e\e" sudo-command-line
 [[ -f /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found
 
 # FZF widgets (if available)
-if ((${+widgets[fzf - history - widget]})); then
+if ((${+widgets[fzf-history-widget]})); then
   bindkey '^r' fzf-history-widget
   bindkey '^t' fzf-file-widget
   bindkey '\ec' fzf-cd-widget
