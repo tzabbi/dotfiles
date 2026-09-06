@@ -190,8 +190,9 @@ fi
 # --- AUTOSUGGESTIONS & HIGHLIGHTING (ORDER MATTERS!) ----------------------
 # 1. Autosuggestions FIRST (wraps widgets)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#88b892'
-[[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+if ((! $+functions[_zsh_autosuggest_start])) && [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
   source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
 # 2. Syntax highlighting MUST BE LAST so it can wrap all previous widgets
 [[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
