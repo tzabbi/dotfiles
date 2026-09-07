@@ -41,6 +41,7 @@ eval "$($BREW_PATH shellenv)"
 brew analytics off
 brew install gcc
 
+
 if [ -f "$DOTFILES_DIR/brew/Brewfile" ]; then
   brew trust alesbrelih/gitlab-ci-ls
   brew trust hashicorp/tap
@@ -49,6 +50,11 @@ if [ -f "$DOTFILES_DIR/brew/Brewfile" ]; then
   brew trust terraform-linters/tap
 
   brew bundle --file "$DOTFILES_DIR/brew/Brewfile"
+
+  /home/linuxbrew/.linuxbrew/opt/glibc/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
+  /home/linuxbrew/.linuxbrew/opt/glibc/bin/localedef -i de_DE -f UTF-8 de_DE.UTF-8
+
+
 fi
 
 if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
