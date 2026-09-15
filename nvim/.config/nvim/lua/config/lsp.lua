@@ -58,12 +58,14 @@ vim.lsp.config("yamlls", {
 		yaml = {
 			keyOrdering = false,
 			format = {
-				enable = false,
+	            enable = true,
+	            singleQuote = false,
+	            printWidth = 200,
+	            bracketSpacing = true
 			},
 			validate = true,
-			schemas = {
-				[require("kubernetes").yamlls_schema()] = "*.yaml",
-				require("schemastore").yaml.schemas(),
+          	kubernetesCRDStore = {
+            	enable = true
 			},
 			schemaStore = {
 				-- Must disable built-in schemaStore support to use
