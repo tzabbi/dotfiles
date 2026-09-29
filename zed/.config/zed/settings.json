@@ -17,6 +17,7 @@
     },
   },
   "colorize_brackets": true,
+  "diff_view_style": "split",
   "git_panel": {
     "dock": null,
     "button": false,
