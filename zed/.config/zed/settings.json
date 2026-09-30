@@ -225,6 +225,13 @@
         },
       },
     },
+    "harper-ls": {
+      "settings": {
+        "harper-ls": {
+          "isolateEnglish": true
+        }
+      }
+    },
     "helm": {
       "settings": {
         "helm-ls": {
